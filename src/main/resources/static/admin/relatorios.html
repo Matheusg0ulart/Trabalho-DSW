@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Relatórios Gerenciais & Exportação | Waldo Ferreira Gestão Contábil</title>
+    <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Estilos -->
+    <link rel="stylesheet" href="../css/admin.css">
+</head>
+<body class="admin-body">
+
+    <!-- Sidebar Lateral -->
+    <aside class="admin-sidebar">
+        <div class="sidebar-header">
+            <a href="dashboard.html" class="sidebar-brand">
+                <div class="logo-icon"><i class="fa-solid fa-scale-balanced"></i></div>
+                <div>
+                    <div class="brand-title">WALDO GESTÃO</div>
+                    <div class="brand-badge">SISTEMA CONTÁBIL</div>
+                </div>
+            </a>
+            <button class="sidebar-close-btn" id="sidebarCloseBtn"><i class="fa-solid fa-xmark"></i></button>
+        </div>
+
+        <nav class="sidebar-nav">
+            <div class="nav-category">Geral</div>
+            <a href="dashboard.html" class="sidebar-link">
+                <i class="fa-solid fa-chart-line"></i>
+                <span>Dashboard Principal</span>
+            </a>
+            <a href="empresas.html" class="sidebar-link">
+                <i class="fa-solid fa-building"></i>
+                <span>Empresas & Clientes</span>
+            </a>
+
+            <div class="nav-category">Operação & Conformidade</div>
+            <a href="impostos.html" class="sidebar-link">
+                <i class="fa-solid fa-receipt"></i>
+                <span>Impostos & Fiscal</span>
+                <span class="counter-badge" id="badge-sidebar-impostos">0</span>
+            </a>
+            <a href="folha.html" class="sidebar-link">
+                <i class="fa-solid fa-users"></i>
+                <span>Folha de Pagamento</span>
+                <span class="counter-badge" id="badge-sidebar-folha">0</span>
+            </a>
+            <a href="servicos.html" class="sidebar-link">
+                <i class="fa-solid fa-list-check"></i>
+                <span>Serviços & Tarefas</span>
+                <span class="counter-badge" id="badge-sidebar-servicos">0</span>
+            </a>
+            <a href="notas-fiscais.html" class="sidebar-link">
+                <i class="fa-solid fa-file-invoice"></i>
+                <span>Notas Fiscais</span>
+                <span class="counter-badge" id="badge-sidebar-notas">0</span>
+            </a>
+            <a href="parcelamentos.html" class="sidebar-link">
+                <i class="fa-solid fa-hand-holding-dollar"></i>
+                <span>Parcelamentos</span>
+            </a>
+            <a href="documentos.html" class="sidebar-link">
+                <i class="fa-solid fa-folder-open"></i>
+                <span>Documentos & Anexos</span>
+                <span class="counter-badge" id="badge-sidebar-documentos">0</span>
+            </a>
+
+            <div class="nav-category">Gestão & Controle</div>
+            <a href="agenda.html" class="sidebar-link">
+                <i class="fa-solid fa-calendar-days"></i>
+                <span>Agenda & Prazos</span>
+            </a>
+            <a href="relatorios.html" class="sidebar-link active">
+                <i class="fa-solid fa-file-excel"></i>
+                <span>Relatórios & Exportação</span>
+            </a>
+            <a href="usuarios.html" class="sidebar-link">
+                <i class="fa-solid fa-user-gear"></i>
+                <span>Usuários & Perfis</span>
+            </a>
+            <a href="notificacoes.html" class="sidebar-link">
+                <i class="fa-solid fa-bell"></i>
+                <span>Central de Alertas</span>
+            </a>
+        </nav>
+
+        <div class="sidebar-footer">
+            <div class="user-mini-card">
+                <div class="user-avatar-mini">WF</div>
+                <div class="user-info-text">
+                    <strong>Waldo Ferreira</strong>
+                    <span>Contador Responsável</span>
+                </div>
+            </div>
+            <a href="../login.html" class="btn-sidebar-exit">
+                <i class="fa-solid fa-arrow-right-from-bracket"></i>
+                <span>Encerrar Demonstração</span>
+            </a>
+        </div>
+    </aside>
+
+    <!-- Área Principal -->
+    <main class="admin-main">
+        <header class="admin-topbar">
+            <div class="topbar-left">
+                <button class="menu-toggle-btn" id="menuToggleBtn"><i class="fa-solid fa-bars"></i></button>
+                <div class="page-header-info">
+                    <div class="page-breadcrumb">
+                        <a href="dashboard.html">Dashboard</a>
+                        <i class="fa-solid fa-chevron-right" style="font-size: 0.65rem;"></i>
+                        <span>Análise Gerencial</span>
+                    </div>
+                    <h1>Relatórios Gerenciais & Exportação de Dados</h1>
+                </div>
+            </div>
+
+            <div class="topbar-right">
+                <div class="demo-status-pill">
+                    <span class="pulse-dot"></span>
+                    <span>Modo Demo</span>
+                </div>
+                <a href="../index.html" class="btn-icon-action" title="Ir para o Site Público"><i class="fa-solid fa-globe"></i></a>
+            </div>
+        </header>
+
+        <div class="admin-content">
+            <!-- Barra de Seleção de Relatório -->
+            <div class="action-toolbar">
+                <div class="filter-group">
+                    <label for="selectTipoRelatorio" style="font-size: 0.88rem; font-weight: 700; color: var(--text-primary);">Tipo de Relatório:</label>
+                    <select id="selectTipoRelatorio" class="filter-select" style="min-width: 280px; font-weight: 600;">
+                        <option value="impostos">1. Relatório de Obrigações & Impostos Fiscais</option>
+                        <option value="folha">2. Relatório de Folha de Pagamento & DP</option>
+                        <option value="servicos">3. Relatório de Serviços & Produtividade</option>
+                        <option value="empresas">4. Resumo da Carteira de Empresas</option>
+                        <option value="parcelamentos">5. Relatório de Parcelamentos Tributários</option>
+                        <option value="documentos">6. Relatório de Pendências de Documentos</option>
+                    </select>
+
+                    <select id="filtroEmpresaRelatorio" class="filter-select">
+                        <option value="Todas">Empresa: Todas</option>
+                    </select>
+                </div>
+
+                <div style="display: flex; gap: 10px;">
+                    <button type="button" class="btn btn-primary" onclick="exportarRelatorioAtualCSV()">
+                        <i class="fa-solid fa-file-csv"></i> Baixar Relatório em CSV (Excel)
+                    </button>
+                </div>
+            </div>
+
+            <!-- Resumo Analítico do Relatório Selecionado -->
+            <div class="kpi-grid" id="containerKPIsRelatorio"></div>
+
+            <!-- Tabela de Dados do Relatório -->
+            <div class="table-card">
+                <div style="padding: 18px 24px; border-bottom: 1px solid var(--border-color); display: flex; justify-content: space-between; align-items: center;">
+                    <h3 id="tituloTabelaRelatorio" style="font-family: var(--font-heading); font-size: 1.1rem; color: var(--text-primary); font-weight: 700;">Dados do Relatório</h3>
+                    <span id="contadorLinhasRelatorio" class="badge-tag" style="font-size: 0.72rem;">0 registros</span>
+                </div>
+                <div class="table-responsive">
+                    <table class="admin-table" id="tabelaRelatorio">
+                        <thead id="tabelaRelatorioHead"></thead>
+                        <tbody id="tabelaRelatorioCorpo"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Scripts -->
+    <script src="../js/data.js"></script>
+    <script src="../js/admin.js"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            carregarSelectEmpresas();
+            renderizarRelatorio();
+
+            document.getElementById('selectTipoRelatorio').addEventListener('change', renderizarRelatorio);
+            document.getElementById('filtroEmpresaRelatorio').addEventListener('change', renderizarRelatorio);
+        });
+
+        function carregarSelectEmpresas() {
+            const empresas = window.DataStore.getEmpresas();
+            const select = document.getElementById('filtroEmpresaRelatorio');
+            empresas.forEach(e => {
+                const opt = document.createElement('option');
+                opt.value = e.id;
+                opt.textContent = e.nomeFantasia;
+                select.appendChild(opt);
+            });
+        }
+
+        function renderizarRelatorio() {
+            const tipo = document.getElementById('selectTipoRelatorio').value;
+            const empresaId = document.getElementById('filtroEmpresaRelatorio').value;
+
+            const thead = document.getElementById('tabelaRelatorioHead');
+            const tbody = document.getElementById('tabelaRelatorioCorpo');
+            const kpiContainer = document.getElementById('containerKPIsRelatorio');
+            const titulo = document.getElementById('tituloTabelaRelatorio');
+            const contador = document.getElementById('contadorLinhasRelatorio');
+
+            let rows = [];
+
+            if (tipo === 'impostos') {
+                titulo.textContent = 'Relatório Analítico de Obrigações & Impostos Fiscais';
+                const impostos = window.DataStore.getImpostos(empresaId !== 'Todas' ? { empresaId: Number(empresaId) } : {});
+                rows = impostos;
+
+                const concluidos = impostos.filter(i => i.situacao === 'Concluída' || i.situacao === 'Entregue').length;
+                const pendentes = impostos.filter(i => i.situacao === 'Pendente' || i.situacao === 'Em Andamento').length;
+                const atrasados = impostos.filter(i => i.situacao === 'Atrasada').length;
+                const valorTotal = impostos.reduce((a,c) => a + (c.valor || 0), 0);
+
+                kpiContainer.innerHTML = `
+                    <div class="kpi-card"><span class="kpi-title">Total de Obrigações</span><div class="kpi-value">${impostos.length}</div></div>
+                    <div class="kpi-card"><span class="kpi-title">Concluídas / Transmitidas</span><div class="kpi-value text-green">${concluidos}</div></div>
+                    <div class="kpi-card"><span class="kpi-title">Pendentes de Envio</span><div class="kpi-value" style="color: var(--warning);">${pendentes}</div></div>
+                    <div class="kpi-card"><span class="kpi-title">Total em Guias</span><div class="kpi-value" style="font-size: 1.4rem;">${window.AdminUI.formatCurrency(valorTotal)}</div></div>
+                `;
+
+                thead.innerHTML = `
+                    <tr><th>Empresa</th><th>Tributo</th><th>Competência</th><th>Vencimento</th><th>Valor</th><th>Responsável</th><th>Situação</th><th>Protocolo</th></tr>
+                `;
+                tbody.innerHTML = impostos.map(i => {
+                    const emp = window.DataStore.getEmpresaById(i.empresaId);
+                    return `
+                        <tr>
+                            <td><strong>${emp ? emp.nomeFantasia : ''}</strong></td>
+                            <td>${i.tipo}</td>
+                            <td>${i.competencia}</td>
+                            <td>${window.AdminUI.formatDate(i.vencimento)}</td>
+                            <td><strong>${window.AdminUI.formatCurrency(i.valor)}</strong></td>
+                            <td>${i.responsavel}</td>
+                            <td><span class="status-badge ${i.situacao.toLowerCase().replace(/ /g, '-')}">${i.situacao}</span></td>
+                            <td><code>${i.protocolo || '-'}</code></td>
+                        </tr>
+                    `;
+                }).join('');
+
+            } else if (tipo === 'folha') {
+                titulo.textContent = 'Relatório de Folha de Pagamento & Encargos';
+                const folhas = window.DataStore.getFolha(empresaId !== 'Todas' ? { empresaId: Number(empresaId) } : {});
+                rows = folhas;
+
+                const fechadas = folhas.filter(f => f.situacao === 'Fechada' || f.situacao === 'Entregue').length;
+                const totalVidas = folhas.reduce((a,c) => a + (c.totalFuncionarios || 0), 0);
+
+                kpiContainer.innerHTML = `
+                    <div class="kpi-card"><span class="kpi-title">Folhas Analisadas</span><div class="kpi-value">${folhas.length}</div></div>
+                    <div class="kpi-card"><span class="kpi-title">Folhas Fechadas</span><div class="kpi-value text-green">${fechadas}</div></div>
+                    <div class="kpi-card"><span class="kpi-title">Total de Vidas Atendidas</span><div class="kpi-value">${totalVidas} colaboradores</div></div>
+                    <div class="kpi-card"><span class="kpi-title">Prazos de Pagamento</span><div class="kpi-value" style="font-size: 1.25rem;">5º dia útil</div></div>
+                `;
+
+                thead.innerHTML = `
+                    <tr><th>Empresa</th><th>Competência</th><th>Prazo Legal</th><th>Funcionários</th><th>Responsável</th><th>Status</th><th>Data Entrega</th></tr>
+                `;
+                tbody.innerHTML = folhas.map(f => {
+                    const emp = window.DataStore.getEmpresaById(f.empresaId);
+                    return `
+                        <tr>
+                            <td><strong>${emp ? emp.nomeFantasia : ''}</strong></td>
+                            <td>${f.competencia}</td>
+                            <td>${f.prazoPrevisto}</td>
+                            <td>${f.totalFuncionarios} vidas</td>
+                            <td>${f.responsavel}</td>
+                            <td><span class="status-badge ${f.situacao.toLowerCase().replace(/ /g, '-')}">${f.situacao}</span></td>
+                            <td>${f.dataEntrega ? window.AdminUI.formatDate(f.dataEntrega) : '-'}</td>
+                        </tr>
+                    `;
+                }).join('');
+
+            } else if (tipo === 'servicos') {
+                titulo.textContent = 'Relatório de Serviços & Produtividade da Equipe';
+                const servicos = window.DataStore.getServicos(empresaId !== 'Todas' ? { empresaId: Number(empresaId) } : {});
+                rows = servicos;
+
+                const concluidos = servicos.filter(s => s.situacao === 'Concluído').length;
+                const abertos = servicos.filter(s => s.situacao !== 'Concluído').length;
+
+                kpiContainer.innerHTML = `
+                    <div class="kpi-card"><span class="kpi-title">Total de Serviços</span><div class="kpi-value">${servicos.length}</div></div>
+                    <div class="kpi-card"><span class="kpi-title">Concluídos com Sucesso</span><div class="kpi-value text-green">${concluidos}</div></div>
+                    <div class="kpi-card"><span class="kpi-title">Em Andamento / Abertos</span><div class="kpi-value" style="color: var(--primary);">${abertos}</div></div>
+                    <div class="kpi-card"><span class="kpi-title">Taxa de Resolução</span><div class="kpi-value" style="font-size: 1.4rem;">${Math.round((concluidos/servicos.length)*100 || 0)}%</div></div>
+                `;
+
+                thead.innerHTML = `
+                    <tr><th>Título</th><th>Empresa</th><th>Categoria</th><th>Prioridade</th><th>Responsável</th><th>Prazo</th><th>Situação</th></tr>
+                `;
+                tbody.innerHTML = servicos.map(s => {
+                    const emp = window.DataStore.getEmpresaById(s.empresaId);
+                    return `
+                        <tr>
+                            <td><strong>${s.titulo}</strong></td>
+                            <td>${emp ? emp.nomeFantasia : ''}</td>
+                            <td>${s.categoria}</td>
+                            <td>${s.prioridade}</td>
+                            <td>${s.responsavel}</td>
+                            <td>${window.AdminUI.formatDate(s.prazoEntrega)}</td>
+                            <td><span class="status-badge ${s.situacao.toLowerCase().replace(/ /g, '-')}">${s.situacao}</span></td>
+                        </tr>
+                    `;
+                }).join('');
+
+            } else if (tipo === 'empresas') {
+                titulo.textContent = 'Resumo da Carteira de Clientes & Regimes Tributários';
+                const empresas = window.DataStore.getEmpresas();
+                rows = empresas;
+
+                const ativas = empresas.filter(e => e.situacao === 'Ativa').length;
+                const simples = empresas.filter(e => e.regimeTributario === 'Simples Nacional').length;
+
+                kpiContainer.innerHTML = `
+                    <div class="kpi-card"><span class="kpi-title">Total de Empresas</span><div class="kpi-value">${empresas.length}</div></div>
+                    <div class="kpi-card"><span class="kpi-title">Empresas Ativas</span><div class="kpi-value text-green">${ativas}</div></div>
+                    <div class="kpi-card"><span class="kpi-title">Simples Nacional</span><div class="kpi-value" style="color: var(--gold);">${simples}</div></div>
+                    <div class="kpi-card"><span class="kpi-title">Lucro Presumido</span><div class="kpi-value" style="color: var(--purple);">${empresas.length - simples}</div></div>
+                `;
+
+                thead.innerHTML = `
+                    <tr><th>Empresa</th><th>Razão Social</th><th>CNPJ</th><th>Regime</th><th>Responsável</th><th>Contador Interno</th><th>Situação</th></tr>
+                `;
+                tbody.innerHTML = empresas.map(e => `
+                    <tr>
+                        <td><strong>${e.nomeFantasia}</strong></td>
+                        <td>${e.razaoSocial}</td>
+                        <td><code>${e.cnpj}</code></td>
+                        <td>${e.regimeTributario}</td>
+                        <td>${e.responsavel}</td>
+                        <td>${e.responsavelInterno}</td>
+                        <td><span class="status-badge ${e.situacao.toLowerCase().replace(/ /g, '-')}">${e.situacao}</span></td>
+                    </tr>
+                `).join('');
+
+            } else if (tipo === 'parcelamentos') {
+                titulo.textContent = 'Relatório de Parcelamentos Tributários';
+                const parcelamentos = window.DataStore.getParcelamentos();
+                rows = parcelamentos;
+
+                kpiContainer.innerHTML = `
+                    <div class="kpi-card"><span class="kpi-title">Acordos Ativos</span><div class="kpi-value">${parcelamentos.length}</div></div>
+                    <div class="kpi-card"><span class="kpi-title">Órgãos Principais</span><div class="kpi-value" style="font-size: 1.15rem;">RFB / PGFN / PMSP</div></div>
+                    <div class="kpi-card"><span class="kpi-title">Controle de Débitos</span><div class="kpi-value text-green">Em Dia</div></div>
+                    <div class="kpi-card"><span class="kpi-title">Transações Especiais</span><div class="kpi-value">Simples / PPI</div></div>
+                `;
+
+                thead.innerHTML = `
+                    <tr><th>Empresa</th><th>Órgão</th><th>Acordo</th><th>Adesão</th><th>Parcelas Pagas</th><th>Valor Parcela</th><th>Status</th></tr>
+                `;
+                tbody.innerHTML = parcelamentos.map(p => {
+                    const emp = window.DataStore.getEmpresaById(p.empresaId);
+                    return `
+                        <tr>
+                            <td><strong>${emp ? emp.nomeFantasia : ''}</strong></td>
+                            <td>${p.orgao}</td>
+                            <td><code>${p.numeroAcordo}</code></td>
+                            <td>${window.AdminUI.formatDate(p.dataAdesao)}</td>
+                            <td>${p.parcelasPagas} / ${p.totalParcelas}</td>
+                            <td>${window.AdminUI.formatCurrency(p.valorParcela)}</td>
+                            <td><span class="status-badge ${p.situacao.toLowerCase().replace(/ /g, '-')}">${p.situacao}</span></td>
+                        </tr>
+                    `;
+                }).join('');
+
+            } else if (tipo === 'documentos') {
+                titulo.textContent = 'Relatório de Pendências de Documentos de Clientes';
+                const docs = window.DataStore.getDocumentos();
+                rows = docs;
+
+                const recebidos = docs.filter(d => d.situacao === 'Recebido' || d.situacao === 'Aprovado').length;
+                const pendentes = docs.filter(d => d.situacao === 'Solicitado' || d.situacao === 'Aguardando Cliente').length;
+
+                kpiContainer.innerHTML = `
+                    <div class="kpi-card"><span class="kpi-title">Total Solicitado</span><div class="kpi-value">${docs.length}</div></div>
+                    <div class="kpi-card"><span class="kpi-title">Recebidos / Aprovados</span><div class="kpi-value text-green">${recebidos}</div></div>
+                    <div class="kpi-card"><span class="kpi-title">Aguardando Cliente</span><div class="kpi-value" style="color: var(--warning);">${pendentes}</div></div>
+                    <div class="kpi-card"><span class="kpi-title">Taxa de Retorno</span><div class="kpi-value" style="font-size: 1.4rem;">${Math.round((recebidos/docs.length)*100 || 0)}%</div></div>
+                `;
+
+                thead.innerHTML = `
+                    <tr><th>Empresa</th><th>Documento</th><th>Categoria</th><th>Solicitado em</th><th>Prazo</th><th>Responsável</th><th>Status</th></tr>
+                `;
+                tbody.innerHTML = docs.map(d => {
+                    const emp = window.DataStore.getEmpresaById(d.empresaId);
+                    return `
+                        <tr>
+                            <td><strong>${emp ? emp.nomeFantasia : ''}</strong></td>
+                            <td>${d.nome}</td>
+                            <td>${d.categoria}</td>
+                            <td>${window.AdminUI.formatDate(d.dataSolicitacao)}</td>
+                            <td>${window.AdminUI.formatDate(d.prazoEnvio)}</td>
+                            <td>${d.responsavel}</td>
+                            <td><span class="status-badge ${d.situacao.toLowerCase().replace(/ /g, '-')}">${d.situacao}</span></td>
+                        </tr>
+                    `;
+                }).join('');
+            }
+
+            contador.textContent = `${rows.length} registros`;
+        }
+
+        function exportarRelatorioAtualCSV() {
+            const tipo = document.getElementById('selectTipoRelatorio').value;
+            const empresaId = document.getElementById('filtroEmpresaRelatorio').value;
+            let rows = [];
+            let filename = `relatorio_${tipo}_waldo_contabilidade`;
+
+            if (tipo === 'impostos') {
+                rows = window.DataStore.getImpostos(empresaId !== 'Todas' ? { empresaId: Number(empresaId) } : {}).map(i => {
+                    const emp = window.DataStore.getEmpresaById(i.empresaId);
+                    return {
+                        "Empresa": emp ? emp.nomeFantasia : '',
+                        "Tributo": i.tipo,
+                        "Competência": i.competencia,
+                        "Vencimento": i.vencimento,
+                        "Valor (R$)": i.valor,
+                        "Responsável": i.responsavel,
+                        "Situação": i.situacao,
+                        "Protocolo": i.protocolo || ''
+                    };
+                });
+            } else if (tipo === 'folha') {
+                rows = window.DataStore.getFolha(empresaId !== 'Todas' ? { empresaId: Number(empresaId) } : {}).map(f => {
+                    const emp = window.DataStore.getEmpresaById(f.empresaId);
+                    return {
+                        "Empresa": emp ? emp.nomeFantasia : '',
+                        "Competência": f.competencia,
+                        "Prazo": f.prazoPrevisto,
+                        "Colaboradores": f.totalFuncionarios,
+                        "Responsável": f.responsavel,
+                        "Situação": f.situacao,
+                        "Data Entrega": f.dataEntrega || ''
+                    };
+                });
+            } else if (tipo === 'servicos') {
+                rows = window.DataStore.getServicos(empresaId !== 'Todas' ? { empresaId: Number(empresaId) } : {}).map(s => {
+                    const emp = window.DataStore.getEmpresaById(s.empresaId);
+                    return {
+                        "Título": s.titulo,
+                        "Empresa": emp ? emp.nomeFantasia : '',
+                        "Categoria": s.categoria,
+                        "Prioridade": s.prioridade,
+                        "Responsável": s.responsavel,
+                        "Prazo": s.prazoEntrega,
+                        "Situação": s.situacao
+                    };
+                });
+            } else if (tipo === 'empresas') {
+                rows = window.DataStore.getEmpresas().map(e => ({
+                    "Nome Fantasia": e.nomeFantasia,
+                    "Razão Social": e.razaoSocial,
+                    "CNPJ": e.cnpj,
+                    "Regime": e.regimeTributario,
+                    "Responsável": e.responsavel,
+                    "Situação": e.situacao
+                }));
+            } else if (tipo === 'parcelamentos') {
+                rows = window.DataStore.getParcelamentos().map(p => {
+                    const emp = window.DataStore.getEmpresaById(p.empresaId);
+                    return {
+                        "Empresa": emp ? emp.nomeFantasia : '',
+                        "Órgão": p.orgao,
+                        "Acordo": p.numeroAcordo,
+                        "Parcelas": `${p.parcelasPagas}/${p.totalParcelas}`,
+                        "Valor (R$)": p.valorParcela,
+                        "Situação": p.situacao
+                    };
+                });
+            } else if (tipo === 'documentos') {
+                rows = window.DataStore.getDocumentos().map(d => {
+                    const emp = window.DataStore.getEmpresaById(d.empresaId);
+                    return {
+                        "Empresa": emp ? emp.nomeFantasia : '',
+                        "Documento": d.nome,
+                        "Categoria": d.categoria,
+                        "Prazo": d.prazoEnvio,
+                        "Responsável": d.responsavel,
+                        "Situação": d.situacao
+                    };
+                });
+            }
+
+            window.DataStore.exportToCSV(filename, rows);
+            window.AdminUI.showToast("Arquivo CSV gerado e baixado com sucesso!", "success");
+        }
+    </script>
+</body>
+</html>

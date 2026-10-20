@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Área do Contador | Waldo Ferreira Assessoria Contábil</title>
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Estilos -->
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body class="login-body">
+
+    <div class="login-card">
+        <div class="login-header">
+            <div class="brand-logo" style="justify-content: center; margin-bottom: 14px;">
+                <div class="logo-icon"><i class="fa-solid fa-scale-balanced"></i></div>
+                <div class="logo-text" style="text-align: left;">
+                    <span class="brand-name">WALDO FERREIRA</span>
+                    <span class="brand-sub">ASSESSORIA CONTÁBIL</span>
+                </div>
+            </div>
+            <h2 style="font-family: var(--font-heading); font-size: 1.45rem; color: var(--navy-950);">Sistema de Gestão Interna</h2>
+            <p style="font-size: 0.86rem; color: var(--slate-500); margin-top: 4px;">Acesso restrito à equipe contábil do escritório</p>
+        </div>
+
+        <!-- Banner de Status de Navegação (Acesso Restrito ou Logout) -->
+        <div id="statusNotice" style="display: none; margin-bottom: 16px; padding: 12px 14px; border-radius: var(--radius-md); font-size: 0.85rem; line-height: 1.4;"></div>
+
+        <!-- Banner Explicativo do Modo Demonstrativo -->
+        <div class="demo-mode-alert" style="margin-bottom: 16px;">
+            <i class="fa-solid fa-shield-halved" style="font-size: 1.25rem; color: var(--gold-500); margin-top: 2px;"></i>
+            <div>
+                <strong>Navegação Demonstrativa do Frontend</strong><br>
+                Nesta etapa o frontend simula a proteção da área administrativa no navegador. Nenhuma senha real deve ser utilizada. Clique em <u>Acesso Rápido Demonstrativo</u> para iniciar.
+            </div>
+        </div>
+
+        <form id="loginForm" class="contact-form" novalidate>
+            <div class="form-field">
+                <label for="loginEmail">E-mail Corporativo Demonstrativo</label>
+                <div style="position: relative;">
+                    <input type="email" id="loginEmail" required maxlength="100" value="waldo@waldocontabilidade.com.br" placeholder="seu.nome@waldocontabilidade.com.br" style="padding-left: 38px;">
+                    <i class="fa-solid fa-envelope" style="position: absolute; left: 14px; top: 50%; transform: translateY(-50%); color: var(--slate-400);"></i>
+                </div>
+            </div>
+
+            <div class="form-field">
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <label for="loginPassword">Senha Demonstrativa</label>
+                    <a href="#" id="btnEsqueciSenha" style="font-size: 0.78rem; color: var(--navy-800); font-weight: 600;">Esqueceu a senha?</a>
+                </div>
+                <div class="input-password-wrap">
+                    <input type="password" id="loginPassword" required maxlength="100" value="demo2026" placeholder="••••••••" style="padding-left: 38px; width: 100%;">
+                    <i class="fa-solid fa-lock" style="position: absolute; left: 14px; top: 50%; transform: translateY(-50%); color: var(--slate-400);"></i>
+                    <button type="button" class="toggle-password-btn" id="togglePasswordBtn" aria-label="Mostrar ou ocultar senha">
+                        <i class="fa-solid fa-eye" id="togglePasswordIcon"></i>
+                    </button>
+                </div>
+            </div>
+
+            <div style="display: flex; align-items: center; justify-content: space-between; font-size: 0.84rem; color: var(--slate-600); margin-top: -6px;">
+                <label style="display: flex; align-items: center; gap: 8px; cursor: pointer;">
+                    <input type="checkbox" id="lembrarLogin" checked style="accent-color: var(--navy-900);">
+                    Manter sessão demonstrativa ativa
+                </label>
+            </div>
+
+            <button type="submit" id="btnEntrar" class="btn btn-primary btn-full btn-lg" style="margin-top: 8px;">
+                <i class="fa-solid fa-right-to-bracket"></i>
+                <span id="btnEntrarTexto">Acessar Área do Contador</span>
+            </button>
+
+            <!-- Botão de Acesso Rápido Demonstrativo -->
+            <button type="button" id="btnAcessoRapido" class="btn btn-gold btn-full" style="margin-top: 4px;">
+                <i class="fa-solid fa-bolt"></i> Acesso Rápido Demonstrativo (1-Clique)
+            </button>
+
+            <div id="loginFeedback" class="form-feedback-alert" style="display: none; margin-top: 10px;"></div>
+        </form>
+
+        <div style="text-align: center; margin-top: 24px; padding-top: 18px; border-top: 1px solid var(--slate-200);">
+            <a href="index.html" style="display: inline-flex; align-items: center; gap: 6px; font-size: 0.88rem; color: var(--slate-600); font-weight: 600;">
+                <i class="fa-solid fa-arrow-left"></i> Voltar à Landing Page Pública
+            </a>
+        </div>
+    </div>
+
+    <script>
+        // Lógica do Login Demonstrativo com Segurança no Frontend
+        document.addEventListener('DOMContentLoaded', () => {
+            const form = document.getElementById('loginForm');
+            const emailInput = document.getElementById('loginEmail');
+            const passInput = document.getElementById('loginPassword');
+            const togglePassBtn = document.getElementById('togglePasswordBtn');
+            const togglePassIcon = document.getElementById('togglePasswordIcon');
+            const btnEntrar = document.getElementById('btnEntrar');
+            const btnEntrarTexto = document.getElementById('btnEntrarTexto');
+            const btnAcessoRapido = document.getElementById('btnAcessoRapido');
+            const feedback = document.getElementById('loginFeedback');
+            const btnEsqueci = document.getElementById('btnEsqueciSenha');
+            const statusNotice = document.getElementById('statusNotice');
+
+            // Verifica motivos de redirecionamento na URL
+            const urlParams = new URLSearchParams(window.location.search);
+            const motivo = urlParams.get('motivo');
+
+            if (motivo === 'acesso_restrito') {
+                statusNotice.style.display = 'block';
+                statusNotice.style.backgroundColor = '#fffbeb';
+                statusNotice.style.border = '1px solid #fde68a';
+                statusNotice.style.color = '#92400e';
+                statusNotice.innerHTML = '<i class="fa-solid fa-lock" style="margin-right: 6px;"></i> <strong>Sessão Demonstrativa Necessária:</strong> O acesso direto às telas de gestão contábil requer uma sessão ativa. Utilize o botão de acesso rápido abaixo para testar a navegação.';
+            } else if (motivo === 'logout') {
+                statusNotice.style.display = 'block';
+                statusNotice.style.backgroundColor = '#f0fdf4';
+                statusNotice.style.border = '1px solid #bbf7d0';
+                statusNotice.style.color = '#166534';
+                statusNotice.innerHTML = '<i class="fa-solid fa-circle-check" style="margin-right: 6px;"></i> <strong>Sessão Encerrada com Sucesso:</strong> Os dados de sessão temporária foram limpos do seu navegador com segurança.';
+            }
+
+            // Mostrar/Ocultar Senha
+            togglePassBtn.addEventListener('click', () => {
+                if (passInput.type === 'password') {
+                    passInput.type = 'text';
+                    togglePassIcon.classList.remove('fa-eye');
+                    togglePassIcon.classList.add('fa-eye-slash');
+                } else {
+                    passInput.type = 'password';
+                    togglePassIcon.classList.remove('fa-eye-slash');
+                    togglePassIcon.classList.add('fa-eye');
+                }
+            });
+
+            // "Esqueci a senha" demonstrativo
+            btnEsqueci.addEventListener('click', (e) => {
+                e.preventDefault();
+                alert("Aviso de Segurança: Este ambiente é exclusivamente demonstrativo. Em produção, um link de recuperação com token temporário e expirável será enviado ao e-mail cadastrado.");
+            });
+
+            function exibirErro(msg) {
+                feedback.style.display = 'block';
+                feedback.style.backgroundColor = '#fee2e2';
+                feedback.style.color = '#b91c1c';
+                feedback.style.border = '1px solid #fecaca';
+                feedback.style.padding = '10px 14px';
+                feedback.style.borderRadius = 'var(--radius-md)';
+                feedback.style.fontSize = '0.86rem';
+                feedback.innerHTML = `<i class="fa-solid fa-circle-exclamation"></i> ${msg}`;
+            }
+
+            function autenticarDemonstracao() {
+                const email = emailInput.value.trim();
+                const senha = passInput.value.trim();
+
+                // 1. Validação de preenchimento
+                if (!email || !senha) {
+                    exibirErro('Por favor, informe o e-mail corporativo e a senha demonstrativos.');
+                    return;
+                }
+
+                // 2. Validação sintática de e-mail
+                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                if (!emailRegex.test(email)) {
+                    exibirErro('Por favor, insira um formato de e-mail válido (exemplo: usuario@dominio.com.br).');
+                    return;
+                }
+
+                // 3. Validação de tamanho mínimo
+                if (senha.length < 4) {
+                    exibirErro('A senha demonstrativa deve possuir no mínimo 4 caracteres.');
+                    return;
+                }
+
+                // 4. Bloqueio preventivo contra caracteres de injeção de script
+                if (/[<>]/.test(email) || /[<>]/.test(senha)) {
+                    exibirErro('Caracteres inválidos detectados. Não utilize caracteres como < ou > nos campos.');
+                    return;
+                }
+
+                btnEntrar.disabled = true;
+                btnEntrarTexto.textContent = 'Iniciando sessão demonstrativa...';
+                feedback.style.display = 'none';
+
+                setTimeout(() => {
+                    // ATENÇÃO: NUNCA armazenar senhas em localStorage, sessionStorage ou cookies!
+                    // Armazena apenas o identificador da sessão demonstrativa temporária:
+                    const sessionData = {
+                        usuario: email,
+                        nome: "Waldo Ferreira",
+                        cargo: "Contador Responsável / Sócio",
+                        perfil: "Administrador",
+                        origem: "Sessão Demonstrativa Frontend",
+                        autenticadoEm: new Date().toISOString()
+                    };
+
+                    sessionStorage.setItem('WALDO_DEMO_SESSION', JSON.stringify(sessionData));
+                    sessionStorage.setItem('WALDO_LOGGED_USER', JSON.stringify(sessionData));
+
+                    // Redireciona para a página que o usuário tentou acessar ou para o dashboard
+                    const destinoPendente = sessionStorage.getItem('WALDO_REDIRECT_AFTER_LOGIN');
+                    sessionStorage.removeItem('WALDO_REDIRECT_AFTER_LOGIN');
+
+                    if (destinoPendente && !destinoPendente.includes('login.html')) {
+                        const target = destinoPendente.startsWith('admin/') ? destinoPendente : 'admin/' + destinoPendente;
+                        window.location.href = target;
+                    } else {
+                        window.location.href = 'admin/dashboard.html';
+                    }
+                }, 500);
+            }
+
+            form.addEventListener('submit', (e) => {
+                e.preventDefault();
+                autenticarDemonstracao();
+            });
+
+            btnAcessoRapido.addEventListener('click', () => {
+                emailInput.value = 'waldo@waldocontabilidade.com.br';
+                passInput.value = 'demo2026';
+                autenticarDemonstracao();
+            });
+        });
+    </script>
+</body>
+</html>

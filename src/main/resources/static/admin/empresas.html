@@ -1,0 +1,780 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Módulo de Empresas | Waldo Ferreira Gestão Contábil</title>
+    <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Estilos -->
+    <link rel="stylesheet" href="../css/admin.css">
+</head>
+<body class="admin-body">
+
+    <!-- Sidebar Lateral -->
+    <aside class="admin-sidebar">
+        <div class="sidebar-header">
+            <a href="dashboard.html" class="sidebar-brand">
+                <div class="logo-icon"><i class="fa-solid fa-scale-balanced"></i></div>
+                <div>
+                    <div class="brand-title">WALDO GESTÃO</div>
+                    <div class="brand-badge">SISTEMA CONTÁBIL</div>
+                </div>
+            </a>
+            <button class="sidebar-close-btn" id="sidebarCloseBtn" aria-label="Fechar menu lateral">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+        </div>
+
+        <nav class="sidebar-nav">
+            <div class="nav-category">Geral</div>
+            <a href="dashboard.html" class="sidebar-link">
+                <i class="fa-solid fa-chart-line"></i>
+                <span>Dashboard Principal</span>
+            </a>
+            <a href="empresas.html" class="sidebar-link active">
+                <i class="fa-solid fa-building"></i>
+                <span>Empresas & Clientes</span>
+            </a>
+
+            <div class="nav-category">Operação & Conformidade</div>
+            <a href="impostos.html" class="sidebar-link">
+                <i class="fa-solid fa-receipt"></i>
+                <span>Impostos & Fiscal</span>
+                <span class="counter-badge" id="badge-sidebar-impostos">0</span>
+            </a>
+            <a href="folha.html" class="sidebar-link">
+                <i class="fa-solid fa-users"></i>
+                <span>Folha de Pagamento</span>
+                <span class="counter-badge" id="badge-sidebar-folha">0</span>
+            </a>
+            <a href="servicos.html" class="sidebar-link">
+                <i class="fa-solid fa-list-check"></i>
+                <span>Serviços & Tarefas</span>
+                <span class="counter-badge" id="badge-sidebar-servicos">0</span>
+            </a>
+            <a href="notas-fiscais.html" class="sidebar-link">
+                <i class="fa-solid fa-file-invoice"></i>
+                <span>Notas Fiscais</span>
+                <span class="counter-badge" id="badge-sidebar-notas">0</span>
+            </a>
+            <a href="parcelamentos.html" class="sidebar-link">
+                <i class="fa-solid fa-hand-holding-dollar"></i>
+                <span>Parcelamentos</span>
+            </a>
+            <a href="documentos.html" class="sidebar-link">
+                <i class="fa-solid fa-folder-open"></i>
+                <span>Documentos & Anexos</span>
+                <span class="counter-badge" id="badge-sidebar-documentos">0</span>
+            </a>
+
+            <div class="nav-category">Gestão & Controle</div>
+            <a href="agenda.html" class="sidebar-link">
+                <i class="fa-solid fa-calendar-days"></i>
+                <span>Agenda & Prazos</span>
+            </a>
+            <a href="relatorios.html" class="sidebar-link">
+                <i class="fa-solid fa-file-excel"></i>
+                <span>Relatórios & Exportação</span>
+            </a>
+            <a href="usuarios.html" class="sidebar-link">
+                <i class="fa-solid fa-user-gear"></i>
+                <span>Usuários & Perfis</span>
+            </a>
+            <a href="notificacoes.html" class="sidebar-link">
+                <i class="fa-solid fa-bell"></i>
+                <span>Central de Alertas</span>
+            </a>
+        </nav>
+
+        <div class="sidebar-footer">
+            <div class="user-mini-card">
+                <div class="user-avatar-mini">WF</div>
+                <div class="user-info-text">
+                    <strong>Waldo Ferreira</strong>
+                    <span>Contador Responsável</span>
+                </div>
+            </div>
+            <a href="../login.html" class="btn-sidebar-exit">
+                <i class="fa-solid fa-arrow-right-from-bracket"></i>
+                <span>Encerrar Demonstração</span>
+            </a>
+        </div>
+    </aside>
+
+    <!-- Área Principal -->
+    <main class="admin-main">
+        <header class="admin-topbar">
+            <div class="topbar-left">
+                <button class="menu-toggle-btn" id="menuToggleBtn"><i class="fa-solid fa-bars"></i></button>
+                <div class="page-header-info">
+                    <div class="page-breadcrumb">
+                        <a href="dashboard.html">Dashboard</a>
+                        <i class="fa-solid fa-chevron-right" style="font-size: 0.65rem;"></i>
+                        <span>Empresas Atendidas</span>
+                    </div>
+                    <h1>Gestão de Empresas & Clientes</h1>
+                </div>
+            </div>
+
+            <div class="topbar-right">
+                <div class="demo-status-pill">
+                    <span class="pulse-dot"></span>
+                    <span>Modo Demo</span>
+                </div>
+                <a href="../index.html" class="btn-icon-action" title="Ir para o Site Público"><i class="fa-solid fa-globe"></i></a>
+            </div>
+        </header>
+
+        <div class="admin-content">
+            <!-- Barra de Ações & Filtros -->
+            <div class="action-toolbar">
+                <div class="filter-group">
+                    <div style="position: relative; width: 260px;">
+                        <input type="text" id="filtroBusca" class="filter-input" placeholder="Buscar por Nome, Razão ou CNPJ..." style="width: 100%; padding-left: 32px;">
+                        <i class="fa-solid fa-magnifying-glass" style="position: absolute; left: 10px; top: 50%; transform: translateY(-50%); color: var(--text-muted); font-size: 0.8rem;"></i>
+                    </div>
+
+                    <select id="filtroSituacao" class="filter-select">
+                        <option value="Todas">Situação: Todas</option>
+                        <option value="Ativa">Ativa</option>
+                        <option value="Em Abertura">Em Abertura</option>
+                        <option value="Regularização">Regularização</option>
+                        <option value="Inativa">Inativa</option>
+                    </select>
+
+                    <select id="filtroRegime" class="filter-select">
+                        <option value="Todos">Regime: Todos</option>
+                        <option value="Simples Nacional">Simples Nacional</option>
+                        <option value="Lucro Presumido">Lucro Presumido</option>
+                    </select>
+
+                    <select id="filtroOrdem" class="filter-select">
+                        <option value="nomeAsc">Ordem: Nome (A-Z)</option>
+                        <option value="nomeDesc">Ordem: Nome (Z-A)</option>
+                        <option value="inicioDesc">Mais Recentes</option>
+                        <option value="inicioAsc">Mais Antigos</option>
+                    </select>
+                </div>
+
+                <div style="display: flex; gap: 10px;">
+                    <button type="button" class="btn btn-sm btn-contador" onclick="exportarEmpresasCSV()">
+                        <i class="fa-solid fa-file-csv"></i> Exportar CSV
+                    </button>
+                    <button type="button" class="btn btn-sm btn-primary" onclick="abrirModalNovaEmpresa()">
+                        <i class="fa-solid fa-plus"></i> Cadastrar Empresa
+                    </button>
+                </div>
+            </div>
+
+            <!-- Tabela de Empresas -->
+            <div class="table-card">
+                <div class="table-responsive">
+                    <table class="admin-table">
+                        <thead>
+                            <tr>
+                                <th>Empresa / Razão Social</th>
+                                <th>CNPJ</th>
+                                <th>Regime Tributário</th>
+                                <th>Responsável / Contato</th>
+                                <th>Contador Interno</th>
+                                <th>Situação</th>
+                                <th style="text-align: right;">Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tabelaEmpresasCorpo"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- MODAL: DETALHES COMPLETOS DA EMPRESA (8 ABAS) -->
+    <div class="admin-modal-backdrop" id="modalDetalhesEmpresa">
+        <div class="admin-modal modal-lg">
+            <div class="modal-header">
+                <div>
+                    <h3 id="detalheNomeFantasia">Nome da Empresa</h3>
+                    <span id="detalheRazaoSocial" style="font-size: 0.82rem; color: var(--text-muted);">Razão Social Completa</span>
+                </div>
+                <button class="modal-close-btn" aria-label="Fechar"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+
+            <div class="modal-body">
+                <!-- Abas -->
+                <div class="modal-tabs">
+                    <button class="tab-btn active" data-tab="tab-geral"><i class="fa-solid fa-circle-info"></i> Visão Geral</button>
+                    <button class="tab-btn" data-tab="tab-impostos"><i class="fa-solid fa-receipt"></i> Impostos</button>
+                    <button class="tab-btn" data-tab="tab-folha"><i class="fa-solid fa-users"></i> Folha de Pagamento</button>
+                    <button class="tab-btn" data-tab="tab-servicos"><i class="fa-solid fa-list-check"></i> Serviços</button>
+                    <button class="tab-btn" data-tab="tab-notas"><i class="fa-solid fa-file-invoice"></i> Notas Fiscais</button>
+                    <button class="tab-btn" data-tab="tab-parcelamentos"><i class="fa-solid fa-hand-holding-dollar"></i> Parcelamentos</button>
+                    <button class="tab-btn" data-tab="tab-documentos"><i class="fa-solid fa-folder-open"></i> Documentos</button>
+                    <button class="tab-btn" data-tab="tab-historico"><i class="fa-solid fa-clock-rotate-left"></i> Histórico</button>
+                </div>
+
+                <!-- Conteúdo Aba 1: Visão Geral -->
+                <div class="tab-pane active" id="tab-geral">
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                        <div>
+                            <h4 style="font-size: 0.9rem; margin-bottom: 12px; color: var(--text-primary);"><i class="fa-solid fa-building" style="color: var(--primary);"></i> Dados Cadastrais</h4>
+                            <p style="font-size: 0.85rem; margin-bottom: 6px;"><strong>CNPJ:</strong> <span id="detCNPJ">-</span></p>
+                            <p style="font-size: 0.85rem; margin-bottom: 6px;"><strong>Inscrição Estadual:</strong> <span id="detIE">-</span></p>
+                            <p style="font-size: 0.85rem; margin-bottom: 6px;"><strong>Inscrição Municipal (CCM):</strong> <span id="detIM">-</span></p>
+                            <p style="font-size: 0.85rem; margin-bottom: 6px;"><strong>Regime Tributário:</strong> <span id="detRegime">-</span></p>
+                            <p style="font-size: 0.85rem; margin-bottom: 6px;"><strong>Data de Abertura:</strong> <span id="detDataAbertura">-</span></p>
+                            <p style="font-size: 0.85rem; margin-bottom: 6px;"><strong>CNAE Principal:</strong> <span id="detCNAE">-</span></p>
+                        </div>
+                        <div>
+                            <h4 style="font-size: 0.9rem; margin-bottom: 12px; color: var(--text-primary);"><i class="fa-solid fa-address-book" style="color: var(--primary);"></i> Contato & Responsáveis</h4>
+                            <p style="font-size: 0.85rem; margin-bottom: 6px;"><strong>Sócio / Responsável:</strong> <span id="detResponsavel">-</span></p>
+                            <p style="font-size: 0.85rem; margin-bottom: 6px;"><strong>E-mail:</strong> <span id="detEmail">-</span></p>
+                            <p style="font-size: 0.85rem; margin-bottom: 6px;"><strong>Telefone / WhatsApp:</strong> <span id="detTelefone">-</span></p>
+                            <p style="font-size: 0.85rem; margin-bottom: 6px;"><strong>Endereço:</strong> <span id="detEndereco">-</span></p>
+                            <p style="font-size: 0.85rem; margin-bottom: 6px;"><strong>Responsável Interno:</strong> <span id="detContadorInterno">-</span></p>
+                            <p style="font-size: 0.85rem; margin-bottom: 6px;"><strong>Início do Contrato:</strong> <span id="detDataInicio">-</span></p>
+                        </div>
+                    </div>
+                    <div style="margin-top: 18px; padding-top: 14px; border-top: 1px solid var(--border-color);">
+                        <strong style="font-size: 0.85rem; display: block; margin-bottom: 4px;">Observações Contábeis Internas:</strong>
+                        <p id="detObservacoes" style="font-size: 0.82rem; color: var(--text-secondary); background: #f8fafc; padding: 10px; border-radius: var(--radius-sm); border: 1px solid var(--border-color);"></p>
+                    </div>
+                </div>
+
+                <!-- Conteúdo Aba 2: Impostos -->
+                <div class="tab-pane" id="tab-impostos">
+                    <div class="table-responsive">
+                        <table class="admin-table">
+                            <thead>
+                                <tr><th>Obrigação</th><th>Competência</th><th>Vencimento</th><th>Valor</th><th>Situação</th></tr>
+                            </thead>
+                            <tbody id="tabelaAbaImpostos"></tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Conteúdo Aba 3: Folha -->
+                <div class="tab-pane" id="tab-folha">
+                    <div class="table-responsive">
+                        <table class="admin-table">
+                            <thead>
+                                <tr><th>Competência</th><th>Prazo Legal</th><th>Funcionários</th><th>Responsável DP</th><th>Status</th></tr>
+                            </thead>
+                            <tbody id="tabelaAbaFolha"></tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Conteúdo Aba 4: Serviços -->
+                <div class="tab-pane" id="tab-servicos">
+                    <div class="table-responsive">
+                        <table class="admin-table">
+                            <thead>
+                                <tr><th>Título</th><th>Categoria</th><th>Prioridade</th><th>Prazo</th><th>Situação</th></tr>
+                            </thead>
+                            <tbody id="tabelaAbaServicos"></tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Conteúdo Aba 5: Notas -->
+                <div class="tab-pane" id="tab-notas">
+                    <div class="table-responsive">
+                        <table class="admin-table">
+                            <thead>
+                                <tr><th>Tipo</th><th>Descrição</th><th>Data</th><th>Valor</th><th>Status</th></tr>
+                            </thead>
+                            <tbody id="tabelaAbaNotas"></tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Conteúdo Aba 6: Parcelamentos -->
+                <div class="tab-pane" id="tab-parcelamentos">
+                    <div class="table-responsive">
+                        <table class="admin-table">
+                            <thead>
+                                <tr><th>Órgão / Acordo</th><th>Parcelas</th><th>Valor Parcela</th><th>Vencimento</th><th>Situação</th></tr>
+                            </thead>
+                            <tbody id="tabelaAbaParcelamentos"></tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Conteúdo Aba 7: Documentos -->
+                <div class="tab-pane" id="tab-documentos">
+                    <div class="table-responsive">
+                        <table class="admin-table">
+                            <thead>
+                                <tr><th>Documento</th><th>Categoria</th><th>Prazo</th><th>Arquivo</th><th>Situação</th></tr>
+                            </thead>
+                            <tbody id="tabelaAbaDocumentos"></tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Conteúdo Aba 8: Histórico -->
+                <div class="tab-pane" id="tab-historico">
+                    <div style="font-size: 0.85rem; color: var(--text-secondary); line-height: 1.8;" id="conteudoAbaHistorico"></div>
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-contador" onclick="window.AdminUI.closeModal('modalDetalhesEmpresa')">Fechar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL: CADASTRAR OU EDITAR EMPRESA -->
+    <div class="admin-modal-backdrop" id="modalFormEmpresa">
+        <div class="admin-modal modal-lg">
+            <div class="modal-header">
+                <h3 id="formEmpresaTitulo">Cadastrar Nova Empresa</h3>
+                <button class="modal-close-btn" aria-label="Fechar"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+
+            <form id="formCadastroEmpresa">
+                <input type="hidden" id="empresaId" value="">
+                <div class="modal-body">
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+                        <div class="form-field">
+                            <label for="campoRazaoSocial">Razão Social *</label>
+                            <input type="text" id="campoRazaoSocial" required placeholder="Ex: Nova Empresa Soluções Ltda">
+                        </div>
+                        <div class="form-field">
+                            <label for="campoNomeFantasia">Nome Fantasia *</label>
+                            <input type="text" id="campoNomeFantasia" required placeholder="Ex: Nova Empresa">
+                        </div>
+                    </div>
+
+                    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 14px;">
+                        <div class="form-field">
+                            <label for="campoCNPJ">CNPJ (Fictício) *</label>
+                            <input type="text" id="campoCNPJ" required placeholder="00.000.000/0001-00 [Demo]">
+                        </div>
+                        <div class="form-field">
+                            <label for="campoIE">Inscrição Estadual</label>
+                            <input type="text" id="campoIE" placeholder="Isento ou nº estadual">
+                        </div>
+                        <div class="form-field">
+                            <label for="campoIM">Inscrição Municipal (CCM)</label>
+                            <input type="text" id="campoIM" placeholder="Nº CCM prefeitura">
+                        </div>
+                    </div>
+
+                    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 14px;">
+                        <div class="form-field">
+                            <label for="campoRegime">Regime Tributário *</label>
+                            <select id="campoRegime" required class="filter-select" style="width: 100%;">
+                                <option value="Simples Nacional">Simples Nacional</option>
+                                <option value="Lucro Presumido">Lucro Presumido</option>
+                                <option value="Lucro Real">Lucro Real</option>
+                            </select>
+                        </div>
+                        <div class="form-field">
+                            <label for="campoDataAbertura">Data de Abertura</label>
+                            <input type="date" id="campoDataAbertura">
+                        </div>
+                        <div class="form-field">
+                            <label for="campoSituacao">Situação Contratual</label>
+                            <select id="campoSituacao" class="filter-select" style="width: 100%;">
+                                <option value="Ativa">Ativa</option>
+                                <option value="Em Abertura">Em Abertura</option>
+                                <option value="Regularização">Regularização</option>
+                                <option value="Inativa">Inativa</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-field" style="margin-top: 14px;">
+                        <label for="campoCNAE">CNAE Principal ou Atividade</label>
+                        <input type="text" id="campoCNAE" placeholder="Ex: 6201-5/01 - Desenvolvimento de software">
+                    </div>
+
+                    <div class="form-field" style="margin-top: 14px;">
+                        <label for="campoEndereco">Endereço Completo</label>
+                        <input type="text" id="campoEndereco" placeholder="Logradouro, número, bairro, cidade/UF">
+                    </div>
+
+                    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 14px;">
+                        <div class="form-field">
+                            <label for="campoResponsavel">Nome do Sócio / Responsável *</label>
+                            <input type="text" id="campoResponsavel" required placeholder="Nome completo">
+                        </div>
+                        <div class="form-field">
+                            <label for="campoEmail">E-mail de Contato *</label>
+                            <input type="email" id="campoEmail" required placeholder="contato@empresa.com.br">
+                        </div>
+                        <div class="form-field">
+                            <label for="campoTelefone">Telefone / WhatsApp *</label>
+                            <input type="text" id="campoTelefone" required placeholder="(11) 90000-0000">
+                        </div>
+                    </div>
+
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 14px;">
+                        <div class="form-field">
+                            <label for="campoContadorInterno">Responsável Contábil Interno</label>
+                            <select id="campoContadorInterno" class="filter-select" style="width: 100%;">
+                                <option value="Waldo Ferreira">Waldo Ferreira</option>
+                                <option value="Juliana Martins">Juliana Martins</option>
+                                <option value="Carlos Silveira">Carlos Silveira</option>
+                                <option value="Beatriz Oliveira">Beatriz Oliveira</option>
+                                <option value="Ricardo Mendes">Ricardo Mendes</option>
+                            </select>
+                        </div>
+                        <div class="form-field">
+                            <label for="campoInicio">Data Início Atendimento</label>
+                            <input type="date" id="campoInicio">
+                        </div>
+                    </div>
+
+                    <div class="form-field" style="margin-top: 14px;">
+                        <label for="campoObs">Observações do Atendimento</label>
+                        <textarea id="campoObs" rows="3" placeholder="Informações de enquadramento, Fator R, regras tributárias particulares..."></textarea>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-contador" onclick="window.AdminUI.closeModal('modalFormEmpresa')">Cancelar</button>
+                    <button type="submit" class="btn btn-primary"><i class="fa-solid fa-floppy-disk"></i> Salvar Empresa</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="../js/data.js"></script>
+    <script src="../js/admin.js"></script>
+
+    <script>
+        let currentEmpresaId = null;
+
+        document.addEventListener('DOMContentLoaded', () => {
+            // Verificar parâmetro de busca na URL
+            const urlParams = new URLSearchParams(window.location.search);
+            const buscaParam = urlParams.get('busca');
+            if (buscaParam) {
+                document.getElementById('filtroBusca').value = buscaParam;
+            }
+            const filtroParam = urlParams.get('filtro');
+            if (filtroParam) {
+                document.getElementById('filtroSituacao').value = filtroParam;
+            }
+
+            renderizarTabela();
+            initFiltros();
+            initTabs();
+            initForm();
+        });
+
+        function getFiltrosAtuais() {
+            return {
+                busca: document.getElementById('filtroBusca').value.trim(),
+                situacao: document.getElementById('filtroSituacao').value,
+                regime: document.getElementById('filtroRegime').value,
+                ordem: document.getElementById('filtroOrdem').value
+            };
+        }
+
+        function renderizarTabela() {
+            const tbody = document.getElementById('tabelaEmpresasCorpo');
+            if (!tbody) return;
+
+            const empresas = window.DataStore.getEmpresas(getFiltrosAtuais());
+
+            if (!empresas.length) {
+                tbody.innerHTML = `
+                    <tr>
+                        <td colspan="7" style="text-align: center; padding: 40px; color: var(--text-muted);">
+                            <i class="fa-solid fa-building-circle-xmark" style="font-size: 2rem; margin-bottom: 8px; display: block;"></i>
+                            Nenhuma empresa encontrada com os filtros aplicados.
+                        </td>
+                    </tr>
+                `;
+                return;
+            }
+
+            tbody.innerHTML = empresas.map(e => `
+                <tr>
+                    <td>
+                        <strong style="color: var(--text-primary); font-size: 0.92rem;">${window.AdminUI.escapeHtml(e.nomeFantasia)}</strong><br>
+                        <span style="font-size: 0.78rem; color: var(--text-muted);">${window.AdminUI.escapeHtml(e.razaoSocial)}</span>
+                    </td>
+                    <td><code style="background: #f1f5f9; padding: 2px 6px; border-radius: 4px; font-size: 0.8rem;">${window.AdminUI.escapeHtml(e.cnpj)}</code></td>
+                    <td>
+                        <span class="badge-tag ${e.regimeTributario === 'Simples Nacional' ? 'gold-tag' : ''}">
+                            ${e.regimeTributario}
+                        </span>
+                        ${e.fatorR ? '<span class="status-badge ativa" style="font-size: 0.65rem; padding: 2px 6px;">Fator R</span>' : ''}
+                    </td>
+                    <td>
+                        <strong>${window.AdminUI.escapeHtml(e.responsavel)}</strong><br>
+                        <span style="font-size: 0.76rem; color: var(--text-muted);">${window.AdminUI.escapeHtml(e.telefone)}</span>
+                    </td>
+                    <td>
+                        <span style="font-size: 0.82rem; font-weight: 600; color: var(--text-secondary);">
+                            <i class="fa-solid fa-user-check" style="color: var(--primary); font-size: 0.75rem; margin-right: 4px;"></i>
+                            ${window.AdminUI.escapeHtml(e.responsavelInterno)}
+                        </span>
+                    </td>
+                    <td>
+                        <span class="status-badge ${e.situacao.toLowerCase().replace(' ', '-')}">
+                            ${e.situacao}
+                        </span>
+                    </td>
+                    <td style="text-align: right;">
+                        <div class="action-btn-group" style="justify-content: flex-end;">
+                            <button type="button" class="btn-icon-action" title="Ver Detalhes (8 Abas)" onclick="verDetalhes(${e.id})">
+                                <i class="fa-solid fa-eye"></i>
+                            </button>
+                            <button type="button" class="btn-icon-action" title="Editar Cadastro" onclick="editarEmpresa(${e.id})">
+                                <i class="fa-solid fa-pen-to-square"></i>
+                            </button>
+                            <button type="button" class="btn-icon-action ${e.situacao === 'Inativa' ? 'success' : 'danger'}" title="${e.situacao === 'Inativa' ? 'Reativar Empresa' : 'Desativação Demonstrativa'}" onclick="alternarSituacao(${e.id})">
+                                <i class="fa-solid ${e.situacao === 'Inativa' ? 'fa-rotate-left' : 'fa-ban'}"></i>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        function initFiltros() {
+            document.getElementById('filtroBusca').addEventListener('input', renderizarTabela);
+            document.getElementById('filtroSituacao').addEventListener('change', renderizarTabela);
+            document.getElementById('filtroRegime').addEventListener('change', renderizarTabela);
+            document.getElementById('filtroOrdem').addEventListener('change', renderizarTabela);
+        }
+
+        function initTabs() {
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const target = btn.dataset.tab;
+                    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+                    document.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active'));
+                    btn.classList.add('active');
+                    const pane = document.getElementById(target);
+                    if (pane) pane.classList.add('active');
+                });
+            });
+        }
+
+        function verDetalhes(id) {
+            const emp = window.DataStore.getEmpresaById(id);
+            if (!emp) return;
+            currentEmpresaId = emp.id;
+
+            document.getElementById('detalheNomeFantasia').textContent = emp.nomeFantasia;
+            document.getElementById('detalheRazaoSocial').textContent = emp.razaoSocial;
+            document.getElementById('detCNPJ').textContent = emp.cnpj;
+            document.getElementById('detIE').textContent = emp.inscricaoEstadual || 'Isento';
+            document.getElementById('detIM').textContent = emp.inscricaoMunicipal || 'Não informada';
+            document.getElementById('detRegime').textContent = emp.regimeTributario + (emp.fatorR ? ' (com Fator R 6%)' : '');
+            document.getElementById('detDataAbertura').textContent = window.AdminUI.formatDate(emp.dataAbertura);
+            document.getElementById('detCNAE').textContent = emp.cnae || 'Geral';
+            document.getElementById('detResponsavel').textContent = emp.responsavel;
+            document.getElementById('detEmail').textContent = emp.email;
+            document.getElementById('detTelefone').textContent = emp.telefone;
+            document.getElementById('detEndereco').textContent = emp.endereco;
+            document.getElementById('detContadorInterno').textContent = emp.responsavelInterno;
+            document.getElementById('detDataInicio').textContent = window.AdminUI.formatDate(emp.dataInicio);
+            document.getElementById('detObservacoes').textContent = emp.observacoes || 'Nenhuma observação registrada.';
+
+            // Aba 2: Impostos da Empresa
+            const impostos = window.DataStore.getImpostos({ empresaId: emp.id });
+            const tbodyImp = document.getElementById('tabelaAbaImpostos');
+            tbodyImp.innerHTML = impostos.length ? impostos.map(i => `
+                <tr>
+                    <td><strong>${i.tipo}</strong></td>
+                    <td>${i.competencia}</td>
+                    <td>${window.AdminUI.formatDate(i.vencimento)}</td>
+                    <td>${window.AdminUI.formatCurrency(i.valor)}</td>
+                    <td><span class="status-badge ${i.situacao.toLowerCase().replace(' ', '-')}">${i.situacao}</span></td>
+                </tr>
+            `).join('') : '<tr><td colspan="5" style="text-align: center; color: var(--text-muted); padding: 16px;">Nenhum imposto registrado para esta empresa.</td></tr>';
+
+            // Aba 3: Folha
+            const folhas = window.DataStore.getFolha({ empresaId: emp.id });
+            const tbodyFolha = document.getElementById('tabelaAbaFolha');
+            tbodyFolha.innerHTML = folhas.length ? folhas.map(f => `
+                <tr>
+                    <td><strong>${f.competencia}</strong></td>
+                    <td>${f.prazoPrevisto}</td>
+                    <td>${f.totalFuncionarios} colaboradores</td>
+                    <td>${f.responsavel}</td>
+                    <td><span class="status-badge ${f.situacao.toLowerCase().replace(' ', '-')}">${f.situacao}</span></td>
+                </tr>
+            `).join('') : '<tr><td colspan="5" style="text-align: center; color: var(--text-muted); padding: 16px;">Nenhuma folha registrada.</td></tr>';
+
+            // Aba 4: Serviços
+            const servicos = window.DataStore.getServicos({ empresaId: emp.id });
+            const tbodyServ = document.getElementById('tabelaAbaServicos');
+            tbodyServ.innerHTML = servicos.length ? servicos.map(s => `
+                <tr>
+                    <td><strong>${s.titulo}</strong></td>
+                    <td><span class="badge-tag" style="font-size: 0.7rem;">${s.categoria}</span></td>
+                    <td><strong>${s.prioridade}</strong></td>
+                    <td>${window.AdminUI.formatDate(s.prazoEntrega)}</td>
+                    <td><span class="status-badge ${s.situacao.toLowerCase().replace(' ', '-')}">${s.situacao}</span></td>
+                </tr>
+            `).join('') : '<tr><td colspan="5" style="text-align: center; color: var(--text-muted); padding: 16px;">Nenhum serviço registrado.</td></tr>';
+
+            // Aba 5: Notas
+            const notas = window.DataStore.getNotas({ empresaId: emp.id });
+            const tbodyNotas = document.getElementById('tabelaAbaNotas');
+            tbodyNotas.innerHTML = notas.length ? notas.map(n => `
+                <tr>
+                    <td><strong>${n.tipoNota}</strong></td>
+                    <td>${n.descricao}</td>
+                    <td>${window.AdminUI.formatDate(n.dataSolicitacao)}</td>
+                    <td>${window.AdminUI.formatCurrency(n.valor)}</td>
+                    <td><span class="status-badge ${n.situacao.toLowerCase().replace(' ', '-')}">${n.situacao}</span></td>
+                </tr>
+            `).join('') : '<tr><td colspan="5" style="text-align: center; color: var(--text-muted); padding: 16px;">Nenhuma nota solicitada.</td></tr>';
+
+            // Aba 6: Parcelamentos
+            const parcelas = window.DataStore.getParcelamentos({ empresaId: emp.id });
+            const tbodyParc = document.getElementById('tabelaAbaParcelamentos');
+            tbodyParc.innerHTML = parcelas.length ? parcelas.map(p => `
+                <tr>
+                    <td><strong>${p.orgao}</strong><br><span style="font-size: 0.72rem; color: var(--text-muted);">${p.numeroAcordo}</span></td>
+                    <td>${p.parcelasPagas} / ${p.totalParcelas} pagas</td>
+                    <td>${window.AdminUI.formatCurrency(p.valorParcela)}</td>
+                    <td>Dia ${p.diaVencimento}</td>
+                    <td><span class="status-badge ${p.situacao.toLowerCase().replace(' ', '-')}">${p.situacao}</span></td>
+                </tr>
+            `).join('') : '<tr><td colspan="5" style="text-align: center; color: var(--text-muted); padding: 16px;">Sem parcelamentos ativos.</td></tr>';
+
+            // Aba 7: Documentos
+            const docs = window.DataStore.getDocumentos({ empresaId: emp.id });
+            const tbodyDocs = document.getElementById('tabelaAbaDocumentos');
+            tbodyDocs.innerHTML = docs.length ? docs.map(d => `
+                <tr>
+                    <td><strong>${d.nome}</strong></td>
+                    <td><span class="badge-tag" style="font-size: 0.7rem;">${d.categoria}</span></td>
+                    <td>${window.AdminUI.formatDate(d.prazoEnvio)}</td>
+                    <td>${d.arquivoMock ? `<span style="color: var(--primary);"><i class="fa-solid fa-file-pdf"></i> ${d.arquivoMock}</span>` : '<span style="color: var(--text-muted);">-</span>'}</td>
+                    <td><span class="status-badge ${d.situacao.toLowerCase().replace(' ', '-')}">${d.situacao}</span></td>
+                </tr>
+            `).join('') : '<tr><td colspan="5" style="text-align: center; color: var(--text-muted); padding: 16px;">Nenhum documento pendente.</td></tr>';
+
+            // Aba 8: Histórico
+            document.getElementById('conteudoAbaHistorico').innerHTML = `
+                <div style="border-left: 2px solid var(--border-color); padding-left: 16px; margin-left: 8px;">
+                    <p>• <strong>Cadastro Inicial:</strong> Início do atendimento registrado em ${window.AdminUI.formatDate(emp.dataInicio)} por ${emp.responsavelInterno}.</p>
+                    <p>• <strong>Revisão de Enquadramento:</strong> Enquadramento ativo no regime ${emp.regimeTributario} com foco em redução tributária legal.</p>
+                    <p>• <strong>Status Atual:</strong> Empresa em situação <u>${emp.situacao}</u> no cadastro do escritório.</p>
+                </div>
+            `;
+
+            window.AdminUI.openModal('modalDetalhesEmpresa');
+        }
+
+        function abrirModalNovaEmpresa() {
+            document.getElementById('formEmpresaTitulo').textContent = 'Cadastrar Nova Empresa';
+            document.getElementById('formCadastroEmpresa').reset();
+            document.getElementById('empresaId').value = '';
+            document.getElementById('campoInicio').value = new Date().toISOString().split('T')[0];
+            window.AdminUI.openModal('modalFormEmpresa');
+        }
+
+        function editarEmpresa(id) {
+            const emp = window.DataStore.getEmpresaById(id);
+            if (!emp) return;
+
+            document.getElementById('formEmpresaTitulo').textContent = `Editar Empresa: ${emp.nomeFantasia}`;
+            document.getElementById('empresaId').value = emp.id;
+            document.getElementById('campoRazaoSocial').value = emp.razaoSocial;
+            document.getElementById('campoNomeFantasia').value = emp.nomeFantasia;
+            document.getElementById('campoCNPJ').value = emp.cnpj;
+            document.getElementById('campoIE').value = emp.inscricaoEstadual || '';
+            document.getElementById('campoIM').value = emp.inscricaoMunicipal || '';
+            document.getElementById('campoRegime').value = emp.regimeTributario;
+            document.getElementById('campoDataAbertura').value = emp.dataAbertura || '';
+            document.getElementById('campoSituacao').value = emp.situacao;
+            document.getElementById('campoCNAE').value = emp.cnae || '';
+            document.getElementById('campoEndereco').value = emp.endereco || '';
+            document.getElementById('campoResponsavel').value = emp.responsavel;
+            document.getElementById('campoEmail').value = emp.email;
+            document.getElementById('campoTelefone').value = emp.telefone;
+            document.getElementById('campoContadorInterno').value = emp.responsavelInterno;
+            document.getElementById('campoInicio').value = emp.dataInicio || '';
+            document.getElementById('campoObs').value = emp.observacoes || '';
+
+            window.AdminUI.openModal('modalFormEmpresa');
+        }
+
+        function alternarSituacao(id) {
+            const emp = window.DataStore.getEmpresaById(id);
+            if (!emp) return;
+            const novaSit = emp.situacao === 'Inativa' ? 'Ativa' : 'Inativa';
+            if (confirm(`Deseja alterar a situação da empresa "${emp.nomeFantasia}" para "${novaSit}" na demonstração?`)) {
+                window.DataStore.desativarEmpresa(id);
+                window.AdminUI.showToast(`Situação da empresa alterada para "${novaSit}" com sucesso!`, "info");
+                renderizarTabela();
+                window.AdminUI.updateSidebarCounters();
+            }
+        }
+
+        function initForm() {
+            const form = document.getElementById('formCadastroEmpresa');
+            form.addEventListener('submit', (e) => {
+                e.preventDefault();
+
+                const id = document.getElementById('empresaId').value;
+                const empData = {
+                    id: id ? Number(id) : null,
+                    razaoSocial: document.getElementById('campoRazaoSocial').value.trim(),
+                    nomeFantasia: document.getElementById('campoNomeFantasia').value.trim(),
+                    cnpj: document.getElementById('campoCNPJ').value.trim(),
+                    inscricaoEstadual: document.getElementById('campoIE').value.trim() || 'Isento',
+                    inscricaoMunicipal: document.getElementById('campoIM').value.trim() || '-',
+                    regimeTributario: document.getElementById('campoRegime').value,
+                    dataAbertura: document.getElementById('campoDataAbertura').value,
+                    situacao: document.getElementById('campoSituacao').value,
+                    cnae: document.getElementById('campoCNAE').value.trim(),
+                    endereco: document.getElementById('campoEndereco').value.trim(),
+                    responsavel: document.getElementById('campoResponsavel').value.trim(),
+                    email: document.getElementById('campoEmail').value.trim(),
+                    telefone: document.getElementById('campoTelefone').value.trim(),
+                    responsavelInterno: document.getElementById('campoContadorInterno').value,
+                    dataInicio: document.getElementById('campoInicio').value,
+                    observacoes: document.getElementById('campoObs').value.trim()
+                };
+
+                window.DataStore.saveEmpresa(empData);
+                window.AdminUI.closeModal('modalFormEmpresa');
+                window.AdminUI.showToast(id ? 'Empresa atualizada com sucesso!' : 'Empresa cadastrada com sucesso!', 'success');
+                renderizarTabela();
+                window.AdminUI.updateSidebarCounters();
+            });
+        }
+
+        function exportarEmpresasCSV() {
+            const empresas = window.DataStore.getEmpresas(getFiltrosAtuais());
+            const rows = empresas.map(e => ({
+                "ID": e.id,
+                "Nome Fantasia": e.nomeFantasia,
+                "Razão Social": e.razaoSocial,
+                "CNPJ": e.cnpj,
+                "Regime Tributário": e.regimeTributario,
+                "Situação": e.situacao,
+                "Responsável": e.responsavel,
+                "E-mail": e.email,
+                "Telefone": e.telefone,
+                "Contador Interno": e.responsavelInterno,
+                "Data Início": e.dataInicio
+            }));
+            window.DataStore.exportToCSV("empresas_waldo_contabilidade", rows);
+        }
+    </script>
+</body>
+</html>

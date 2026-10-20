@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Central de Alertas & Notificações | Waldo Ferreira Gestão Contábil</title>
+    <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Estilos -->
+    <link rel="stylesheet" href="../css/admin.css">
+    <style>
+        .notif-card-item {
+            background-color: #ffffff;
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-lg);
+            padding: 20px 24px;
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 18px;
+            margin-bottom: 14px;
+            transition: all 0.2s ease;
+        }
+
+        .notif-card-item.unread {
+            background-color: #f8fbff;
+            border-left: 4px solid var(--primary);
+        }
+
+        .notif-card-item.critico {
+            border-left: 4px solid var(--danger);
+        }
+
+        .notif-card-item.alerta {
+            border-left: 4px solid var(--warning);
+        }
+
+        .notif-card-item.sucesso {
+            border-left: 4px solid var(--success);
+        }
+    </style>
+</head>
+<body class="admin-body">
+
+    <!-- Sidebar Lateral -->
+    <aside class="admin-sidebar">
+        <div class="sidebar-header">
+            <a href="dashboard.html" class="sidebar-brand">
+                <div class="logo-icon"><i class="fa-solid fa-scale-balanced"></i></div>
+                <div>
+                    <div class="brand-title">WALDO GESTÃO</div>
+                    <div class="brand-badge">SISTEMA CONTÁBIL</div>
+                </div>
+            </a>
+            <button class="sidebar-close-btn" id="sidebarCloseBtn"><i class="fa-solid fa-xmark"></i></button>
+        </div>
+
+        <nav class="sidebar-nav">
+            <div class="nav-category">Geral</div>
+            <a href="dashboard.html" class="sidebar-link">
+                <i class="fa-solid fa-chart-line"></i>
+                <span>Dashboard Principal</span>
+            </a>
+            <a href="empresas.html" class="sidebar-link">
+                <i class="fa-solid fa-building"></i>
+                <span>Empresas & Clientes</span>
+            </a>
+
+            <div class="nav-category">Operação & Conformidade</div>
+            <a href="impostos.html" class="sidebar-link">
+                <i class="fa-solid fa-receipt"></i>
+                <span>Impostos & Fiscal</span>
+                <span class="counter-badge" id="badge-sidebar-impostos">0</span>
+            </a>
+            <a href="folha.html" class="sidebar-link">
+                <i class="fa-solid fa-users"></i>
+                <span>Folha de Pagamento</span>
+                <span class="counter-badge" id="badge-sidebar-folha">0</span>
+            </a>
+            <a href="servicos.html" class="sidebar-link">
+                <i class="fa-solid fa-list-check"></i>
+                <span>Serviços & Tarefas</span>
+                <span class="counter-badge" id="badge-sidebar-servicos">0</span>
+            </a>
+            <a href="notas-fiscais.html" class="sidebar-link">
+                <i class="fa-solid fa-file-invoice"></i>
+                <span>Notas Fiscais</span>
+                <span class="counter-badge" id="badge-sidebar-notas">0</span>
+            </a>
+            <a href="parcelamentos.html" class="sidebar-link">
+                <i class="fa-solid fa-hand-holding-dollar"></i>
+                <span>Parcelamentos</span>
+            </a>
+            <a href="documentos.html" class="sidebar-link">
+                <i class="fa-solid fa-folder-open"></i>
+                <span>Documentos & Anexos</span>
+                <span class="counter-badge" id="badge-sidebar-documentos">0</span>
+            </a>
+
+            <div class="nav-category">Gestão & Controle</div>
+            <a href="agenda.html" class="sidebar-link">
+                <i class="fa-solid fa-calendar-days"></i>
+                <span>Agenda & Prazos</span>
+            </a>
+            <a href="relatorios.html" class="sidebar-link">
+                <i class="fa-solid fa-file-excel"></i>
+                <span>Relatórios & Exportação</span>
+            </a>
+            <a href="usuarios.html" class="sidebar-link">
+                <i class="fa-solid fa-user-gear"></i>
+                <span>Usuários & Perfis</span>
+            </a>
+            <a href="notificacoes.html" class="sidebar-link active">
+                <i class="fa-solid fa-bell"></i>
+                <span>Central de Alertas</span>
+            </a>
+        </nav>
+
+        <div class="sidebar-footer">
+            <div class="user-mini-card">
+                <div class="user-avatar-mini">WF</div>
+                <div class="user-info-text">
+                    <strong>Waldo Ferreira</strong>
+                    <span>Contador Responsável</span>
+                </div>
+            </div>
+            <a href="../login.html" class="btn-sidebar-exit">
+                <i class="fa-solid fa-arrow-right-from-bracket"></i>
+                <span>Encerrar Demonstração</span>
+            </a>
+        </div>
+    </aside>
+
+    <!-- Área Principal -->
+    <main class="admin-main">
+        <header class="admin-topbar">
+            <div class="topbar-left">
+                <button class="menu-toggle-btn" id="menuToggleBtn"><i class="fa-solid fa-bars"></i></button>
+                <div class="page-header-info">
+                    <div class="page-breadcrumb">
+                        <a href="dashboard.html">Dashboard</a>
+                        <i class="fa-solid fa-chevron-right" style="font-size: 0.65rem;"></i>
+                        <span>Alertas</span>
+                    </div>
+                    <h1>Central de Notificações & Pendências</h1>
+                </div>
+            </div>
+
+            <div class="topbar-right">
+                <div class="demo-status-pill">
+                    <span class="pulse-dot"></span>
+                    <span>Modo Demo</span>
+                </div>
+                <a href="../index.html" class="btn-icon-action" title="Ir para o Site Público"><i class="fa-solid fa-globe"></i></a>
+            </div>
+        </header>
+
+        <div class="admin-content">
+            <!-- Barra de Ações & Filtros -->
+            <div class="action-toolbar">
+                <div class="filter-group">
+                    <select id="filtroTipoNotif" class="filter-select">
+                        <option value="Todas">Severidade: Todas</option>
+                        <option value="critico">Críticas / Atrasadas</option>
+                        <option value="alerta">Alertas & Vencimentos</option>
+                        <option value="info">Informativas</option>
+                        <option value="sucesso">Conclusões com Sucesso</option>
+                    </select>
+
+                    <select id="filtroStatusNotif" class="filter-select">
+                        <option value="Todas">Status: Todas</option>
+                        <option value="naoLidas" selected>Apenas Não Lidas</option>
+                        <option value="lidas">Lidas</option>
+                    </select>
+                </div>
+
+                <div style="display: flex; gap: 10px;">
+                    <button type="button" class="btn btn-sm btn-contador" onclick="marcarTodasLidas()">
+                        <i class="fa-solid fa-check-double"></i> Marcar Todas como Lidas
+                    </button>
+                </div>
+            </div>
+
+            <!-- Lista de Notificações -->
+            <div id="listaNotificacoesContainer"></div>
+        </div>
+    </main>
+
+    <!-- Scripts -->
+    <script src="../js/data.js"></script>
+    <script src="../js/admin.js"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            renderizarNotificacoes();
+            document.getElementById('filtroTipoNotif').addEventListener('change', renderizarNotificacoes);
+            document.getElementById('filtroStatusNotif').addEventListener('change', renderizarNotificacoes);
+        });
+
+        function renderizarNotificacoes() {
+            const container = document.getElementById('listaNotificacoesContainer');
+            if (!container) return;
+
+            const tipoFiltro = document.getElementById('filtroTipoNotif').value;
+            const statusFiltro = document.getElementById('filtroStatusNotif').value;
+
+            let notifs = window.DataStore.getNotificacoes();
+
+            if (tipoFiltro !== 'Todas') {
+                notifs = notifs.filter(n => n.tipo === tipoFiltro);
+            }
+
+            if (statusFiltro === 'naoLidas') {
+                notifs = notifs.filter(n => !n.lida);
+            } else if (statusFiltro === 'lidas') {
+                notifs = notifs.filter(n => n.lida);
+            }
+
+            if (!notifs.length) {
+                container.innerHTML = `
+                    <div class="table-card" style="padding: 50px; text-align: center; color: var(--text-muted);">
+                        <i class="fa-regular fa-bell-slash" style="font-size: 2.5rem; margin-bottom: 12px; display: block;"></i>
+                        <h3>Nenhuma notificação encontrada</h3>
+                        <p style="font-size: 0.85rem; margin-top: 4px;">Todas as pendências e avisos estão em dia no momento.</p>
+                    </div>
+                `;
+                return;
+            }
+
+            container.innerHTML = notifs.map(n => {
+                let icone = 'fa-circle-info';
+                let iconeCor = 'var(--primary)';
+                if (n.tipo === 'critico') { icone = 'fa-circle-exclamation'; iconeCor = 'var(--danger)'; }
+                else if (n.tipo === 'alerta') { icone = 'fa-triangle-exclamation'; iconeCor = 'var(--warning)'; }
+                else if (n.tipo === 'sucesso') { icone = 'fa-circle-check'; iconeCor = 'var(--success)'; }
+
+                return `
+                    <div class="notif-card-item ${n.tipo} ${!n.lida ? 'unread' : ''}">
+                        <div style="display: flex; gap: 16px; align-items: flex-start;">
+                            <div style="font-size: 1.4rem; color: ${iconeCor}; margin-top: 2px;">
+                                <i class="fa-solid ${icone}"></i>
+                            </div>
+                            <div>
+                                <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 4px;">
+                                    <strong style="font-family: var(--font-heading); font-size: 1.05rem; color: var(--text-primary);">${window.AdminUI.escapeHtml(n.titulo)}</strong>
+                                    ${!n.lida ? '<span class="status-badge pendente" style="font-size: 0.65rem; padding: 2px 6px;">Não lida</span>' : ''}
+                                </div>
+                                <p style="font-size: 0.88rem; color: var(--text-secondary); line-height: 1.5; margin-bottom: 8px;">
+                                    ${window.AdminUI.escapeHtml(n.mensagem)}
+                                </p>
+                                <span style="font-size: 0.74rem; color: var(--text-muted);">
+                                    <i class="fa-regular fa-clock" style="margin-right: 4px;"></i> ${n.data}
+                                </span>
+                            </div>
+                        </div>
+
+                        <div style="display: flex; align-items: center; gap: 8px; flex-shrink: 0;">
+                            ${n.link ? `
+                                <a href="${n.link}" class="btn btn-sm btn-primary">
+                                    <span>Acessar Módulo</span>
+                                    <i class="fa-solid fa-arrow-right"></i>
+                                </a>
+                            ` : ''}
+                            ${!n.lida ? `
+                                <button type="button" class="btn btn-sm btn-contador" title="Marcar como Lida" onclick="marcarComoLida(${n.id})">
+                                    <i class="fa-solid fa-check"></i>
+                                </button>
+                            ` : ''}
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function marcarComoLida(id) {
+            window.DataStore.marcarNotificacaoComoLida(id);
+            window.AdminUI.showToast("Notificação marcada como lida!", "info");
+            renderizarNotificacoes();
+            window.AdminUI.updateSidebarCounters();
+        }
+
+        function marcarTodasLidas() {
+            window.DataStore.marcarTodasNotificacoesComoLidas();
+            window.AdminUI.showToast("Todas as notificações foram marcadas como lidas!", "success");
+            renderizarNotificacoes();
+            window.AdminUI.updateSidebarCounters();
+        }
+    </script>
+</body>
+</html>

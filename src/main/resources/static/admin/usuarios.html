@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Usuários & Configurações | Waldo Ferreira Gestão Contábil</title>
+    <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Estilos -->
+    <link rel="stylesheet" href="../css/admin.css">
+</head>
+<body class="admin-body">
+
+    <!-- Sidebar Lateral -->
+    <aside class="admin-sidebar">
+        <div class="sidebar-header">
+            <a href="dashboard.html" class="sidebar-brand">
+                <div class="logo-icon"><i class="fa-solid fa-scale-balanced"></i></div>
+                <div>
+                    <div class="brand-title">WALDO GESTÃO</div>
+                    <div class="brand-badge">SISTEMA CONTÁBIL</div>
+                </div>
+            </a>
+            <button class="sidebar-close-btn" id="sidebarCloseBtn"><i class="fa-solid fa-xmark"></i></button>
+        </div>
+
+        <nav class="sidebar-nav">
+            <div class="nav-category">Geral</div>
+            <a href="dashboard.html" class="sidebar-link">
+                <i class="fa-solid fa-chart-line"></i>
+                <span>Dashboard Principal</span>
+            </a>
+            <a href="empresas.html" class="sidebar-link">
+                <i class="fa-solid fa-building"></i>
+                <span>Empresas & Clientes</span>
+            </a>
+
+            <div class="nav-category">Operação & Conformidade</div>
+            <a href="impostos.html" class="sidebar-link">
+                <i class="fa-solid fa-receipt"></i>
+                <span>Impostos & Fiscal</span>
+                <span class="counter-badge" id="badge-sidebar-impostos">0</span>
+            </a>
+            <a href="folha.html" class="sidebar-link">
+                <i class="fa-solid fa-users"></i>
+                <span>Folha de Pagamento</span>
+                <span class="counter-badge" id="badge-sidebar-folha">0</span>
+            </a>
+            <a href="servicos.html" class="sidebar-link">
+                <i class="fa-solid fa-list-check"></i>
+                <span>Serviços & Tarefas</span>
+                <span class="counter-badge" id="badge-sidebar-servicos">0</span>
+            </a>
+            <a href="notas-fiscais.html" class="sidebar-link">
+                <i class="fa-solid fa-file-invoice"></i>
+                <span>Notas Fiscais</span>
+                <span class="counter-badge" id="badge-sidebar-notas">0</span>
+            </a>
+            <a href="parcelamentos.html" class="sidebar-link">
+                <i class="fa-solid fa-hand-holding-dollar"></i>
+                <span>Parcelamentos</span>
+            </a>
+            <a href="documentos.html" class="sidebar-link">
+                <i class="fa-solid fa-folder-open"></i>
+                <span>Documentos & Anexos</span>
+                <span class="counter-badge" id="badge-sidebar-documentos">0</span>
+            </a>
+
+            <div class="nav-category">Gestão & Controle</div>
+            <a href="agenda.html" class="sidebar-link">
+                <i class="fa-solid fa-calendar-days"></i>
+                <span>Agenda & Prazos</span>
+            </a>
+            <a href="relatorios.html" class="sidebar-link">
+                <i class="fa-solid fa-file-excel"></i>
+                <span>Relatórios & Exportação</span>
+            </a>
+            <a href="usuarios.html" class="sidebar-link active">
+                <i class="fa-solid fa-user-gear"></i>
+                <span>Usuários & Perfis</span>
+            </a>
+            <a href="notificacoes.html" class="sidebar-link">
+                <i class="fa-solid fa-bell"></i>
+                <span>Central de Alertas</span>
+            </a>
+        </nav>
+
+        <div class="sidebar-footer">
+            <div class="user-mini-card">
+                <div class="user-avatar-mini">WF</div>
+                <div class="user-info-text">
+                    <strong>Waldo Ferreira</strong>
+                    <span>Contador Responsável</span>
+                </div>
+            </div>
+            <a href="../login.html" class="btn-sidebar-exit">
+                <i class="fa-solid fa-arrow-right-from-bracket"></i>
+                <span>Encerrar Demonstração</span>
+            </a>
+        </div>
+    </aside>
+
+    <!-- Área Principal -->
+    <main class="admin-main">
+        <header class="admin-topbar">
+            <div class="topbar-left">
+                <button class="menu-toggle-btn" id="menuToggleBtn"><i class="fa-solid fa-bars"></i></button>
+                <div class="page-header-info">
+                    <div class="page-breadcrumb">
+                        <a href="dashboard.html">Dashboard</a>
+                        <i class="fa-solid fa-chevron-right" style="font-size: 0.65rem;"></i>
+                        <span>Administração</span>
+                    </div>
+                    <h1>Usuários & Configurações do Escritório</h1>
+                </div>
+            </div>
+
+            <div class="topbar-right">
+                <div class="demo-status-pill">
+                    <span class="pulse-dot"></span>
+                    <span>Modo Demo</span>
+                </div>
+                <a href="../index.html" class="btn-icon-action" title="Ir para o Site Público"><i class="fa-solid fa-globe"></i></a>
+            </div>
+        </header>
+
+        <div class="admin-content">
+            <!-- Abas do Módulo de Configurações -->
+            <div class="modal-tabs" style="margin-bottom: 24px;">
+                <button class="tab-btn active" data-tab="tab-equipe"><i class="fa-solid fa-users-gear"></i> Equipe & Colaboradores</button>
+                <button class="tab-btn" data-tab="tab-escritorio"><i class="fa-solid fa-building-user"></i> Dados do Escritório Waldo</button>
+            </div>
+
+            <!-- Aba 1: Gestão de Usuários -->
+            <div class="tab-pane active" id="tab-equipe">
+                <div class="action-toolbar">
+                    <div>
+                        <h3 style="font-family: var(--font-heading); font-size: 1.1rem; color: var(--text-primary); font-weight: 700;">Equipe Contábil Cadastrada</h3>
+                        <p style="font-size: 0.8rem; color: var(--text-muted);">Perfis de acesso aos módulos e analistas responsáveis</p>
+                    </div>
+
+                    <button type="button" class="btn btn-sm btn-primary" onclick="abrirModalNovoUsuario()">
+                        <i class="fa-solid fa-user-plus"></i> Novo Colaborador
+                    </button>
+                </div>
+
+                <div class="table-card">
+                    <div class="table-responsive">
+                        <table class="admin-table">
+                            <thead>
+                                <tr>
+                                    <th>Colaborador</th>
+                                    <th>E-mail</th>
+                                    <th>Cargo / Função</th>
+                                    <th>Perfil de Acesso</th>
+                                    <th>Data Cadastro</th>
+                                    <th>Situação</th>
+                                    <th style="text-align: right;">Ações</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tabelaUsuariosCorpo"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Aba 2: Dados do Escritório -->
+            <div class="tab-pane" id="tab-escritorio">
+                <div class="table-card" style="padding: 32px; max-width: 860px;">
+                    <div style="margin-bottom: 24px;">
+                        <h3 style="font-family: var(--font-heading); font-size: 1.25rem; color: var(--navy-950); font-weight: 700;">
+                            Identidade Institucional do Escritório
+                        </h3>
+                        <p style="font-size: 0.85rem; color: var(--text-muted);">Informações exibidas na landing page pública e nos cabeçalhos de relatórios</p>
+                    </div>
+
+                    <form id="formDadosEscritorio">
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 18px;">
+                            <div class="form-field">
+                                <label>Nome Fantasia</label>
+                                <input type="text" id="cfgNomeFantasia" value="Waldo Ferreira Assessoria Contábil" required>
+                            </div>
+                            <div class="form-field">
+                                <label>Razão Social</label>
+                                <input type="text" id="cfgRazaoSocial" value="Waldo Ferreira Assessoria & Consultoria Contábil Ltda" required>
+                            </div>
+                        </div>
+
+                        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; margin-top: 14px;">
+                            <div class="form-field">
+                                <label>CNPJ Demonstrativo</label>
+                                <input type="text" id="cfgCNPJ" value="11.222.333/0001-44 [Demonstrativo]" required>
+                            </div>
+                            <div class="form-field">
+                                <label>Registro CRC</label>
+                                <input type="text" id="cfgCRC" value="CRC-SP 1SP234567/O-8" required>
+                            </div>
+                            <div class="form-field">
+                                <label>Contador Responsável</label>
+                                <input type="text" id="cfgResponsavel" value="Waldo Ferreira" required>
+                            </div>
+                        </div>
+
+                        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; margin-top: 14px;">
+                            <div class="form-field">
+                                <label>Telefone Fixo</label>
+                                <input type="text" id="cfgTelefone" value="(11) 3999-8888" required>
+                            </div>
+                            <div class="form-field">
+                                <label>WhatsApp Direto</label>
+                                <input type="text" id="cfgWhatsApp" value="(11) 99999-9999" required>
+                            </div>
+                            <div class="form-field">
+                                <label>E-mail Geral</label>
+                                <input type="email" id="cfgEmail" value="waldoferreira@gmail.com" required>
+                            </div>
+                        </div>
+
+                        <div class="form-field" style="margin-top: 14px;">
+                            <label>Endereço Presencial</label>
+                            <input type="text" id="cfgEndereco" value="Av. Paulista, 1000 - Sala 501 - Bela Vista, São Paulo/SP - CEP 01310-100" required>
+                        </div>
+
+                        <div class="form-field" style="margin-top: 14px;">
+                            <label>Horário de Atendimento</label>
+                            <input type="text" id="cfgHorario" value="Segunda a Sexta, das 08h00 às 18h00" required>
+                        </div>
+
+                        <div style="margin-top: 24px;">
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fa-solid fa-floppy-disk"></i> Salvar Configurações Demonstrativas
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- MODAL: CADASTRAR OU EDITAR USUÁRIO -->
+    <div class="admin-modal-backdrop" id="modalFormUsuario">
+        <div class="admin-modal">
+            <div class="modal-header">
+                <h3 id="formUsuarioTitulo">Cadastrar Colaborador</h3>
+                <button class="modal-close-btn"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+
+            <form id="formCadastroUsuario">
+                <input type="hidden" id="usuarioId" value="">
+                <div class="modal-body">
+                    <div class="form-field">
+                        <label for="campoNomeUsuario">Nome Completo *</label>
+                        <input type="text" id="campoNomeUsuario" required placeholder="Ex: Lucas Ferreira">
+                    </div>
+
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 14px;">
+                        <div class="form-field">
+                            <label for="campoEmailUsuario">E-mail Corporativo *</label>
+                            <input type="email" id="campoEmailUsuario" required placeholder="lucas@waldocontabilidade.com.br">
+                        </div>
+                        <div class="form-field">
+                            <label for="campoCargoUsuario">Cargo / Especialidade *</label>
+                            <input type="text" id="campoCargoUsuario" required placeholder="Ex: Analista Fiscal Jr">
+                        </div>
+                    </div>
+
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 14px;">
+                        <div class="form-field">
+                            <label for="campoPerfilUsuario">Perfil de Acesso Demonstrativo *</label>
+                            <select id="campoPerfilUsuario" class="filter-select" style="width: 100%;">
+                                <option value="Colaborador">Colaborador (Módulos Operacionais)</option>
+                                <option value="Administrador">Administrador (Acesso Total)</option>
+                            </select>
+                        </div>
+                        <div class="form-field">
+                            <label for="campoSituacaoUsuario">Situação *</label>
+                            <select id="campoSituacaoUsuario" class="filter-select" style="width: 100%;">
+                                <option value="Ativo">Ativo</option>
+                                <option value="Inativo">Inativo</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-contador" onclick="window.AdminUI.closeModal('modalFormUsuario')">Cancelar</button>
+                    <button type="submit" class="btn btn-primary"><i class="fa-solid fa-floppy-disk"></i> Salvar Usuário</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="../js/data.js"></script>
+    <script src="../js/admin.js"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            renderizarUsuarios();
+            initTabs();
+            initForms();
+        });
+
+        function initTabs() {
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const target = btn.dataset.tab;
+                    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+                    document.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active'));
+                    btn.classList.add('active');
+                    const pane = document.getElementById(target);
+                    if (pane) pane.classList.add('active');
+                });
+            });
+        }
+
+        function renderizarUsuarios() {
+            const tbody = document.getElementById('tabelaUsuariosCorpo');
+            if (!tbody) return;
+
+            const usuarios = window.DataStore.getUsuarios();
+
+            tbody.innerHTML = usuarios.map(u => `
+                <tr>
+                    <td>
+                        <div style="display: flex; align-items: center; gap: 10px;">
+                            <div class="user-avatar-mini" style="width: 32px; height: 32px; font-size: 0.78rem;">${u.avatar || 'U'}</div>
+                            <strong>${window.AdminUI.escapeHtml(u.nome)}</strong>
+                        </div>
+                    </td>
+                    <td><span style="font-size: 0.84rem; color: var(--text-secondary);">${window.AdminUI.escapeHtml(u.email)}</span></td>
+                    <td>${u.cargo}</td>
+                    <td>
+                        <span class="badge-tag ${u.perfil === 'Administrador' ? 'gold-tag' : ''}" style="font-size: 0.72rem;">
+                            ${u.perfil}
+                        </span>
+                    </td>
+                    <td>${window.AdminUI.formatDate(u.dataCadastro)}</td>
+                    <td>
+                        <span class="status-badge ${u.situacao.toLowerCase()}">
+                            ${u.situacao}
+                        </span>
+                    </td>
+                    <td style="text-align: right;">
+                        <div class="action-btn-group" style="justify-content: flex-end;">
+                            <button type="button" class="btn-icon-action" title="Editar Usuário" onclick="editarUsuario(${u.id})">
+                                <i class="fa-solid fa-pen-to-square"></i>
+                            </button>
+                            <button type="button" class="btn-icon-action ${u.situacao === 'Ativo' ? 'danger' : 'success'}" title="${u.situacao === 'Ativo' ? 'Desativar' : 'Ativar'}" onclick="alternarSituacaoUsuario(${u.id})">
+                                <i class="fa-solid ${u.situacao === 'Ativo' ? 'fa-user-slash' : 'fa-user-check'}"></i>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        function alternarSituacaoUsuario(id) {
+            const u = window.DataStore.alternarSituacaoUsuario(id);
+            if (u) {
+                window.AdminUI.showToast(`Situação do usuário alterada para ${u.situacao}!`, 'info');
+                renderizarUsuarios();
+            }
+        }
+
+        function abrirModalNovoUsuario() {
+            document.getElementById('formUsuarioTitulo').textContent = 'Cadastrar Novo Colaborador';
+            document.getElementById('formCadastroUsuario').reset();
+            document.getElementById('usuarioId').value = '';
+            window.AdminUI.openModal('modalFormUsuario');
+        }
+
+        function editarUsuario(id) {
+            const u = window.DataStore.getUsuarios().find(user => user.id === Number(id));
+            if (!u) return;
+
+            document.getElementById('formUsuarioTitulo').textContent = `Editar: ${u.nome}`;
+            document.getElementById('usuarioId').value = u.id;
+            document.getElementById('campoNomeUsuario').value = u.nome;
+            document.getElementById('campoEmailUsuario').value = u.email;
+            document.getElementById('campoCargoUsuario').value = u.cargo;
+            document.getElementById('campoPerfilUsuario').value = u.perfil;
+            document.getElementById('campoSituacaoUsuario').value = u.situacao;
+
+            window.AdminUI.openModal('modalFormUsuario');
+        }
+
+        function initForms() {
+            // Form usuário
+            const formUser = document.getElementById('formCadastroUsuario');
+            formUser.addEventListener('submit', (e) => {
+                e.preventDefault();
+
+                const id = document.getElementById('usuarioId').value;
+                const userData = {
+                    id: id ? Number(id) : null,
+                    nome: document.getElementById('campoNomeUsuario').value.trim(),
+                    email: document.getElementById('campoEmailUsuario').value.trim(),
+                    cargo: document.getElementById('campoCargoUsuario').value.trim(),
+                    perfil: document.getElementById('campoPerfilUsuario').value,
+                    situacao: document.getElementById('campoSituacaoUsuario').value
+                };
+
+                window.DataStore.saveUsuario(userData);
+                window.AdminUI.closeModal('modalFormUsuario');
+                window.AdminUI.showToast(id ? 'Colaborador atualizado com sucesso!' : 'Novo colaborador registrado!', 'success');
+                renderizarUsuarios();
+            });
+
+            // Form dados escritório
+            const formEscritorio = document.getElementById('formDadosEscritorio');
+            formEscritorio.addEventListener('submit', (e) => {
+                e.preventDefault();
+                window.AdminUI.showToast('Configurações do escritório atualizadas na demonstração!', 'success');
+            });
+        }
+    </script>
+</body>
+</html>

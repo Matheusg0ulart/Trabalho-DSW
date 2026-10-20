@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Folha de Pagamento & DP | Waldo Ferreira Gestão Contábil</title>
+    <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Estilos -->
+    <link rel="stylesheet" href="../css/admin.css">
+</head>
+<body class="admin-body">
+
+    <!-- Sidebar Lateral -->
+    <aside class="admin-sidebar">
+        <div class="sidebar-header">
+            <a href="dashboard.html" class="sidebar-brand">
+                <div class="logo-icon"><i class="fa-solid fa-scale-balanced"></i></div>
+                <div>
+                    <div class="brand-title">WALDO GESTÃO</div>
+                    <div class="brand-badge">SISTEMA CONTÁBIL</div>
+                </div>
+            </a>
+            <button class="sidebar-close-btn" id="sidebarCloseBtn"><i class="fa-solid fa-xmark"></i></button>
+        </div>
+
+        <nav class="sidebar-nav">
+            <div class="nav-category">Geral</div>
+            <a href="dashboard.html" class="sidebar-link">
+                <i class="fa-solid fa-chart-line"></i>
+                <span>Dashboard Principal</span>
+            </a>
+            <a href="empresas.html" class="sidebar-link">
+                <i class="fa-solid fa-building"></i>
+                <span>Empresas & Clientes</span>
+            </a>
+
+            <div class="nav-category">Operação & Conformidade</div>
+            <a href="impostos.html" class="sidebar-link">
+                <i class="fa-solid fa-receipt"></i>
+                <span>Impostos & Fiscal</span>
+                <span class="counter-badge" id="badge-sidebar-impostos">0</span>
+            </a>
+            <a href="folha.html" class="sidebar-link active">
+                <i class="fa-solid fa-users"></i>
+                <span>Folha de Pagamento</span>
+                <span class="counter-badge" id="badge-sidebar-folha">0</span>
+            </a>
+            <a href="servicos.html" class="sidebar-link">
+                <i class="fa-solid fa-list-check"></i>
+                <span>Serviços & Tarefas</span>
+                <span class="counter-badge" id="badge-sidebar-servicos">0</span>
+            </a>
+            <a href="notas-fiscais.html" class="sidebar-link">
+                <i class="fa-solid fa-file-invoice"></i>
+                <span>Notas Fiscais</span>
+                <span class="counter-badge" id="badge-sidebar-notas">0</span>
+            </a>
+            <a href="parcelamentos.html" class="sidebar-link">
+                <i class="fa-solid fa-hand-holding-dollar"></i>
+                <span>Parcelamentos</span>
+            </a>
+            <a href="documentos.html" class="sidebar-link">
+                <i class="fa-solid fa-folder-open"></i>
+                <span>Documentos & Anexos</span>
+                <span class="counter-badge" id="badge-sidebar-documentos">0</span>
+            </a>
+
+            <div class="nav-category">Gestão & Controle</div>
+            <a href="agenda.html" class="sidebar-link">
+                <i class="fa-solid fa-calendar-days"></i>
+                <span>Agenda & Prazos</span>
+            </a>
+            <a href="relatorios.html" class="sidebar-link">
+                <i class="fa-solid fa-file-excel"></i>
+                <span>Relatórios & Exportação</span>
+            </a>
+            <a href="usuarios.html" class="sidebar-link">
+                <i class="fa-solid fa-user-gear"></i>
+                <span>Usuários & Perfis</span>
+            </a>
+            <a href="notificacoes.html" class="sidebar-link">
+                <i class="fa-solid fa-bell"></i>
+                <span>Central de Alertas</span>
+            </a>
+        </nav>
+
+        <div class="sidebar-footer">
+            <div class="user-mini-card">
+                <div class="user-avatar-mini">WF</div>
+                <div class="user-info-text">
+                    <strong>Waldo Ferreira</strong>
+                    <span>Contador Responsável</span>
+                </div>
+            </div>
+            <a href="../login.html" class="btn-sidebar-exit">
+                <i class="fa-solid fa-arrow-right-from-bracket"></i>
+                <span>Encerrar Demonstração</span>
+            </a>
+        </div>
+    </aside>
+
+    <!-- Área Principal -->
+    <main class="admin-main">
+        <header class="admin-topbar">
+            <div class="topbar-left">
+                <button class="menu-toggle-btn" id="menuToggleBtn"><i class="fa-solid fa-bars"></i></button>
+                <div class="page-header-info">
+                    <div class="page-breadcrumb">
+                        <a href="dashboard.html">Dashboard</a>
+                        <i class="fa-solid fa-chevron-right" style="font-size: 0.65rem;"></i>
+                        <span>Departamento Pessoal</span>
+                    </div>
+                    <h1>Acompanhamento de Folha de Pagamento</h1>
+                </div>
+            </div>
+
+            <div class="topbar-right">
+                <div class="demo-status-pill">
+                    <span class="pulse-dot"></span>
+                    <span>Modo Demo</span>
+                </div>
+                <a href="../index.html" class="btn-icon-action" title="Ir para o Site Público"><i class="fa-solid fa-globe"></i></a>
+            </div>
+        </header>
+
+        <div class="admin-content">
+            <!-- Indicadores do Módulo de Folha -->
+            <div class="kpi-grid">
+                <div class="kpi-card">
+                    <div class="kpi-header">
+                        <span class="kpi-title">Folhas Fechadas no Mês</span>
+                        <div class="kpi-icon green"><i class="fa-solid fa-circle-check"></i></div>
+                    </div>
+                    <div class="kpi-value" id="kpi-folhas-fechadas">0</div>
+                    <div class="kpi-sub"><i class="fa-solid fa-check text-green"></i> Concluídas e transmitidas</div>
+                </div>
+
+                <div class="kpi-card">
+                    <div class="kpi-header">
+                        <span class="kpi-title">Em Processamento / Conferência</span>
+                        <div class="kpi-icon blue"><i class="fa-solid fa-spinner"></i></div>
+                    </div>
+                    <div class="kpi-value" id="kpi-folhas-processando">0</div>
+                    <div class="kpi-sub"><i class="fa-solid fa-calculator" style="color: var(--primary);"></i> Apuração de holerites e pró-labore</div>
+                </div>
+
+                <div class="kpi-card">
+                    <div class="kpi-header">
+                        <span class="kpi-title">Aguardando Informações</span>
+                        <div class="kpi-icon gold"><i class="fa-solid fa-hourglass-half"></i></div>
+                    </div>
+                    <div class="kpi-value" id="kpi-folhas-aguardando">0</div>
+                    <div class="kpi-sub"><i class="fa-solid fa-clock" style="color: var(--warning);"></i> Ponto, horas extras e comissões</div>
+                </div>
+
+                <div class="kpi-card">
+                    <div class="kpi-header">
+                        <span class="kpi-title">Pendentes de Correção</span>
+                        <div class="kpi-icon red"><i class="fa-solid fa-triangle-exclamation"></i></div>
+                    </div>
+                    <div class="kpi-value" style="color: var(--danger);" id="kpi-folhas-correcao">0</div>
+                    <div class="kpi-sub"><i class="fa-solid fa-circle-exclamation text-danger" style="color: var(--danger);"></i> Divergência de atestado/eSocial</div>
+                </div>
+            </div>
+
+            <!-- Barra de Ações & Filtros -->
+            <div class="action-toolbar">
+                <div class="filter-group">
+                    <select id="filtroEmpresa" class="filter-select">
+                        <option value="Todas">Empresa: Todas</option>
+                    </select>
+
+                    <select id="filtroCompetencia" class="filter-select">
+                        <option value="Todas">Competência: Todas</option>
+                        <option value="09/2026">09/2026 (Anterior)</option>
+                        <option value="10/2026" selected>10/2026 (Atual)</option>
+                    </select>
+
+                    <select id="filtroSituacao" class="filter-select">
+                        <option value="Todas">Etapa / Situação: Todas</option>
+                        <option value="Aguardando Informações">Aguardando Informações</option>
+                        <option value="Em Processamento">Em Processamento</option>
+                        <option value="Em Conferência">Em Conferência</option>
+                        <option value="Fechada">Fechada</option>
+                        <option value="Entregue">Entregue</option>
+                        <option value="Pendente de Correção">Pendente de Correção</option>
+                    </select>
+                </div>
+
+                <div style="display: flex; gap: 10px;">
+                    <button type="button" class="btn btn-sm btn-contador" onclick="exportarFolhaCSV()">
+                        <i class="fa-solid fa-file-csv"></i> Exportar CSV
+                    </button>
+                </div>
+            </div>
+
+            <!-- Tabela de Folha -->
+            <div class="table-card">
+                <div class="table-responsive">
+                    <table class="admin-table">
+                        <thead>
+                            <tr>
+                                <th>Empresa</th>
+                                <th>Competência</th>
+                                <th>Prazo Legal / Fechamento</th>
+                                <th>Total Vidas</th>
+                                <th>Responsável DP</th>
+                                <th>Etapa Atual</th>
+                                <th>Fechamento / Entrega</th>
+                                <th style="text-align: right;">Ações de Etapa</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tabelaFolhaCorpo"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- MODAL: DETALHES DA FOLHA DE PAGAMENTO -->
+    <div class="admin-modal-backdrop" id="modalDetalhesFolha">
+        <div class="admin-modal">
+            <div class="modal-header">
+                <div>
+                    <h3 id="modalFolhaEmpresa">Empresa</h3>
+                    <span id="modalFolhaComp" style="font-size: 0.8rem; color: var(--text-muted);">Competência</span>
+                </div>
+                <button class="modal-close-btn"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <div class="modal-body">
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 18px;">
+                    <p style="font-size: 0.85rem;"><strong>Responsável DP:</strong> <span id="modalFolhaResp">-</span></p>
+                    <p style="font-size: 0.85rem;"><strong>Prazo de Pagamento:</strong> <span id="modalFolhaPrazo">-</span></p>
+                    <p style="font-size: 0.85rem;"><strong>Total de Colaboradores:</strong> <span id="modalFolhaVidas">-</span></p>
+                    <p style="font-size: 0.85rem;"><strong>Situação Atual:</strong> <span id="modalFolhaStatus">-</span></p>
+                </div>
+
+                <h4 style="font-size: 0.9rem; margin-bottom: 10px; color: var(--text-primary);"><i class="fa-solid fa-list-check"></i> Checklist Demonstrativo da Folha</h4>
+                <div style="display: flex; flex-direction: column; gap: 8px; font-size: 0.84rem; background: #f8fafc; padding: 14px; border-radius: var(--radius-md); border: 1px solid var(--border-color);">
+                    <label style="display: flex; align-items: center; gap: 8px;"><input type="checkbox" checked disabled> Espelho de ponto e horas extras conferidos</label>
+                    <label style="display: flex; align-items: center; gap: 8px;"><input type="checkbox" checked disabled> Cálculo de encargos (INSS, FGTS Digital e IRRF)</label>
+                    <label style="display: flex; align-items: center; gap: 8px;"><input type="checkbox" checked disabled> Transmissão dos eventos periódicos ao eSocial (S-1200/S-1210)</label>
+                    <label style="display: flex; align-items: center; gap: 8px;"><input type="checkbox" id="checkHolerites"> Emissão e envio dos holerites em PDF aos funcionários</label>
+                </div>
+
+                <div style="margin-top: 16px;">
+                    <strong style="font-size: 0.85rem; display: block; margin-bottom: 4px;">Observações do Departamento Pessoal:</strong>
+                    <p id="modalFolhaObs" style="font-size: 0.82rem; color: var(--text-secondary); background: #ffffff; padding: 10px; border-radius: var(--radius-sm); border: 1px solid var(--border-color);"></p>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-contador" onclick="window.AdminUI.closeModal('modalDetalhesFolha')">Fechar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="../js/data.js"></script>
+    <script src="../js/admin.js"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            carregarSelectEmpresas();
+            renderizarTabela();
+            initFiltros();
+            atualizarKPIsFolha();
+        });
+
+        function carregarSelectEmpresas() {
+            const empresas = window.DataStore.getEmpresas();
+            const selectFiltro = document.getElementById('filtroEmpresa');
+
+            empresas.forEach(e => {
+                const opt = document.createElement('option');
+                opt.value = e.id;
+                opt.textContent = e.nomeFantasia;
+                selectFiltro.appendChild(opt);
+            });
+        }
+
+        function getFiltrosAtuais() {
+            return {
+                empresaId: document.getElementById('filtroEmpresa').value,
+                competencia: document.getElementById('filtroCompetencia').value,
+                situacao: document.getElementById('filtroSituacao').value
+            };
+        }
+
+        function atualizarKPIsFolha() {
+            const folhas = window.DataStore.getFolha();
+            const fechadas = folhas.filter(f => f.situacao === 'Fechada' || f.situacao === 'Entregue').length;
+            const processando = folhas.filter(f => f.situacao === 'Em Processamento' || f.situacao === 'Em Conferência').length;
+            const aguardando = folhas.filter(f => f.situacao === 'Aguardando Informações').length;
+            const correcao = folhas.filter(f => f.situacao === 'Pendente de Correção').length;
+
+            document.getElementById('kpi-folhas-fechadas').textContent = fechadas;
+            document.getElementById('kpi-folhas-processando').textContent = processando;
+            document.getElementById('kpi-folhas-aguardando').textContent = aguardando;
+            document.getElementById('kpi-folhas-correcao').textContent = correcao;
+        }
+
+        function renderizarTabela() {
+            const tbody = document.getElementById('tabelaFolhaCorpo');
+            if (!tbody) return;
+
+            const folhas = window.DataStore.getFolha(getFiltrosAtuais());
+
+            if (!folhas.length) {
+                tbody.innerHTML = `
+                    <tr>
+                        <td colspan="8" style="text-align: center; padding: 40px; color: var(--text-muted);">
+                            <i class="fa-solid fa-users-slash" style="font-size: 2rem; margin-bottom: 8px; display: block;"></i>
+                            Nenhuma folha encontrada para os filtros selecionados.
+                        </td>
+                    </tr>
+                `;
+                return;
+            }
+
+            tbody.innerHTML = folhas.map(f => {
+                const emp = window.DataStore.getEmpresaById(f.empresaId);
+                const isAtrasada = f.situacao === 'Pendente de Correção' || (f.situacao === 'Aguardando Informações' && f.competencia === '09/2026');
+
+                return `
+                    <tr style="${isAtrasada ? 'background-color: #fffaf0;' : ''}">
+                        <td>
+                            <strong>${window.AdminUI.escapeHtml(emp ? emp.nomeFantasia : 'Empresa')}</strong><br>
+                            <span style="font-size: 0.74rem; color: var(--text-muted);">${emp ? emp.razaoSocial : ''}</span>
+                        </td>
+                        <td><span class="badge-tag" style="font-size: 0.75rem;">${f.competencia}</span></td>
+                        <td>
+                            <strong style="color: ${isAtrasada ? 'var(--danger)' : 'var(--text-primary)'};">
+                                ${f.prazoPrevisto}
+                            </strong>
+                        </td>
+                        <td><strong>${f.totalFuncionarios}</strong> colaboradores</td>
+                        <td><span style="font-size: 0.82rem; color: var(--text-secondary);">${f.responsavel}</span></td>
+                        <td>
+                            <span class="status-badge ${f.situacao.toLowerCase().replace(/ /g, '-')}">
+                                ${f.situacao}
+                            </span>
+                        </td>
+                        <td>
+                            <span style="font-size: 0.78rem; color: var(--text-muted);">
+                                ${f.dataEntrega ? `Entregue em: ${window.AdminUI.formatDate(f.dataEntrega)}` : f.dataFechamento ? `Fechada em: ${window.AdminUI.formatDate(f.dataFechamento)}` : 'Em andamento'}
+                            </span>
+                        </td>
+                        <td style="text-align: right;">
+                            <div class="action-btn-group" style="justify-content: flex-end;">
+                                <button type="button" class="btn-icon-action" title="Ver Detalhes / Checklist" onclick="verDetalhesFolha(${f.id})">
+                                    <i class="fa-solid fa-eye"></i>
+                                </button>
+                                ${f.situacao !== 'Entregue' ? `
+                                    <button type="button" class="btn-icon-action success" title="Avançar Etapa Demonstrativa" onclick="avancarEtapaFolha(${f.id})">
+                                        <i class="fa-solid fa-forward-step"></i>
+                                    </button>
+                                ` : ''}
+                            </div>
+                        </td>
+                    </tr>
+                `;
+            }).join('');
+        }
+
+        function initFiltros() {
+            document.getElementById('filtroEmpresa').addEventListener('change', renderizarTabela);
+            document.getElementById('filtroCompetencia').addEventListener('change', renderizarTabela);
+            document.getElementById('filtroSituacao').addEventListener('change', renderizarTabela);
+        }
+
+        function avancarEtapaFolha(id) {
+            const folha = window.DataStore.getFolha().find(f => f.id === Number(id));
+            if (!folha) return;
+
+            let proximoStatus = 'Em Processamento';
+            if (folha.situacao === 'Aguardando Informações') proximoStatus = 'Em Processamento';
+            else if (folha.situacao === 'Em Processamento') proximoStatus = 'Em Conferência';
+            else if (folha.situacao === 'Em Conferência') proximoStatus = 'Fechada';
+            else if (folha.situacao === 'Fechada') proximoStatus = 'Entregue';
+            else if (folha.situacao === 'Pendente de Correção') proximoStatus = 'Em Conferência';
+
+            window.DataStore.updateFolhaStatus(id, proximoStatus);
+            window.AdminUI.showToast(`Folha de pagamento atualizada para: "${proximoStatus}"`, 'success');
+            renderizarTabela();
+            atualizarKPIsFolha();
+            window.AdminUI.updateSidebarCounters();
+        }
+
+        function verDetalhesFolha(id) {
+            const f = window.DataStore.getFolha().find(item => item.id === Number(id));
+            if (!f) return;
+            const emp = window.DataStore.getEmpresaById(f.empresaId);
+
+            document.getElementById('modalFolhaEmpresa').textContent = emp ? emp.nomeFantasia : 'Empresa';
+            document.getElementById('modalFolhaComp').textContent = `Competência ${f.competencia}`;
+            document.getElementById('modalFolhaResp').textContent = f.responsavel;
+            document.getElementById('modalFolhaPrazo').textContent = f.prazoPrevisto;
+            document.getElementById('modalFolhaVidas').textContent = `${f.totalFuncionarios} vidas`;
+            document.getElementById('modalFolhaStatus').innerHTML = `<span class="status-badge ${f.situacao.toLowerCase().replace(/ /g, '-')}">${f.situacao}</span>`;
+            document.getElementById('modalFolhaObs').textContent = f.observacoes || 'Nenhuma ressalva cadastrada.';
+
+            window.AdminUI.openModal('modalDetalhesFolha');
+        }
+
+        function exportarFolhaCSV() {
+            const folhas = window.DataStore.getFolha(getFiltrosAtuais());
+            const rows = folhas.map(f => {
+                const emp = window.DataStore.getEmpresaById(f.empresaId);
+                return {
+                    "ID": f.id,
+                    "Empresa": emp ? emp.nomeFantasia : '',
+                    "Competência": f.competencia,
+                    "Prazo Previsto": f.prazoPrevisto,
+                    "Funcionários": f.totalFuncionarios,
+                    "Responsável": f.responsavel,
+                    "Situação": f.situacao,
+                    "Fechamento": f.dataFechamento || '',
+                    "Entrega": f.dataEntrega || '',
+                    "Observações": f.observacoes || ''
+                };
+            });
+            window.DataStore.exportToCSV("folha_de_pagamento_waldo", rows);
+        }
+    </script>
+</body>
+</html>

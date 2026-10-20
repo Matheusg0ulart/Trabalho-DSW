@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Solicitações de Notas Fiscais | Waldo Ferreira Gestão Contábil</title>
+    <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Estilos -->
+    <link rel="stylesheet" href="../css/admin.css">
+</head>
+<body class="admin-body">
+
+    <!-- Sidebar Lateral -->
+    <aside class="admin-sidebar">
+        <div class="sidebar-header">
+            <a href="dashboard.html" class="sidebar-brand">
+                <div class="logo-icon"><i class="fa-solid fa-scale-balanced"></i></div>
+                <div>
+                    <div class="brand-title">WALDO GESTÃO</div>
+                    <div class="brand-badge">SISTEMA CONTÁBIL</div>
+                </div>
+            </a>
+            <button class="sidebar-close-btn" id="sidebarCloseBtn"><i class="fa-solid fa-xmark"></i></button>
+        </div>
+
+        <nav class="sidebar-nav">
+            <div class="nav-category">Geral</div>
+            <a href="dashboard.html" class="sidebar-link">
+                <i class="fa-solid fa-chart-line"></i>
+                <span>Dashboard Principal</span>
+            </a>
+            <a href="empresas.html" class="sidebar-link">
+                <i class="fa-solid fa-building"></i>
+                <span>Empresas & Clientes</span>
+            </a>
+
+            <div class="nav-category">Operação & Conformidade</div>
+            <a href="impostos.html" class="sidebar-link">
+                <i class="fa-solid fa-receipt"></i>
+                <span>Impostos & Fiscal</span>
+                <span class="counter-badge" id="badge-sidebar-impostos">0</span>
+            </a>
+            <a href="folha.html" class="sidebar-link">
+                <i class="fa-solid fa-users"></i>
+                <span>Folha de Pagamento</span>
+                <span class="counter-badge" id="badge-sidebar-folha">0</span>
+            </a>
+            <a href="servicos.html" class="sidebar-link">
+                <i class="fa-solid fa-list-check"></i>
+                <span>Serviços & Tarefas</span>
+                <span class="counter-badge" id="badge-sidebar-servicos">0</span>
+            </a>
+            <a href="notas-fiscais.html" class="sidebar-link active">
+                <i class="fa-solid fa-file-invoice"></i>
+                <span>Notas Fiscais</span>
+                <span class="counter-badge" id="badge-sidebar-notas">0</span>
+            </a>
+            <a href="parcelamentos.html" class="sidebar-link">
+                <i class="fa-solid fa-hand-holding-dollar"></i>
+                <span>Parcelamentos</span>
+            </a>
+            <a href="documentos.html" class="sidebar-link">
+                <i class="fa-solid fa-folder-open"></i>
+                <span>Documentos & Anexos</span>
+                <span class="counter-badge" id="badge-sidebar-documentos">0</span>
+            </a>
+
+            <div class="nav-category">Gestão & Controle</div>
+            <a href="agenda.html" class="sidebar-link">
+                <i class="fa-solid fa-calendar-days"></i>
+                <span>Agenda & Prazos</span>
+            </a>
+            <a href="relatorios.html" class="sidebar-link">
+                <i class="fa-solid fa-file-excel"></i>
+                <span>Relatórios & Exportação</span>
+            </a>
+            <a href="usuarios.html" class="sidebar-link">
+                <i class="fa-solid fa-user-gear"></i>
+                <span>Usuários & Perfis</span>
+            </a>
+            <a href="notificacoes.html" class="sidebar-link">
+                <i class="fa-solid fa-bell"></i>
+                <span>Central de Alertas</span>
+            </a>
+        </nav>
+
+        <div class="sidebar-footer">
+            <div class="user-mini-card">
+                <div class="user-avatar-mini">WF</div>
+                <div class="user-info-text">
+                    <strong>Waldo Ferreira</strong>
+                    <span>Contador Responsável</span>
+                </div>
+            </div>
+            <a href="../login.html" class="btn-sidebar-exit">
+                <i class="fa-solid fa-arrow-right-from-bracket"></i>
+                <span>Encerrar Demonstração</span>
+            </a>
+        </div>
+    </aside>
+
+    <!-- Área Principal -->
+    <main class="admin-main">
+        <header class="admin-topbar">
+            <div class="topbar-left">
+                <button class="menu-toggle-btn" id="menuToggleBtn"><i class="fa-solid fa-bars"></i></button>
+                <div class="page-header-info">
+                    <div class="page-breadcrumb">
+                        <a href="dashboard.html">Dashboard</a>
+                        <i class="fa-solid fa-chevron-right" style="font-size: 0.65rem;"></i>
+                        <span>Documentos Fiscais</span>
+                    </div>
+                    <h1>Acompanhamento de Emissão de Notas Fiscais</h1>
+                </div>
+            </div>
+
+            <div class="topbar-right">
+                <div class="demo-status-pill">
+                    <span class="pulse-dot"></span>
+                    <span>Modo Demo</span>
+                </div>
+                <a href="../index.html" class="btn-icon-action" title="Ir para o Site Público"><i class="fa-solid fa-globe"></i></a>
+            </div>
+        </header>
+
+        <div class="admin-content">
+            <!-- Indicadores de NF -->
+            <div class="kpi-grid">
+                <div class="kpi-card">
+                    <div class="kpi-header">
+                        <span class="kpi-title">Aguardando Emissão</span>
+                        <div class="kpi-icon gold"><i class="fa-solid fa-hourglass-half"></i></div>
+                    </div>
+                    <div class="kpi-value" id="kpi-notas-pendentes">0</div>
+                    <div class="kpi-sub"><i class="fa-solid fa-clock" style="color: var(--warning);"></i> Solicitações pendentes</div>
+                </div>
+
+                <div class="kpi-card">
+                    <div class="kpi-header">
+                        <span class="kpi-title">Notas Emitidas no Mês</span>
+                        <div class="kpi-icon green"><i class="fa-solid fa-circle-check"></i></div>
+                    </div>
+                    <div class="kpi-value" id="kpi-notas-emitidas">0</div>
+                    <div class="kpi-sub"><i class="fa-solid fa-check text-green"></i> Autorizadas na SEFAZ/Prefeitura</div>
+                </div>
+
+                <div class="kpi-card">
+                    <div class="kpi-header">
+                        <span class="kpi-title">Volume Financeiro</span>
+                        <div class="kpi-icon blue"><i class="fa-solid fa-sack-dollar"></i></div>
+                    </div>
+                    <div class="kpi-value" id="kpi-valor-total" style="font-size: 1.4rem;">R$ 0,00</div>
+                    <div class="kpi-sub"><i class="fa-solid fa-arrow-trend-up text-green"></i> Total transacionado em notas</div>
+                </div>
+
+                <div class="kpi-card">
+                    <div class="kpi-header">
+                        <span class="kpi-title">Atrasadas / Pendentes</span>
+                        <div class="kpi-icon red"><i class="fa-solid fa-triangle-exclamation"></i></div>
+                    </div>
+                    <div class="kpi-value" style="color: var(--danger);" id="kpi-notas-atrasadas">0</div>
+                    <div class="kpi-sub"><i class="fa-solid fa-circle-exclamation text-danger" style="color: var(--danger);"></i> Exige atenção imediata</div>
+                </div>
+            </div>
+
+            <!-- Barra de Ações & Filtros -->
+            <div class="action-toolbar">
+                <div class="filter-group">
+                    <select id="filtroEmpresa" class="filter-select">
+                        <option value="Todas">Empresa: Todas</option>
+                    </select>
+
+                    <select id="filtroSituacao" class="filter-select">
+                        <option value="Todas">Situação: Todas</option>
+                        <option value="Solicitada">Solicitada</option>
+                        <option value="Pronta para Emissão">Pronta para Emissão</option>
+                        <option value="Emitida">Emitida</option>
+                        <option value="Atrasada">Atrasada</option>
+                    </select>
+                </div>
+
+                <div style="display: flex; gap: 10px;">
+                    <button type="button" class="btn btn-sm btn-contador" onclick="exportarNotasCSV()">
+                        <i class="fa-solid fa-file-csv"></i> Exportar CSV
+                    </button>
+                    <button type="button" class="btn btn-sm btn-primary" onclick="abrirModalNovaNota()">
+                        <i class="fa-solid fa-plus"></i> Nova Solicitação de NF
+                    </button>
+                </div>
+            </div>
+
+            <!-- Tabela de Notas Fiscais -->
+            <div class="table-card">
+                <div class="table-responsive">
+                    <table class="admin-table">
+                        <thead>
+                            <tr>
+                                <th>Empresa Solicitante</th>
+                                <th>Tipo de Documento</th>
+                                <th>Descrição / Tomador</th>
+                                <th>Data Solicitação</th>
+                                <th>Previsão Emissão</th>
+                                <th>Valor Declarado</th>
+                                <th>Responsável</th>
+                                <th>Número / Chave</th>
+                                <th>Situação</th>
+                                <th style="text-align: right;">Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tabelaNotasCorpo"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- MODAL: NOVA SOLICITAÇÃO DE NOTA -->
+    <div class="admin-modal-backdrop" id="modalFormNota">
+        <div class="admin-modal">
+            <div class="modal-header">
+                <h3 id="formNotaTitulo">Solicitar Emissão de Nota Fiscal</h3>
+                <button class="modal-close-btn"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+
+            <form id="formCadastroNota">
+                <input type="hidden" id="notaId" value="">
+                <div class="modal-body">
+                    <div class="form-field">
+                        <label for="campoEmpresaId">Empresa Emitente *</label>
+                        <select id="campoEmpresaId" required class="filter-select" style="width: 100%;"></select>
+                    </div>
+
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 14px;">
+                        <div class="form-field">
+                            <label for="campoTipoNota">Tipo de Documento *</label>
+                            <select id="campoTipoNota" class="filter-select" style="width: 100%;">
+                                <option value="NFS-e (Serviços)">NFS-e (Serviços Municipais)</option>
+                                <option value="NF-e (Mercadorias)">NF-e (Mercadorias Estadual)</option>
+                                <option value="CT-e (Transporte)">CT-e (Conhecimento de Transporte)</option>
+                            </select>
+                        </div>
+                        <div class="form-field">
+                            <label for="campoValor">Valor dos Serviços / Mercadoria (R$) *</label>
+                            <input type="number" step="0.01" id="campoValor" required placeholder="0.00">
+                        </div>
+                    </div>
+
+                    <div class="form-field" style="margin-top: 14px;">
+                        <label for="campoDescricao">Descrição do Serviço e Tomador *</label>
+                        <textarea id="campoDescricao" rows="2" required placeholder="Ex: Consultoria em TI para Banco X / Venda de materiais..."></textarea>
+                    </div>
+
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 14px;">
+                        <div class="form-field">
+                            <label for="campoDataPrevista">Data Prevista para Emissão *</label>
+                            <input type="date" id="campoDataPrevista" required>
+                        </div>
+                        <div class="form-field">
+                            <label for="campoResponsavel">Responsável Operacional *</label>
+                            <select id="campoResponsavel" class="filter-select" style="width: 100%;">
+                                <option value="Carlos Silveira">Carlos Silveira</option>
+                                <option value="Juliana Martins">Juliana Martins</option>
+                                <option value="Waldo Ferreira">Waldo Ferreira</option>
+                                <option value="Ricardo Mendes">Ricardo Mendes</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-field" style="margin-top: 14px;">
+                        <label for="campoObservacoes">Observações Fiscais</label>
+                        <textarea id="campoObservacoes" rows="2" placeholder="Retenções tributárias, alíquotas de ISS no município do tomador..."></textarea>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-contador" onclick="window.AdminUI.closeModal('modalFormNota')">Cancelar</button>
+                    <button type="submit" class="btn btn-primary"><i class="fa-solid fa-floppy-disk"></i> Registrar Solicitação</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="../js/data.js"></script>
+    <script src="../js/admin.js"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            carregarSelectEmpresas();
+            renderizarTabela();
+            initFiltros();
+            initForm();
+            atualizarKPIsNotas();
+        });
+
+        function carregarSelectEmpresas() {
+            const empresas = window.DataStore.getEmpresas();
+            const selectFiltro = document.getElementById('filtroEmpresa');
+            const selectForm = document.getElementById('campoEmpresaId');
+
+            empresas.forEach(e => {
+                const opt1 = document.createElement('option');
+                opt1.value = e.id;
+                opt1.textContent = e.nomeFantasia;
+                selectFiltro.appendChild(opt1);
+
+                const opt2 = document.createElement('option');
+                opt2.value = e.id;
+                opt2.textContent = e.nomeFantasia;
+                selectForm.appendChild(opt2);
+            });
+        }
+
+        function getFiltrosAtuais() {
+            return {
+                empresaId: document.getElementById('filtroEmpresa').value,
+                situacao: document.getElementById('filtroSituacao').value
+            };
+        }
+
+        function atualizarKPIsNotas() {
+            const notas = window.DataStore.getNotas();
+            const pendentes = notas.filter(n => n.situacao === 'Solicitada' || n.situacao === 'Pronta para Emissão').length;
+            const emitidas = notas.filter(n => n.situacao === 'Emitida').length;
+            const atrasadas = notas.filter(n => n.situacao === 'Atrasada' || (n.dataPrevista < '2026-10-20' && n.situacao !== 'Emitida')).length;
+            const valorTotal = notas.reduce((acc, curr) => acc + (curr.valor || 0), 0);
+
+            document.getElementById('kpi-notas-pendentes').textContent = pendentes;
+            document.getElementById('kpi-notas-emitidas').textContent = emitidas;
+            document.getElementById('kpi-notas-atrasadas').textContent = atrasadas;
+            document.getElementById('kpi-valor-total').textContent = window.AdminUI.formatCurrency(valorTotal);
+        }
+
+        function renderizarTabela() {
+            const tbody = document.getElementById('tabelaNotasCorpo');
+            if (!tbody) return;
+
+            const notas = window.DataStore.getNotas(getFiltrosAtuais());
+
+            if (!notas.length) {
+                tbody.innerHTML = `
+                    <tr>
+                        <td colspan="10" style="text-align: center; padding: 40px; color: var(--text-muted);">
+                            <i class="fa-solid fa-file-invoice" style="font-size: 2rem; margin-bottom: 8px; display: block;"></i>
+                            Nenhuma solicitação de nota fiscal encontrada.
+                        </td>
+                    </tr>
+                `;
+                return;
+            }
+
+            tbody.innerHTML = notas.map(n => {
+                const emp = window.DataStore.getEmpresaById(n.empresaId);
+                const isAtrasada = n.situacao === 'Atrasada' || (n.dataPrevista < '2026-10-20' && n.situacao !== 'Emitida');
+
+                return `
+                    <tr style="${isAtrasada ? 'background-color: #fffaf0;' : ''}">
+                        <td>
+                            <strong>${window.AdminUI.escapeHtml(emp ? emp.nomeFantasia : 'Empresa')}</strong>
+                        </td>
+                        <td><span class="badge-tag" style="font-size: 0.72rem;">${n.tipoNota}</span></td>
+                        <td>
+                            <strong style="font-size: 0.88rem; color: var(--text-primary);">${window.AdminUI.escapeHtml(n.descricao)}</strong>
+                        </td>
+                        <td>${window.AdminUI.formatDate(n.dataSolicitacao)}</td>
+                        <td>
+                            <strong style="color: ${isAtrasada ? 'var(--danger)' : 'var(--text-primary)'};">
+                                ${window.AdminUI.formatDate(n.dataPrevista)}
+                            </strong>
+                        </td>
+                        <td><strong>${window.AdminUI.formatCurrency(n.valor)}</strong></td>
+                        <td><span style="font-size: 0.82rem; color: var(--text-secondary);">${n.responsavel}</span></td>
+                        <td>
+                            ${n.numeroNota ? `
+                                <strong style="font-size: 0.8rem; color: var(--success);"><i class="fa-solid fa-check"></i> ${n.numeroNota}</strong>
+                            ` : '<span style="font-size: 0.75rem; color: var(--text-muted);">Aguardando</span>'}
+                        </td>
+                        <td>
+                            <span class="status-badge ${n.situacao.toLowerCase().replace(/ /g, '-')}">
+                                ${n.situacao}
+                            </span>
+                        </td>
+                        <td style="text-align: right;">
+                            <div class="action-btn-group" style="justify-content: flex-end;">
+                                ${n.situacao !== 'Emitida' ? `
+                                    <button type="button" class="btn-icon-action success" title="Emitir Nota Demonstrativa" onclick="emitirNotaDemo(${n.id})">
+                                        <i class="fa-solid fa-stamp"></i>
+                                    </button>
+                                ` : ''}
+                            </div>
+                        </td>
+                    </tr>
+                `;
+            }).join('');
+        }
+
+        function initFiltros() {
+            document.getElementById('filtroEmpresa').addEventListener('change', renderizarTabela);
+            document.getElementById('filtroSituacao').addEventListener('change', renderizarTabela);
+        }
+
+        function emitirNotaDemo(id) {
+            const nota = window.DataStore.emitirNota(id);
+            if (nota) {
+                window.AdminUI.showToast(`Nota Fiscal emitida na demonstração! Número gerado: ${nota.numeroNota}`, 'success');
+                renderizarTabela();
+                atualizarKPIsNotas();
+                window.AdminUI.updateSidebarCounters();
+            }
+        }
+
+        function abrirModalNovaNota() {
+            document.getElementById('formCadastroNota').reset();
+            document.getElementById('notaId').value = '';
+            document.getElementById('campoDataPrevista').value = new Date().toISOString().split('T')[0];
+            window.AdminUI.openModal('modalFormNota');
+        }
+
+        function initForm() {
+            const form = document.getElementById('formCadastroNota');
+            form.addEventListener('submit', (e) => {
+                e.preventDefault();
+
+                const notaData = {
+                    empresaId: Number(document.getElementById('campoEmpresaId').value),
+                    tipoNota: document.getElementById('campoTipoNota').value,
+                    descricao: document.getElementById('campoDescricao').value.trim(),
+                    valor: parseFloat(document.getElementById('campoValor').value) || 0,
+                    dataPrevista: document.getElementById('campoDataPrevista').value,
+                    responsavel: document.getElementById('campoResponsavel').value,
+                    observacoes: document.getElementById('campoObservacoes').value.trim()
+                };
+
+                window.DataStore.saveNota(notaData);
+                window.AdminUI.closeModal('modalFormNota');
+                window.AdminUI.showToast('Solicitação de nota fiscal cadastrada com sucesso!', 'success');
+                renderizarTabela();
+                atualizarKPIsNotas();
+                window.AdminUI.updateSidebarCounters();
+            });
+        }
+
+        function exportarNotasCSV() {
+            const notas = window.DataStore.getNotas(getFiltrosAtuais());
+            const rows = notas.map(n => {
+                const emp = window.DataStore.getEmpresaById(n.empresaId);
+                return {
+                    "ID": n.id,
+                    "Empresa": emp ? emp.nomeFantasia : '',
+                    "Tipo de Nota": n.tipoNota,
+                    "Descrição": n.descricao,
+                    "Data Solicitação": n.dataSolicitacao,
+                    "Data Prevista": n.dataPrevista,
+                    "Valor (R$)": n.valor,
+                    "Responsável": n.responsavel,
+                    "Situação": n.situacao,
+                    "Número": n.numeroNota || '',
+                    "Chave": n.chaveAcesso || ''
+                };
+            });
+            window.DataStore.exportToCSV("solicitacoes_notas_fiscais", rows);
+        }
+    </script>
+</body>
+</html>

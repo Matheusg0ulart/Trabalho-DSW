@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard Principal | Waldo Ferreira Gestão Contábil</title>
+    <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Estilos Administrativos -->
+    <link rel="stylesheet" href="../css/admin.css">
+</head>
+<body class="admin-body">
+
+    <!-- Sidebar de Navegação Lateral -->
+    <aside class="admin-sidebar">
+        <div class="sidebar-header">
+            <a href="dashboard.html" class="sidebar-brand">
+                <div class="logo-icon"><i class="fa-solid fa-scale-balanced"></i></div>
+                <div>
+                    <div class="brand-title">WALDO GESTÃO</div>
+                    <div class="brand-badge">SISTEMA CONTÁBIL</div>
+                </div>
+            </a>
+            <button class="sidebar-close-btn" id="sidebarCloseBtn" aria-label="Fechar menu lateral">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+        </div>
+
+        <nav class="sidebar-nav">
+            <div class="nav-category">Geral</div>
+            <a href="dashboard.html" class="sidebar-link active">
+                <i class="fa-solid fa-chart-line"></i>
+                <span>Dashboard Principal</span>
+            </a>
+            <a href="empresas.html" class="sidebar-link">
+                <i class="fa-solid fa-building"></i>
+                <span>Empresas & Clientes</span>
+            </a>
+
+            <div class="nav-category">Operação & Conformidade</div>
+            <a href="impostos.html" class="sidebar-link">
+                <i class="fa-solid fa-receipt"></i>
+                <span>Impostos & Fiscal</span>
+                <span class="counter-badge" id="badge-sidebar-impostos">0</span>
+            </a>
+            <a href="folha.html" class="sidebar-link">
+                <i class="fa-solid fa-users"></i>
+                <span>Folha de Pagamento</span>
+                <span class="counter-badge" id="badge-sidebar-folha">0</span>
+            </a>
+            <a href="servicos.html" class="sidebar-link">
+                <i class="fa-solid fa-list-check"></i>
+                <span>Serviços & Tarefas</span>
+                <span class="counter-badge" id="badge-sidebar-servicos">0</span>
+            </a>
+            <a href="notas-fiscais.html" class="sidebar-link">
+                <i class="fa-solid fa-file-invoice"></i>
+                <span>Notas Fiscais</span>
+                <span class="counter-badge" id="badge-sidebar-notas">0</span>
+            </a>
+            <a href="parcelamentos.html" class="sidebar-link">
+                <i class="fa-solid fa-hand-holding-dollar"></i>
+                <span>Parcelamentos</span>
+            </a>
+            <a href="documentos.html" class="sidebar-link">
+                <i class="fa-solid fa-folder-open"></i>
+                <span>Documentos & Anexos</span>
+                <span class="counter-badge" id="badge-sidebar-documentos">0</span>
+            </a>
+
+            <div class="nav-category">Gestão & Controle</div>
+            <a href="agenda.html" class="sidebar-link">
+                <i class="fa-solid fa-calendar-days"></i>
+                <span>Agenda & Prazos</span>
+            </a>
+            <a href="relatorios.html" class="sidebar-link">
+                <i class="fa-solid fa-file-excel"></i>
+                <span>Relatórios & Exportação</span>
+            </a>
+            <a href="usuarios.html" class="sidebar-link">
+                <i class="fa-solid fa-user-gear"></i>
+                <span>Usuários & Perfis</span>
+            </a>
+            <a href="notificacoes.html" class="sidebar-link">
+                <i class="fa-solid fa-bell"></i>
+                <span>Central de Alertas</span>
+            </a>
+        </nav>
+
+        <div class="sidebar-footer">
+            <div class="user-mini-card">
+                <div class="user-avatar-mini">WF</div>
+                <div class="user-info-text">
+                    <strong>Waldo Ferreira</strong>
+                    <span>Contador Responsável</span>
+                </div>
+            </div>
+            <a href="../login.html" class="btn-sidebar-exit">
+                <i class="fa-solid fa-arrow-right-from-bracket"></i>
+                <span>Encerrar Demonstração</span>
+            </a>
+        </div>
+    </aside>
+
+    <!-- Conteúdo Principal -->
+    <main class="admin-main">
+        <!-- Topbar Superior -->
+        <header class="admin-topbar">
+            <div class="topbar-left">
+                <button class="menu-toggle-btn" id="menuToggleBtn" aria-label="Abrir menu lateral">
+                    <i class="fa-solid fa-bars"></i>
+                </button>
+                <div class="page-header-info">
+                    <div class="page-breadcrumb">
+                        <a href="../index.html">Site Público</a>
+                        <i class="fa-solid fa-chevron-right" style="font-size: 0.65rem;"></i>
+                        <span>Dashboard</span>
+                    </div>
+                    <h1>Visão Geral do Escritório</h1>
+                </div>
+            </div>
+
+            <div class="topbar-right">
+                <div class="topbar-search">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                    <input type="text" id="globalSearchInput" placeholder="Buscar empresa ou CNPJ... (Enter)">
+                </div>
+
+                <div class="demo-status-pill">
+                    <span class="pulse-dot"></span>
+                    <span>Modo Demo</span>
+                </div>
+
+                <!-- Botão de Notificações com Dropdown -->
+                <div style="position: relative;">
+                    <button class="topbar-btn-icon" id="notifToggleBtn" aria-label="Notificações">
+                        <i class="fa-regular fa-bell"></i>
+                        <span class="notif-badge" id="topbarNotifBadge">0</span>
+                    </button>
+                    <div class="notif-dropdown" id="notifDropdown">
+                        <div class="notif-header">
+                            <span>Notificações & Alertas</span>
+                            <a href="notificacoes.html" style="font-size: 0.76rem; color: var(--primary);">Ver Todas</a>
+                        </div>
+                        <div class="notif-list" id="notifDropdownList"></div>
+                    </div>
+                </div>
+
+                <!-- Link Rápido para Site Público -->
+                <a href="../index.html" class="btn-icon-action" title="Ir para a Landing Page Pública" style="width: 40px; height: 40px; border-radius: var(--radius-md);">
+                    <i class="fa-solid fa-globe"></i>
+                </a>
+            </div>
+        </header>
+
+        <!-- Conteúdo do Dashboard -->
+        <div class="admin-content">
+            <!-- Banner Informativo -->
+            <div class="admin-banner-notice">
+                <div class="notice-text">
+                    <i class="fa-solid fa-circle-info"></i>
+                    <div>
+                        <strong>Ambiente de Demonstração do Frontend Contábil</strong> — Todos os indicadores e gráficos abaixo são derivados dinamicamente do DataStore centralizado. Alterações realizadas nas telas de cadastro, impostos ou tarefas são refletidas em tempo real.
+                    </div>
+                </div>
+                <div class="notice-actions">
+                    <button type="button" class="btn btn-sm" onclick="window.AdminUI.resetDemoData()" style="background: rgba(255,255,255,0.15); color: #fff; border: 1px solid rgba(255,255,255,0.25);">
+                        <i class="fa-solid fa-rotate-left"></i> Restaurar Dados Padrão
+                    </button>
+                </div>
+            </div>
+
+            <!-- Grade de Indicadores Principais (KPIs) -->
+            <div class="kpi-grid">
+                <!-- Empresas Ativas -->
+                <a href="empresas.html?filtro=Ativa" class="kpi-card">
+                    <div class="kpi-header">
+                        <span class="kpi-title">Empresas Ativas</span>
+                        <div class="kpi-icon blue"><i class="fa-solid fa-building-circle-check"></i></div>
+                    </div>
+                    <div class="kpi-value" id="kpi-empresas-ativas">0</div>
+                    <div class="kpi-sub"><i class="fa-solid fa-arrow-trend-up text-green"></i> <span id="kpi-empresas-processo">0</span> em abertura/regularização</div>
+                </a>
+
+                <!-- Obrigações Fiscais Pendentes -->
+                <a href="impostos.html?filtro=Pendente" class="kpi-card">
+                    <div class="kpi-header">
+                        <span class="kpi-title">Obrigações Pendentes</span>
+                        <div class="kpi-icon gold"><i class="fa-solid fa-receipt"></i></div>
+                    </div>
+                    <div class="kpi-value" id="kpi-impostos-pendentes">0</div>
+                    <div class="kpi-sub"><i class="fa-solid fa-clock text-amber" style="color: var(--warning);"></i> <span id="kpi-impostos-proximos">0</span> próximas ao vencimento</div>
+                </a>
+
+                <!-- Obrigações Atrasadas -->
+                <a href="impostos.html?filtro=Atrasada" class="kpi-card">
+                    <div class="kpi-header">
+                        <span class="kpi-title">Obrigações em Atraso</span>
+                        <div class="kpi-icon red"><i class="fa-solid fa-triangle-exclamation"></i></div>
+                    </div>
+                    <div class="kpi-value" style="color: var(--danger);" id="kpi-impostos-atrasados">0</div>
+                    <div class="kpi-sub"><i class="fa-solid fa-circle-exclamation text-danger" style="color: var(--danger);"></i> Exige emissão com juros/multa</div>
+                </a>
+
+                <!-- Folha de Pagamento -->
+                <a href="folha.html" class="kpi-card">
+                    <div class="kpi-header">
+                        <span class="kpi-title">Folhas a Processar</span>
+                        <div class="kpi-icon purple"><i class="fa-solid fa-users"></i></div>
+                    </div>
+                    <div class="kpi-value" id="kpi-folha-pendente">0</div>
+                    <div class="kpi-sub"><i class="fa-solid fa-calendar-check" style="color: var(--info);"></i> Competência ativa do mês</div>
+                </a>
+            </div>
+
+            <!-- Grade Secundária de Indicadores -->
+            <div class="kpi-grid" style="margin-top: -10px;">
+                <!-- Serviços Abertos -->
+                <a href="servicos.html" class="kpi-card">
+                    <div class="kpi-header">
+                        <span class="kpi-title">Serviços em Aberto</span>
+                        <div class="kpi-icon blue"><i class="fa-solid fa-list-check"></i></div>
+                    </div>
+                    <div class="kpi-value" id="kpi-servicos-abertos">0</div>
+                    <div class="kpi-sub"><span id="kpi-servicos-atrasados" style="color: var(--danger); font-weight: 700;">0</span> serviços com prazo vencido</div>
+                </a>
+
+                <!-- Notas Fiscais -->
+                <a href="notas-fiscais.html" class="kpi-card">
+                    <div class="kpi-header">
+                        <span class="kpi-title">Notas Aguardando</span>
+                        <div class="kpi-icon gold"><i class="fa-solid fa-file-invoice"></i></div>
+                    </div>
+                    <div class="kpi-value" id="kpi-notas-pendentes">0</div>
+                    <div class="kpi-sub"><i class="fa-solid fa-paper-plane" style="color: var(--gold);"></i> Solicitações de clientes</div>
+                </a>
+
+                <!-- Parcelamentos Ativos -->
+                <a href="parcelamentos.html" class="kpi-card">
+                    <div class="kpi-header">
+                        <span class="kpi-title">Parcelamentos Ativos</span>
+                        <div class="kpi-icon green"><i class="fa-solid fa-hand-holding-dollar"></i></div>
+                    </div>
+                    <div class="kpi-value" id="kpi-parcelamentos-ativos">0</div>
+                    <div class="kpi-sub"><i class="fa-solid fa-shield-check" style="color: var(--success);"></i> Acordos RFB, PGFN e Prefeituras</div>
+                </a>
+
+                <!-- Documentos Pendentes -->
+                <a href="documentos.html" class="kpi-card">
+                    <div class="kpi-header">
+                        <span class="kpi-title">Documentos Pendentes</span>
+                        <div class="kpi-icon purple"><i class="fa-solid fa-folder-open"></i></div>
+                    </div>
+                    <div class="kpi-value" id="kpi-documentos-pendentes">0</div>
+                    <div class="kpi-sub"><i class="fa-solid fa-hourglass-half" style="color: var(--purple);"></i> Aguardando envio de clientes</div>
+                </a>
+            </div>
+
+            <!-- Gráficos Gerenciais -->
+            <div class="charts-grid-2">
+                <div class="chart-card">
+                    <div class="chart-card-header">
+                        <h3>Obrigações Fiscais por Situação</h3>
+                        <span class="badge-tag" style="font-size: 0.7rem;">Mês Vigente</span>
+                    </div>
+                    <div class="chart-canvas-container">
+                        <canvas id="chartImpostosSituacao"></canvas>
+                    </div>
+                </div>
+
+                <div class="chart-card">
+                    <div class="chart-card-header">
+                        <h3>Empresas por Regime Tributário</h3>
+                        <span class="badge-tag gold-tag" style="font-size: 0.7rem;">Carteira Ativa</span>
+                    </div>
+                    <div class="chart-canvas-container">
+                        <canvas id="chartRegimes"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Seções Críticas: Prazos Imediatos e Atividades Recentes -->
+            <div style="display: grid; grid-template-columns: 1.25fr 0.75fr; gap: 24px;">
+                <!-- Prazos Críticos / Atenção Imediata -->
+                <div class="table-card" style="padding: 24px;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 18px;">
+                        <div>
+                            <h3 style="font-family: var(--font-heading); font-size: 1.15rem; color: var(--text-primary); font-weight: 700;">
+                                <i class="fa-solid fa-triangle-exclamation" style="color: var(--danger); margin-right: 6px;"></i>
+                                Prazos Críticos & Vencimentos Imediatos
+                            </h3>
+                            <p style="font-size: 0.8rem; color: var(--text-muted);">Itens que demandam ação prioritária da equipe contábil hoje</p>
+                        </div>
+                        <a href="agenda.html" class="btn btn-sm btn-contador">Ver Agenda Completa</a>
+                    </div>
+
+                    <div class="table-responsive">
+                        <table class="admin-table">
+                            <thead>
+                                <tr>
+                                    <th>Tipo</th>
+                                    <th>Empresa</th>
+                                    <th>Vencimento / Prazo</th>
+                                    <th>Status</th>
+                                    <th>Ação</th>
+                                </tr>
+                            </thead>
+                            <tbody id="listaPrazosCriticos"></tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Feed de Atividades Recentes do Escritório -->
+                <div class="table-card" style="padding: 24px;">
+                    <h3 style="font-family: var(--font-heading); font-size: 1.15rem; color: var(--text-primary); font-weight: 700; margin-bottom: 4px;">
+                        <i class="fa-solid fa-clock-rotate-left" style="color: var(--primary); margin-right: 6px;"></i>
+                        Atividades Recentes
+                    </h3>
+                    <p style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 18px;">Registros demonstrativos das rotinas do escritório</p>
+
+                    <div style="display: flex; flex-direction: column; gap: 14px;" id="feedAtividadesRecentes">
+                        <div style="display: flex; gap: 12px; align-items: flex-start; padding-bottom: 12px; border-bottom: 1px solid var(--border-color);">
+                            <div class="kpi-icon green" style="width: 32px; height: 32px; font-size: 0.85rem;"><i class="fa-solid fa-check"></i></div>
+                            <div>
+                                <strong style="font-size: 0.85rem; display: block;">CND Federal Emitida</strong>
+                                <span style="font-size: 0.78rem; color: var(--text-secondary);">Inovare Engenharia - Certidão Negativa válida até abr/2027</span>
+                                <span style="font-size: 0.7rem; color: var(--text-muted); display: block; margin-top: 2px;">16/10 às 11:20 por Ricardo Mendes</span>
+                            </div>
+                        </div>
+
+                        <div style="display: flex; gap: 12px; align-items: flex-start; padding-bottom: 12px; border-bottom: 1px solid var(--border-color);">
+                            <div class="kpi-icon blue" style="width: 32px; height: 32px; font-size: 0.85rem;"><i class="fa-solid fa-file-invoice"></i></div>
+                            <div>
+                                <strong style="font-size: 0.85rem; display: block;">Guia DAS Transmitida</strong>
+                                <span style="font-size: 0.78rem; color: var(--text-secondary);">Empório Lima - Competência 09/2026 no valor de R$ 11.450,00</span>
+                                <span style="font-size: 0.7rem; color: var(--text-muted); display: block; margin-top: 2px;">18/10 às 15:40 por Carlos Silveira</span>
+                            </div>
+                        </div>
+
+                        <div style="display: flex; gap: 12px; align-items: flex-start; padding-bottom: 12px; border-bottom: 1px solid var(--border-color);">
+                            <div class="kpi-icon purple" style="width: 32px; height: 32px; font-size: 0.85rem;"><i class="fa-solid fa-users"></i></div>
+                            <div>
+                                <strong style="font-size: 0.85rem; display: block;">Folha 09/2026 Fechada</strong>
+                                <span style="font-size: 0.78rem; color: var(--text-secondary);">Clínica Saúde & Vida - Holerites e pró-labore enviados</span>
+                                <span style="font-size: 0.7rem; color: var(--text-muted); display: block; margin-top: 2px;">05/10 às 16:10 por Beatriz Oliveira</span>
+                            </div>
+                        </div>
+
+                        <div style="display: flex; gap: 12px; align-items: flex-start;">
+                            <div class="kpi-icon gold" style="width: 32px; height: 32px; font-size: 0.85rem;"><i class="fa-solid fa-file-signature"></i></div>
+                            <div>
+                                <strong style="font-size: 0.85rem; display: block;">DBE Deferido na Receita</strong>
+                                <span style="font-size: 0.78rem; color: var(--text-secondary);">Nexus Digital - Processo de abertura avançado para a Prefeitura</span>
+                                <span style="font-size: 0.7rem; color: var(--text-muted); display: block; margin-top: 2px;">14/10 às 09:30 por Juliana Martins</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Scripts do Sistema -->
+    <script src="../js/chart.min.js"></script>
+    <script src="../js/data.js"></script>
+    <script src="../js/admin.js"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            carregarKPIs();
+            carregarGraficos();
+            carregarPrazosCriticos();
+        });
+
+        function carregarKPIs() {
+            const kpis = window.DataStore.getDashboardKPIs();
+
+            document.getElementById('kpi-empresas-ativas').textContent = kpis.empresasAtivas;
+            document.getElementById('kpi-empresas-processo').textContent = kpis.empresasProcesso;
+            document.getElementById('kpi-impostos-pendentes').textContent = kpis.impostosPendentes;
+            document.getElementById('kpi-impostos-proximos').textContent = kpis.impostosProximos;
+            document.getElementById('kpi-impostos-atrasados').textContent = kpis.impostosAtrasados;
+            document.getElementById('kpi-folha-pendente').textContent = kpis.folhaPendente;
+            document.getElementById('kpi-servicos-abertos').textContent = kpis.servicosAbertos;
+            document.getElementById('kpi-servicos-atrasados').textContent = kpis.servicosAtrasados;
+            document.getElementById('kpi-notas-pendentes').textContent = kpis.notasPendentes;
+            document.getElementById('kpi-parcelamentos-ativos').textContent = kpis.parcelamentosAtivos;
+            document.getElementById('kpi-documentos-pendentes').textContent = kpis.documentosPendentes;
+        }
+
+        function carregarGraficos() {
+            // 1. Gráfico de Obrigações por Situação (Doughnut)
+            const ctxImpostos = document.getElementById('chartImpostosSituacao');
+            if (ctxImpostos && typeof Chart !== 'undefined') {
+                const impostos = window.DataStore.getImpostos();
+                const concluidos = impostos.filter(i => i.situacao === 'Concluída' || i.situacao === 'Entregue').length;
+                const pendentes = impostos.filter(i => i.situacao === 'Pendente' || i.situacao === 'Pronta para Entrega').length;
+                const emAndamento = impostos.filter(i => i.situacao === 'Em Andamento' || i.situacao === 'Aguardando Documentos').length;
+                const atrasadas = impostos.filter(i => i.situacao === 'Atrasada').length;
+
+                new Chart(ctxImpostos, {
+                    type: 'doughnut',
+                    data: {
+                        labels: ['Concluídas/Entregues', 'Pendentes', 'Em Andamento', 'Atrasadas'],
+                        datasets: [{
+                            data: [concluidos, pendentes, emAndamento, atrasadas],
+                            backgroundColor: ['#10b981', '#f59e0b', '#3b82f6', '#ef4444'],
+                            borderWidth: 2,
+                            borderColor: '#ffffff'
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: { position: 'bottom' }
+                        },
+                        cutout: '65%'
+                    }
+                });
+            }
+
+            // 2. Gráfico de Empresas por Regime Tributário
+            const ctxRegimes = document.getElementById('chartRegimes');
+            if (ctxRegimes && typeof Chart !== 'undefined') {
+                const empresas = window.DataStore.getEmpresas();
+                const simples = empresas.filter(e => e.regimeTributario === 'Simples Nacional').length;
+                const presumido = empresas.filter(e => e.regimeTributario === 'Lucro Presumido').length;
+                const real = empresas.filter(e => e.regimeTributario === 'Lucro Real').length;
+
+                new Chart(ctxRegimes, {
+                    type: 'pie',
+                    data: {
+                        labels: ['Simples Nacional', 'Lucro Presumido', 'Lucro Real'],
+                        datasets: [{
+                            data: [simples, presumido, real],
+                            backgroundColor: ['#2563eb', '#d97706', '#8b5cf6'],
+                            borderWidth: 2,
+                            borderColor: '#ffffff'
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: { position: 'bottom' }
+                        }
+                    }
+                });
+            }
+        }
+
+        function carregarPrazosCriticos() {
+            const tbody = document.getElementById('listaPrazosCriticos');
+            if (!tbody) return;
+
+            // Coleta itens atrasados ou com vencimento hoje
+            const impostos = window.DataStore.getImpostos().filter(i => i.situacao === 'Atrasada' || i.vencimento === '2026-10-20');
+            const servicos = window.DataStore.getServicos().filter(s => s.prazoEntrega <= '2026-10-20' && s.situacao !== 'Concluído');
+
+            let itens = [];
+
+            impostos.forEach(i => {
+                const emp = window.DataStore.getEmpresaById(i.empresaId);
+                itens.push({
+                    tipoBadge: 'Fiscal',
+                    titulo: i.tipo,
+                    empresa: emp ? emp.nomeFantasia : 'Empresa',
+                    prazo: window.AdminUI.formatDate(i.vencimento),
+                    isAtrasada: i.situacao === 'Atrasada',
+                    link: 'impostos.html'
+                });
+            });
+
+            servicos.forEach(s => {
+                const emp = window.DataStore.getEmpresaById(s.empresaId);
+                itens.push({
+                    tipoBadge: 'Serviço',
+                    titulo: s.titulo,
+                    empresa: emp ? emp.nomeFantasia : 'Geral',
+                    prazo: window.AdminUI.formatDate(s.prazoEntrega),
+                    isAtrasada: s.prazoEntrega < '2026-10-20',
+                    link: 'servicos.html'
+                });
+            });
+
+            tbody.innerHTML = itens.slice(0, 5).map(item => `
+                <tr>
+                    <td><span class="badge-tag" style="font-size: 0.68rem;">${item.tipoBadge}</span></td>
+                    <td><strong>${item.empresa}</strong><br><span style="font-size: 0.75rem; color: var(--text-muted);">${item.titulo}</span></td>
+                    <td>
+                        <strong style="color: ${item.isAtrasada ? 'var(--danger)' : 'var(--warning)'};">
+                            ${item.prazo}
+                        </strong>
+                    </td>
+                    <td>
+                        <span class="status-badge ${item.isAtrasada ? 'atrasada' : 'pendente'}">
+                            ${item.isAtrasada ? 'Atrasado' : 'Vence Hoje'}
+                        </span>
+                    </td>
+                    <td>
+                        <a href="${item.link}" class="btn-icon-action" title="Resolver">
+                            <i class="fa-solid fa-arrow-right"></i>
+                        </a>
+                    </td>
+                </tr>
+            `).join('');
+        }
+    </script>
+</body>
+</html>

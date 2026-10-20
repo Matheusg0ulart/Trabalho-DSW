@@ -1,60 +1,843 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="pt-BR">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0" />
-    <meta name="theme-color" content="#0B132B" />
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+    <meta name="theme-color" content="#0B132B">
     
     <!-- Primary Meta Tags -->
     <title>Waldo Ferreira Assessoria Contábil | Soluções Inteligentes para sua Empresa</title>
-    <meta name="title" content="Waldo Ferreira Assessoria Contábil | Soluções Inteligentes para sua Empresa" />
-    <meta name="description" content="Waldo Ferreira Assessoria Contábil - Soluções contábeis modernas, planejamento tributário, folha de pagamento e abertura de empresas com foco em redução de impostos e suporte direto." />
-    <meta name="keywords" content="contabilidade, assessoria contábil, Waldo Ferreira, abertura de empresa, planejamento tributário, Simples Nacional, Lucro Presumido, contador São Paulo" />
-    <meta name="author" content="Waldo Ferreira Assessoria Contábil" />
+    <meta name="title" content="Waldo Ferreira Assessoria Contábil | Soluções Inteligentes para sua Empresa">
+    <meta name="description" content="Assessoria contábil moderna, planejamento tributário, folha de pagamento, abertura de empresas e gestão fiscal estratégica para tornar seu negócio seguro e lucrativo.">
+    <meta name="keywords" content="contabilidade empresarial, planejamento tributario, abertura de empresa, folha de pagamento, simples nacional, lucro presumido, contador São Paulo, Waldo Ferreira">
+    <meta name="author" content="Waldo Ferreira Assessoria Contábil">
 
-    <!-- Open Graph / Facebook / WhatsApp -->
-    <meta property="og:type" content="website" />
-    <meta property="og:title" content="Waldo Ferreira Assessoria Contábil | Contabilidade Especializada & Digital" />
-    <meta property="og:description" content="Redução legal de impostos, abertura de CNPJ descomplicada e atendimento direto via WhatsApp com especialistas." />
-    <meta property="og:image" content="/hero-office.jpg" />
-
-    <!-- Twitter -->
-    <meta property="twitter:card" content="summary_large_image" />
-    <meta property="twitter:title" content="Waldo Ferreira Assessoria Contábil" />
-    <meta property="twitter:description" content="Soluções contábeis inteligentes para sua empresa crescer com segurança fiscal." />
-    <meta property="twitter:image" content="/hero-office.jpg" />
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
 
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Outfit:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 
-    <!-- Schema.org Structured Data -->
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "AccountingService",
-      "name": "Waldo Ferreira Assessoria Contábil",
-      "image": "/hero-office.jpg",
-      "description": "Assessoria contábil especializada, planejamento tributário, abertura de empresas e gestão fiscal para prestadores de serviço, comércio e tecnologia.",
-      "address": {
-        "@type": "PostalAddress",
-        "streetAddress": "Av. Paulista, 1000 - Sala 501",
-        "addressLocality": "São Paulo",
-        "addressRegion": "SP",
-        "addressCountry": "BR"
-      },
-      "telephone": "+5511999999999",
-      "email": "waldoferreira@gmail.com",
-      "priceRange": "$$"
-    }
-    </script>
-    <script type="module" crossorigin src="/assets/index-DvJ3p4cZ.js"></script>
-    <link rel="stylesheet" crossorigin href="/assets/index-BO0QxPY4.css">
-  </head>
-  <body>
-    <div id="root"></div>
-  </body>
+    <!-- Font Awesome Icons 6 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Estilos Principais -->
+    <link rel="stylesheet" href="css/styles.css?v=2">
+</head>
+<body>
+
+    <!-- Topbar Superior Informativa -->
+    <div class="topbar">
+        <div class="container topbar-container">
+            <div class="topbar-info">
+                <span><i class="fa-solid fa-phone"></i> (11) 3999-8888</span>
+                <span><i class="fa-brands fa-whatsapp"></i> (11) 99999-9999</span>
+                <span><i class="fa-solid fa-envelope"></i> waldoferreira@gmail.com</span>
+            </div>
+            <div class="topbar-hours">
+                <i class="fa-regular fa-clock"></i> Seg a Sex: 08h às 18h | Av. Paulista, 1000 - São Paulo/SP
+            </div>
+        </div>
+    </div>
+
+    <!-- Header & Navegação -->
+    <header class="navbar" id="navbar">
+        <div class="container nav-container">
+            <a href="#inicio" class="brand-logo">
+                <div class="logo-icon"><i class="fa-solid fa-scale-balanced"></i></div>
+                <div class="logo-text">
+                    <span class="brand-name">WALDO FERREIRA</span>
+                    <span class="brand-sub">ASSESSORIA CONTÁBIL</span>
+                </div>
+            </a>
+
+            <nav class="nav-menu" id="navMenu">
+                <a href="#inicio" class="nav-link active">Início</a>
+                <a href="#sobre" class="nav-link">Sobre</a>
+                <a href="#servicos" class="nav-link">Serviços</a>
+                <a href="#diferenciais" class="nav-link">Diferenciais</a>
+                <a href="#simulador" class="nav-link">Simulador</a>
+                <a href="#depoimentos" class="nav-link">Depoimentos</a>
+                <a href="#faq" class="nav-link">FAQ</a>
+                <a href="#contato" class="nav-link">Contato</a>
+
+                <div class="nav-actions-mobile">
+                    <a href="login.html" class="btn btn-contador btn-full">
+                        <i class="fa-solid fa-user-tie"></i> Área do Contador
+                    </a>
+                    <a href="https://wa.me/5511999999999?text=Ol%C3%A1%20Waldo!%20Gostaria%20de%20falar%20com%20o%20escrit%C3%B3rio." target="_blank" class="btn btn-whatsapp btn-full">
+                        <i class="fa-brands fa-whatsapp"></i> Falar no WhatsApp
+                    </a>
+                </div>
+            </nav>
+
+            <div class="nav-actions">
+                <a href="login.html" class="btn btn-contador">
+                    <i class="fa-solid fa-user-tie"></i> Área do Contador
+                </a>
+                <a href="https://wa.me/5511999999999?text=Ol%C3%A1%20Waldo!%20Gostaria%20de%20falar%20com%20o%20escrit%C3%B3rio." target="_blank" class="btn btn-whatsapp">
+                    <i class="fa-brands fa-whatsapp"></i> Falar no WhatsApp
+                </a>
+            </div>
+
+            <button class="nav-toggle" id="navToggle" aria-label="Abrir Menu">
+                <i class="fa-solid fa-bars"></i>
+            </button>
+        </div>
+    </header>
+
+    <!-- Seção Principal — Hero -->
+    <section class="hero" id="inicio">
+        <div class="container hero-container">
+            <div class="hero-content">
+                <span class="badge-tag">
+                    <i class="fa-solid fa-shield-halved"></i> ASSESSORIA CONTÁBIL & ESTRATÉGICA
+                </span>
+                <h1 class="hero-title">
+                    Transforme a contabilidade da sua empresa em um centro de <span class="highlight-navy">inteligência e resultado</span>
+                </h1>
+                <p class="hero-subtitle">
+                    A Waldo Ferreira Assessoria Contábil oferece gestão contábil completa com foco em planejamento tributário, redução legal de impostos, folha de pagamento e abertura ágil de CNPJ — tudo em um só lugar para tornar sua empresa mais lucrativa e segura.
+                </p>
+                
+                <div class="hero-cta-group">
+                    <a href="https://wa.me/5511999999999?text=Ol%C3%A1%20Waldo!%20Gostaria%20de%20uma%20proposta%20para%20minha%20empresa." target="_blank" class="btn btn-whatsapp btn-lg">
+                        <i class="fa-brands fa-whatsapp"></i> Falar agora no WhatsApp
+                    </a>
+                    <a href="#simulador" class="btn btn-outline-navy btn-lg">
+                        <i class="fa-solid fa-calculator"></i> Simular Economia Tributária
+                    </a>
+                </div>
+
+                <div class="hero-bullets">
+                    <span><i class="fa-solid fa-circle-check text-green"></i> Redução Legal de Impostos</span>
+                    <span><i class="fa-solid fa-circle-check text-green"></i> Especialistas no Seu Nicho</span>
+                    <span><i class="fa-solid fa-circle-check text-green"></i> Transição 100% Sem Burocracia</span>
+                </div>
+            </div>
+
+            <div class="hero-image-wrapper">
+                <div class="image-card">
+                    <img src="hero-office.jpg" alt="Escritório Waldo Ferreira Assessoria Contábil" class="hero-img">
+                    <div class="floating-badge">
+                        <div class="badge-icon"><i class="fa-solid fa-trophy"></i></div>
+                        <div>
+                            <strong>R$ 2.5M+ Economizados</strong>
+                            <span>Para nossos clientes em planejamento fiscal</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Apresentação do Escritório — Sobre o Contador -->
+    <section class="sobre-section" id="sobre">
+        <div class="container sobre-container">
+            <div class="sobre-visual">
+                <div class="portrait-wrapper">
+                    <img src="waldo-portrait.jpg" alt="Waldo Ferreira - Contador Responsável" class="portrait-img">
+                    <div class="crc-badge">
+                        <i class="fa-solid fa-certificate crc-icon"></i>
+                        <div>
+                            <strong>CRC-SP 1SP234567/O-8 • Ativo & Regularizado</strong>
+                            <span>Conselho Regional de Contabilidade do Estado de São Paulo</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="sobre-content">
+                <span class="badge-tag gold-tag">
+                    <i class="fa-solid fa-user-check"></i> SOBRE O CONTADOR & ESCRITÓRIO
+                </span>
+                <h2 class="section-title">Parceria Estratégica para o Sucesso do Seu Negócio</h2>
+                <p class="sobre-lead">
+                    A <strong>Waldo Ferreira Assessoria Contábil</strong> nasceu com o compromisso claro de transformar a contabilidade de uma obrigação burocrática em uma alavanca real de lucratividade.
+                </p>
+                <p class="sobre-text">
+                    Acreditamos que a contabilidade não deve ser apenas uma geradora de guias no final do mês. Nosso compromisso é atuar como parceiros estratégicos do seu crescimento, garantindo segurança fiscal contra autuações da Receita Federal, otimização máxima dos regimes tributários e atendimento humanizado e ágil diretamente com contadores especializados.
+                </p>
+
+                <div class="pillars-grid-inline">
+                    <div class="pillar-item-box">
+                        <div class="p-icon"><i class="fa-solid fa-comments"></i></div>
+                        <div>
+                            <h4>Relacionamento Próximo</h4>
+                            <p>Atendimento direto via WhatsApp e telefone com o contador responsável da sua conta.</p>
+                        </div>
+                    </div>
+
+                    <div class="pillar-item-box">
+                        <div class="p-icon"><i class="fa-solid fa-handshake"></i></div>
+                        <div>
+                            <h4>Transparência Absoluta</h4>
+                            <p>Honorários justos, sem letras miúdas ou custos escondidos na sua mensalidade.</p>
+                        </div>
+                    </div>
+
+                    <div class="pillar-item-box">
+                        <div class="p-icon"><i class="fa-solid fa-scale-balanced"></i></div>
+                        <div>
+                            <h4>Excelência Técnica</h4>
+                            <p>Atualização diária com a legislação tributária brasileira e decisões do CARF.</p>
+                        </div>
+                    </div>
+
+                    <div class="pillar-item-box">
+                        <div class="p-icon"><i class="fa-solid fa-bolt"></i></div>
+                        <div>
+                            <h4>Agilidade Digital</h4>
+                            <p>Contabilidade 100% digital, envio de relatórios e documentos na palma da mão.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div style="margin-top: 10px;">
+                    <a href="https://wa.me/5511999999999?text=Ol%C3%A1%20Waldo!%20Gostaria%20de%20agendar%20uma%20conversa%20sobre%20minha%20empresa." target="_blank" class="btn btn-primary">
+                        <i class="fa-solid fa-calendar-check"></i> Agendar Conversa com Waldo Ferreira
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Diferenciais Competitivos -->
+    <section class="section" id="diferenciais">
+        <div class="container">
+            <div class="section-header text-center">
+                <span class="section-subtitle-tag">POR QUE ESCOLHER A WALDO</span>
+                <h2 class="section-title">Como Tornamos Sua Empresa Mais Competitiva</h2>
+                <p class="section-desc">
+                    Unimos conhecimento tributário avançado a uma rotina de acompanhamento constante para proteger seu caixa e impulsionar suas decisões.
+                </p>
+            </div>
+
+            <div class="pillars-grid">
+                <div class="pillar-card">
+                    <div class="pillar-icon"><i class="fa-solid fa-sack-dollar"></i></div>
+                    <h3>Organização das Obrigações</h3>
+                    <p>Escrituração minuciosa e conciliações rigorosas que eliminam riscos fiscais e mantêm suas certidões negativas sempre emitidas.</p>
+                </div>
+
+                <div class="pillar-card">
+                    <div class="pillar-icon"><i class="fa-solid fa-calendar-check"></i></div>
+                    <h3>Acompanhamento de Prazos</h3>
+                    <p>Calendário fiscal proativo com alertas prévios para que guias, declarações e parcelamentos nunca sejam pagos com juros ou multas.</p>
+                </div>
+
+                <div class="pillar-card">
+                    <div class="pillar-icon"><i class="fa-solid fa-user-tie"></i></div>
+                    <h3>Atendimento Consultivo</h3>
+                    <p>Você é atendido por profissionais experientes que entendem a fundo a dinâmica e os desafios operacionais do seu segmento de atuação.</p>
+                </div>
+
+                <div class="pillar-card">
+                    <div class="pillar-icon"><i class="fa-solid fa-chart-pie"></i></div>
+                    <h3>Apoio à Tomada de Decisões</h3>
+                    <p>Demonstrativos contábeis claros, DREs e análises de margem para você planejar investimentos e distribuições de lucros com segurança.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Serviços Contábeis Completos (10 Cards) -->
+    <section class="section servicos-section" id="servicos">
+        <div class="container">
+            <div class="section-header text-center">
+                <span class="section-subtitle-tag">SOLUÇÕES COMPLETAS</span>
+                <h2 class="section-title">Serviços Contábeis Especializados</h2>
+                <p class="section-desc">
+                    Toda a estrutura contábil, fiscal, trabalhista e societária que sua empresa precisa para operar com tranquilidade e máxima eficiência.
+                </p>
+            </div>
+
+            <div class="services-grid-10">
+                <!-- 1. Contabilidade Empresarial -->
+                <div class="service-card-modern">
+                    <div class="card-icon"><i class="fa-solid fa-file-invoice-dollar"></i></div>
+                    <h3>Contabilidade Empresarial</h3>
+                    <p>Escrituração contábil completa, balancetes mensais, conciliação bancária, DRE e elaboração das demonstrações financeiras obrigatórias.</p>
+                    <ul>
+                        <li><i class="fa-solid fa-check"></i> Balanços Patrimoniais e Balancetes</li>
+                        <li><i class="fa-solid fa-check"></i> Escrituração Contábil Digital (ECD)</li>
+                        <li><i class="fa-solid fa-check"></i> Distribuição isenta de lucros apurados</li>
+                    </ul>
+                </div>
+
+                <!-- 2. Abertura de Empresas -->
+                <div class="service-card-modern">
+                    <div class="card-icon"><i class="fa-solid fa-building"></i></div>
+                    <h3>Abertura de Empresas</h3>
+                    <p>Processo ágil e descomplicado de constituição na Junta Comercial, Receita Federal, Prefeitura e órgãos de classe com escolha do formato ideal.</p>
+                    <ul>
+                        <li><i class="fa-solid fa-check"></i> SLU, LTDA, Sociedades Médicas e S/A</li>
+                        <li><i class="fa-solid fa-check"></i> Emissão de CNPJ, Inscrição Estadual e CCM</li>
+                        <li><i class="fa-solid fa-check"></i> Obtenção de alvarás e licenças municipais</li>
+                    </ul>
+                </div>
+
+                <!-- 3. Alterações Cadastrais e Contratuais -->
+                <div class="service-card-modern">
+                    <div class="card-icon"><i class="fa-solid fa-file-pen"></i></div>
+                    <h3>Alterações Contratuais</h3>
+                    <p>Adequação do contrato social, entrada e saída de sócios, transferência de quotas, alteração de endereço, filial e inclusão de novos CNAEs.</p>
+                    <ul>
+                        <li><i class="fa-solid fa-check"></i> Redação de aditivos contratuais</li>
+                        <li><i class="fa-solid fa-check"></i> Atualização cadastral em todos os órgãos</li>
+                        <li><i class="fa-solid fa-check"></i> Regularização de quadro societário (QSA)</li>
+                    </ul>
+                </div>
+
+                <!-- 4. Departamento Fiscal e Tributário -->
+                <div class="service-card-modern">
+                    <div class="card-icon"><i class="fa-solid fa-calculator"></i></div>
+                    <h3>Departamento Fiscal</h3>
+                    <p>Apuração detalhada de tributos municipais, estaduais e federais (DAS, ICMS, ISS, PIS, COFINS, IRPJ, CSLL) e entrega do SPED Fiscal e EFD-Reinf.</p>
+                    <ul>
+                        <li><i class="fa-solid fa-check"></i> Emissão e conferência de guias de recolhimento</li>
+                        <li><i class="fa-solid fa-check"></i> Transmissão da DCTFWeb e EFD-Contribuições</li>
+                        <li><i class="fa-solid fa-check"></i> Segregação de produtos monofásicos e ST</li>
+                    </ul>
+                </div>
+
+                <!-- 5. Departamento Pessoal e Folha -->
+                <div class="service-card-modern">
+                    <div class="card-icon"><i class="fa-solid fa-users"></i></div>
+                    <h3>Departamento Pessoal & Folha</h3>
+                    <p>Gestão completa de colaboradores e pró-labore dos sócios, com cálculo de holerites, férias, 13º, rescisões e cumprimento rigoroso do eSocial.</p>
+                    <ul>
+                        <li><i class="fa-solid fa-check"></i> Folha de pagamento, pró-labore e eSocial</li>
+                        <li><i class="fa-solid fa-check"></i> Guias de FGTS Digital e encargos previdenciários</li>
+                        <li><i class="fa-solid fa-check"></i> Admissões, férias e assessoria trabalhista</li>
+                    </ul>
+                </div>
+
+                <!-- 6. Regularização de Empresas -->
+                <div class="service-card-modern">
+                    <div class="card-icon"><i class="fa-solid fa-triangle-exclamation"></i></div>
+                    <h3>Regularização de Empresas</h3>
+                    <p>Diagnóstico completo de pendências cadastrais e fiscais, desenquadramento de MEI, parcelamento de débitos e reativação de CNPJs suspensos.</p>
+                    <ul>
+                        <li><i class="fa-solid fa-check"></i> Baixa de pendências na Receita e SEFAZ</li>
+                        <li><i class="fa-solid fa-check"></i> Adesão a transações tributárias e parcelamentos</li>
+                        <li><i class="fa-solid fa-check"></i> Emissão de Certidões Negativas de Débitos (CND)</li>
+                    </ul>
+                </div>
+
+                <!-- 7. Planejamento Tributário (Destaque) -->
+                <div class="service-card-modern featured">
+                    <span class="service-tag">Destaque Consultivo</span>
+                    <div class="card-icon"><i class="fa-solid fa-magnifying-glass-dollar"></i></div>
+                    <h3>Planejamento Tributário</h3>
+                    <p>Estudo aprofundado para enquadrar seu negócio no regime fiscal de menor custo legal (Simples Nacional, Fator R, Lucro Presumido ou Lucro Real).</p>
+                    <ul>
+                        <li><i class="fa-solid fa-check"></i> Simulação comparativa entre regimes fiscais</li>
+                        <li><i class="fa-solid fa-check"></i> Aplicação estratégica do Fator R (redução a 6%)</li>
+                        <li><i class="fa-solid fa-check"></i> Prevenção contra riscos e autuações tributárias</li>
+                    </ul>
+                </div>
+
+                <!-- 8. Emissão e Controle de Notas -->
+                <div class="service-card-modern">
+                    <div class="card-icon"><i class="fa-solid fa-receipt"></i></div>
+                    <h3>Controle de Documentos Fiscais</h3>
+                    <p>Suporte na parametrização fiscal e emissão de notas fiscais de serviço (NFS-e), comércio (NF-e) e transportes (CT-e) com validação de alíquotas.</p>
+                    <ul>
+                        <li><i class="fa-solid fa-check"></i> Configuração de CFOP, NCM e retenções na fonte</li>
+                        <li><i class="fa-solid fa-check"></i> Auditoria de XMLs emitidos e recebidos</li>
+                        <li><i class="fa-solid fa-check"></i> Gestão de notas fiscais canceladas e inutilizadas</li>
+                    </ul>
+                </div>
+
+                <!-- 9. Orientação para Empreendedores -->
+                <div class="service-card-modern">
+                    <div class="card-icon"><i class="fa-solid fa-lightbulb"></i></div>
+                    <h3>Orientação para Empreendedores</h3>
+                    <p>Mentoria financeira e contábil para novos empresários entenderem a separação entre pessoa física e jurídica, custos tributários e precificação.</p>
+                    <ul>
+                        <li><i class="fa-solid fa-check"></i> Separação de patrimônio (PF vs PJ)</li>
+                        <li><i class="fa-solid fa-check"></i> Orientação para fixação de pró-labore saudável</li>
+                        <li><i class="fa-solid fa-check"></i> Apoio na escolha e compra de Certificado Digital</li>
+                    </ul>
+                </div>
+
+                <!-- 10. Apoio Administrativo & BPO -->
+                <div class="service-card-modern">
+                    <div class="card-icon"><i class="fa-solid fa-hand-holding-dollar"></i></div>
+                    <h3>Apoio Administrativo & BPO</h3>
+                    <p>Terceirização de rotinas financeiras do escritório: conciliação de contas a pagar e a receber, emissão de boletos e relatórios gerenciais.</p>
+                    <ul>
+                        <li><i class="fa-solid fa-check"></i> Conciliação diária de entradas e saídas</li>
+                        <li><i class="fa-solid fa-check"></i> Emissão e envio de relatórios de fluxo de caixa</li>
+                        <li><i class="fa-solid fa-check"></i> Integração direta com sistemas de gestão (ERPs)</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Ferramenta Interativa: Simulador Tributário -->
+    <section class="section simulador-section" id="simulador">
+        <div class="container">
+            <div class="simulador-card-wrapper">
+                <div class="sim-header text-center">
+                    <span class="badge-tag green-tag">
+                        <i class="fa-solid fa-calculator"></i> FERRAMENTA INTERATIVA GRATUITA
+                    </span>
+                    <h2 class="section-title">Calcule sua Economia Tributária Estimada</h2>
+                    <p class="section-desc">
+                        Ajuste seu faturamento e segmento para visualizar em tempo real a alíquota otimizada e o potencial de redução legal de impostos com a Waldo Assessoria.
+                    </p>
+                </div>
+
+                <div class="simulador-grid">
+                    <div class="sim-controls">
+                        <!-- Objetivo -->
+                        <div class="form-group-block">
+                            <label>1. Qual o seu objetivo atual?</label>
+                            <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px;">
+                                <button type="button" class="btn btn-contador option-btn selected" data-value="abrir">
+                                    <i class="fa-solid fa-plus"></i> Abrir novo CNPJ
+                                </button>
+                                <button type="button" class="btn btn-contador option-btn" data-value="trocar">
+                                    <i class="fa-solid fa-arrow-right-arrow-left"></i> Trocar de Contador
+                                </button>
+                                <button type="button" class="btn btn-contador option-btn" data-value="mei">
+                                    <i class="fa-solid fa-turn-up"></i> Migrar de MEI
+                                </button>
+                                <button type="button" class="btn btn-contador option-btn" data-value="existente">
+                                    <i class="fa-solid fa-briefcase"></i> Já tenho Empresa
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Segmento -->
+                        <div class="form-group-block">
+                            <label for="tipoSegmento">2. Segmento da sua empresa:</label>
+                            <select id="tipoSegmento" class="custom-select">
+                                <option value="servicos">Prestação de Serviços (TI, Saúde, Consultoria, Advogados, Engenharia)</option>
+                                <option value="comercio">Comércio / Lojas Físicas / E-commerce</option>
+                                <option value="industria">Indústria e Manufatura</option>
+                            </select>
+                        </div>
+
+                        <!-- Faturamento Mensal -->
+                        <div class="form-group-block">
+                            <div class="label-row">
+                                <label for="faturamentoRange">3. Faturamento Mensal Estimado:</label>
+                                <span class="range-display" id="rangeValueDisplay">R$ 50.000,00</span>
+                            </div>
+                            <input type="range" id="faturamentoRange" min="10000" max="500000" step="5000" value="50000" class="custom-range">
+                            <div class="range-ticks">
+                                <span>R$ 10 mil/mês</span>
+                                <span>R$ 250 mil/mês</span>
+                                <span>R$ 500 mil+/mês</span>
+                            </div>
+                        </div>
+
+                        <div class="sim-info-box">
+                            <i class="fa-solid fa-circle-info"></i>
+                            <span>O cálculo demonstrativo considera a aplicação técnica do Fator R no Simples Nacional e a correta segregação de receitas tributárias.</span>
+                        </div>
+                    </div>
+
+                    <!-- Painel de Resultados Calculados -->
+                    <div class="sim-result-panel">
+                        <div class="result-highlight-box">
+                            <span class="res-title">Regime Tributário Recomendado</span>
+                            <h3 id="regimeRecomendado">Simples Nacional (Anexo III - Fator R)</h3>
+                            <span class="res-badge-green" id="aliquotaEfetiva">Alíquota otimizada em ~6.0%</span>
+                        </div>
+
+                        <div class="metrics-row">
+                            <div class="m-card red-m">
+                                <span>Imposto Sem Planejamento:</span>
+                                <strong id="impostoAtual">R$ 7.750,00 /mês</strong>
+                            </div>
+                            <div class="m-card green-m">
+                                <span>Imposto com a Waldo:</span>
+                                <strong id="impostoOtimizado">R$ 3.000,00 /mês</strong>
+                            </div>
+                        </div>
+
+                        <div class="economy-banner">
+                            <div class="econ-icon"><i class="fa-solid fa-piggy-bank"></i></div>
+                            <div>
+                                <span class="econ-label">Economia Anual Estimada:</span>
+                                <span class="econ-amount" id="economiaAnual">R$ 57.000,00 /ano</span>
+                            </div>
+                        </div>
+
+                        <a href="https://wa.me/5511999999999" id="btnSimuladorWhatsApp" target="_blank" class="btn btn-whatsapp btn-full btn-lg">
+                            <i class="fa-brands fa-whatsapp"></i> Receber Minha Proposta Personalizada no WhatsApp
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Como Funciona a Transição (Passo a Passo) -->
+    <section class="section" id="como-funciona">
+        <div class="container">
+            <div class="section-header text-center">
+                <span class="section-subtitle-tag">TRANSIÇÃO SIMPLES & GRATUITA</span>
+                <h2 class="section-title">Como Funciona a Migração para a Waldo</h2>
+                <p class="section-desc">
+                    Você não precisa se preocupar com burocracia. Nossa equipe cuida de toda a transição documental junto ao seu contador anterior sem custo extra.
+                </p>
+            </div>
+
+            <div class="steps-grid">
+                <div class="step-card">
+                    <div class="step-number">1</div>
+                    <h3>Diagnóstico Gratuito</h3>
+                    <p>Analisamos a situação cadastral e fiscal do seu CNPJ, obrigações pendentes e oportunidades de economia imediata.</p>
+                </div>
+
+                <div class="step-card">
+                    <div class="step-number">2</div>
+                    <h3>Transferência de Arquivos</h3>
+                    <p>Nossa equipe faz a solicitação e migração de todos os livros fiscais, folhas e declarações anteriores sem atrito.</p>
+                </div>
+
+                <div class="step-card">
+                    <div class="step-number">3</div>
+                    <h3>Revisão Tributária</h3>
+                    <p>Aplicamos o novo plano tributário para garantir que sua empresa já recolha os impostos otimizados no mês seguinte.</p>
+                </div>
+
+                <div class="step-card">
+                    <div class="step-number">4</div>
+                    <h3>Acompanhamento Contínuo</h3>
+                    <p>Sua empresa passa a contar com suporte direto no WhatsApp, relatórios visuais e tranquilidade fiscal total.</p>
+                </div>
+            </div>
+
+            <div style="text-align: center; margin-top: 36px;">
+                <a href="https://wa.me/5511999999999?text=Quero%20fazer%20o%20diagn%C3%B3stico%20gratuito%20do%20meu%20CNPJ!" target="_blank" class="btn btn-whatsapp btn-lg">
+                    <i class="fa-brands fa-whatsapp"></i> Solicitar Diagnóstico Gratuito do Meu CNPJ
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Depoimentos de Clientes -->
+    <section class="section" style="background-color: var(--white); border-top: 1px solid var(--slate-200);" id="depoimentos">
+        <div class="container">
+            <div class="section-header text-center">
+                <span class="section-subtitle-tag">CASOS DE SUCESSO</span>
+                <h2 class="section-title">O Que Nossos Clientes Dizem</h2>
+                <p class="section-desc">
+                    Empresários que transformaram sua gestão fiscal e contábil com a assessoria de Waldo Ferreira.
+                </p>
+            </div>
+
+            <div class="depoimentos-grid">
+                <div class="depoimento-card">
+                    <div class="stars-row">
+                        <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                    </div>
+                    <p class="depoimento-texto">
+                        "A Waldo Ferreira Assessoria reorganizou todo o nosso planejamento tributário. Reduzimos quase 30% da nossa carga tributária mensal de forma 100% legal no Simples Nacional via Fator R. Atendimento ágil e impecável!"
+                    </p>
+                    <div class="depoimento-author">
+                        <div class="author-avatar">CE</div>
+                        <div>
+                            <h4 class="author-nome">Carlos Eduardo Santos</h4>
+                            <span class="author-cargo">CEO • Tech Solutions IT</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="depoimento-card">
+                    <div class="stars-row">
+                        <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                    </div>
+                    <p class="depoimento-texto">
+                        "Migrei minha clínica médica para a assessoria de Waldo e foi a melhor decisão. O atendimento pelo WhatsApp responde na hora e nunca mais precisei me preocupar com burocracia ou datas de impostos."
+                    </p>
+                    <div class="depoimento-author">
+                        <div class="author-avatar">JM</div>
+                        <div>
+                            <h4 class="author-nome">Dra. Juliana Mendes</h4>
+                            <span class="author-cargo">Sócia-Diretora • Clínica Saúde & Vida</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="depoimento-card">
+                    <div class="stars-row">
+                        <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                    </div>
+                    <p class="depoimento-texto">
+                        "Parceria transparente e de confiança! O suporte na folha de pagamento dos nossos 12 funcionários e a orientação precisa sobre ICMS e notas fiscais facilitaram imensamente o dia a dia do nosso comércio."
+                    </p>
+                    <div class="depoimento-author">
+                        <div class="author-avatar">RL</div>
+                        <div>
+                            <h4 class="author-nome">Roberto Lima</h4>
+                            <span class="author-cargo">Proprietário • Empório Lima</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Perguntas Frequentes (FAQ) -->
+    <section class="section" id="faq">
+        <div class="container container-narrow">
+            <div class="section-header text-center">
+                <span class="section-subtitle-tag">TIRE SUAS DÚVIDAS</span>
+                <h2 class="section-title">Perguntas Frequentes</h2>
+                <p class="section-desc">Respostas diretas e transparentes para as dúvidas mais comuns sobre nossos serviços.</p>
+            </div>
+
+            <div class="faq-accordion">
+                <div class="faq-item active">
+                    <button class="faq-question">
+                        <span>Como funciona o processo de troca de contador para a Waldo?</span>
+                        <i class="fa-solid fa-chevron-down"></i>
+                    </button>
+                    <div class="faq-answer">
+                        <p>É extremamente simples e sem dor de cabeça! Você apenas formaliza o encerramento do contrato com o contador anterior e nossa equipe assume toda a comunicação técnica para solicitar os livros contábeis, folhas de pagamento e declarações, sem cobrar nenhuma taxa de adesão.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <button class="faq-question">
+                        <span>Quanto custa a mensalidade contábil para o meu negócio?</span>
+                        <i class="fa-solid fa-chevron-down"></i>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Nossos honorários são calculados sob medida para o porte da sua empresa, regime tributário (Simples Nacional, Lucro Presumido ou Lucro Real), volume de notas fiscais emitidas e número de colaboradores. Faça uma simulação rápida em nosso site ou solicite uma proposta via WhatsApp.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <button class="faq-question">
+                        <span>Como envio meus comprovantes e documentos mensais?</span>
+                        <i class="fa-solid fa-chevron-down"></i>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Nossa rotina é 100% digital e prática! Você pode enviar extratos (OFX/PDF), notas e comprovantes diretamente pelo WhatsApp, por e-mail ou via pasta compartilhada em nuvem, sem necessidade de imprimir papel ou deslocamento físico.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <button class="faq-question">
+                        <span>Quanto tempo leva para abrir um novo CNPJ?</span>
+                        <i class="fa-solid fa-chevron-down"></i>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Em São Paulo e nos principais municípios do estado, o processo completo de abertura de SLU ou LTDA costuma levar entre 3 a 7 dias úteis após a aprovação da viabilidade na Junta Comercial e assinatura digital do contrato social.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <button class="faq-question">
+                        <span>O que é a regra do Fator R e como ela reduz os impostos?</span>
+                        <i class="fa-solid fa-chevron-down"></i>
+                    </button>
+                    <div class="faq-answer">
+                        <p>O Fator R é um mecanismo previsto na legislação do Simples Nacional que permite a prestadores de serviços intelectuais (como desenvolvedores, médicos, arquitetos e consultores) serem tributados no Anexo III (alíquota inicial de 6%) em vez do Anexo V (15,5%), desde que as despesas com folha de pagamento e pró-labore representem no mínimo 28% do faturamento.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <button class="faq-question">
+                        <span>O que já está incluso na mensalidade da assessoria?</span>
+                        <i class="fa-solid fa-chevron-down"></i>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Estão inclusos a escrituração contábil, apuração e emissão de guias de todos os impostos (federais, estaduais e municipais), folha de pagamento e pró-labore, eSocial, emissão de certidões negativas periódicas e atendimento direto com nossos contadores via WhatsApp e telefone.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contato & Formulário Corporativo -->
+    <section class="section contato-section" id="contato">
+        <div class="container">
+            <div class="contato-grid">
+                <div class="contato-info">
+                    <span class="section-subtitle-tag">FALE COM O CONTADOR</span>
+                    <h2 class="section-title">Pronto para Otimizar a Gestão da Sua Empresa?</h2>
+                    <p class="section-desc">
+                        Entre em contato por qualquer um de nossos canais diretos ou solicite uma proposta preenchendo o formulário ao lado.
+                    </p>
+
+                    <div class="contact-channels-list">
+                        <!-- WhatsApp -->
+                        <a href="https://wa.me/5511999999999?text=Ol%C3%A1%20Waldo!%20Gostaria%20de%20informa%C3%A7%C3%B5es%20sobre%20assessoria%20cont%C3%A1bil." target="_blank" class="channel-card">
+                            <div class="c-icon icon-wa"><i class="fa-brands fa-whatsapp"></i></div>
+                            <div>
+                                <strong>WhatsApp Atendimento Direto</strong>
+                                <span>(11) 99999-9999 • Resposta em poucos minutos</span>
+                            </div>
+                        </a>
+
+                        <!-- Telefone Fixo -->
+                        <a href="tel:1139998888" class="channel-card">
+                            <div class="c-icon icon-phone"><i class="fa-solid fa-phone"></i></div>
+                            <div>
+                                <strong>Telefone Fixo do Escritório</strong>
+                                <span>(11) 3999-8888 • Segunda a Sexta, das 08h às 18h</span>
+                            </div>
+                        </a>
+
+                        <!-- E-mail Direto -->
+                        <a href="#" class="channel-card" data-copy-email="waldoferreira@gmail.com">
+                            <div class="c-icon icon-mail"><i class="fa-solid fa-envelope"></i></div>
+                            <div>
+                                <strong>E-mail Direto (Clique para copiar)</strong>
+                                <span>waldoferreira@gmail.com</span>
+                            </div>
+                        </a>
+
+                        <!-- Endereço Presencial -->
+                        <div class="channel-card">
+                            <div class="c-icon icon-pin"><i class="fa-solid fa-location-dot"></i></div>
+                            <div>
+                                <strong>Endereço Presencial</strong>
+                                <span>Av. Paulista, 1000 - Sala 501 - Bela Vista, São Paulo/SP</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="corporate-form-card">
+                    <h3>Solicitar Proposta Sob Medida</h3>
+                    <p class="form-subtitle">Preencha os dados abaixo para receber uma estimativa detalhada para sua empresa.</p>
+
+                    <form class="contact-form" id="contactForm">
+                        <div class="form-field">
+                            <label for="nome">Seu Nome Completo *</label>
+                            <input type="text" id="nome" required placeholder="Ex: João da Silva">
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-field">
+                                <label for="email">E-mail Corporativo *</label>
+                                <input type="email" id="email" required placeholder="seuemail@empresa.com.br">
+                            </div>
+
+                            <div class="form-field">
+                                <label for="whatsapp">WhatsApp / Celular com DDD *</label>
+                                <input type="tel" id="whatsapp" required placeholder="(11) 99999-9999">
+                            </div>
+                        </div>
+
+                        <div class="form-field">
+                            <label for="faturamentoForm">Faturamento Médio Mensal:</label>
+                            <select id="faturamentoForm" class="custom-select">
+                                <option value="Ainda vou abrir a empresa">Ainda vou abrir a empresa</option>
+                                <option value="Até R$ 20.000 / mês">Até R$ 20.000 / mês</option>
+                                <option value="R$ 20.000 a R$ 50.000 / mês" selected>R$ 20.000 a R$ 50.000 / mês</option>
+                                <option value="R$ 50.000 a R$ 150.000 / mês">R$ 50.000 a R$ 150.000 / mês</option>
+                                <option value="Acima de R$ 150.000 / mês">Acima de R$ 150.000 / mês</option>
+                            </select>
+                        </div>
+
+                        <div class="form-field">
+                            <label for="mensagem">Como podemos ajudar sua empresa?</label>
+                            <textarea id="mensagem" rows="3" placeholder="Conte brevemente sobre o seu segmento, número de sócios ou dúvidas contábeis..."></textarea>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary btn-full btn-lg">
+                            <i class="fa-solid fa-paper-plane"></i> Enviar Solicitação de Proposta
+                        </button>
+
+                        <div class="form-feedback-alert" id="formFeedback"></div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Rodapé Corporativo -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <div class="brand-logo">
+                        <div class="logo-icon"><i class="fa-solid fa-scale-balanced"></i></div>
+                        <div class="logo-text">
+                            <span class="brand-name">WALDO FERREIRA</span>
+                            <span class="brand-sub">ASSESSORIA CONTÁBIL</span>
+                        </div>
+                    </div>
+                    <p class="footer-desc">
+                        Soluções contábeis modernas, planejamento tributário, gestão de folha de pagamento e assessoria societária estratégica para impulsionar o seu negócio com segurança fiscal.
+                    </p>
+                </div>
+
+                <div class="footer-col">
+                    <h4>Navegação</h4>
+                    <ul>
+                        <li><a href="#inicio">Início</a></li>
+                        <li><a href="#sobre">Sobre o Contador</a></li>
+                        <li><a href="#diferenciais">Diferenciais</a></li>
+                        <li><a href="#servicos">Serviços</a></li>
+                        <li><a href="#simulador">Simulador Tributário</a></li>
+                        <li><a href="login.html">Área do Contador</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-col">
+                    <h4>Principais Serviços</h4>
+                    <ul>
+                        <li><a href="#servicos">Contabilidade Empresarial</a></li>
+                        <li><a href="#servicos">Abertura de Empresas</a></li>
+                        <li><a href="#servicos">Planejamento Tributário</a></li>
+                        <li><a href="#servicos">Folha de Pagamento & DP</a></li>
+                        <li><a href="#servicos">Regularização Cadastral</a></li>
+                        <li><a href="#servicos">BPO Financeiro</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-col footer-contact">
+                    <h4>Contato & Endereço</h4>
+                    <p><i class="fa-solid fa-location-dot"></i> Av. Paulista, 1000 - Sala 501 - São Paulo/SP</p>
+                    <p><i class="fa-solid fa-phone"></i> (11) 3999-8888</p>
+                    <p><i class="fa-brands fa-whatsapp"></i> (11) 99999-9999</p>
+                    <p><i class="fa-solid fa-envelope"></i> waldoferreira@gmail.com</p>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p>&copy; 2026 Waldo Ferreira Assessoria Contábil. Todos os direitos reservados. CRC-SP 1SP234567/O-8.</p>
+                <button class="scroll-top-btn" id="scrollTopBtn" aria-label="Voltar ao topo">
+                    <span>Voltar ao topo</span>
+                    <i class="fa-solid fa-arrow-up"></i>
+                </button>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Botão Flutuante do WhatsApp com Mensagem de Boas-Vindas -->
+    <div class="whatsapp-float-wrapper">
+        <div class="whatsapp-popover" id="whatsappPopover">
+            <button class="popover-close" id="popoverCloseBtn" aria-label="Fechar popover"><i class="fa-solid fa-xmark"></i></button>
+            <div style="display: flex; align-items: center; gap: 8px;">
+                <span class="status-badge ativa" style="padding: 2px 8px; font-size: 0.7rem;">Online Agora</span>
+            </div>
+            <p><strong>Olá!</strong> Precisa de suporte ou simulação contábil para sua empresa?</p>
+            <a href="https://wa.me/5511999999999?text=Ol%C3%A1%20Waldo!%20Vim%20pelo%20site%20e%20gostaria%20de%20atendimento." target="_blank" class="btn btn-whatsapp btn-sm" style="margin-top: 4px;">
+                <i class="fa-brands fa-whatsapp"></i> Iniciar Conversa
+            </a>
+        </div>
+
+        <a href="https://wa.me/5511999999999?text=Ol%C3%A1%20Waldo!%20Vim%20pelo%20site%20e%20gostaria%20de%20atendimento." class="whatsapp-float-btn" target="_blank" aria-label="Falar no WhatsApp com Waldo Ferreira Assessoria Contábil">
+            <i class="fa-brands fa-whatsapp"></i>
+        </a>
+    </div>
+
+    <!-- Scripts -->
+    <script src="js/main.js?v=2"></script>
+</body>
 </html>
-

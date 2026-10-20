@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Parcelamentos Tributários | Waldo Ferreira Gestão Contábil</title>
+    <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Estilos -->
+    <link rel="stylesheet" href="../css/admin.css">
+</head>
+<body class="admin-body">
+
+    <!-- Sidebar Lateral -->
+    <aside class="admin-sidebar">
+        <div class="sidebar-header">
+            <a href="dashboard.html" class="sidebar-brand">
+                <div class="logo-icon"><i class="fa-solid fa-scale-balanced"></i></div>
+                <div>
+                    <div class="brand-title">WALDO GESTÃO</div>
+                    <div class="brand-badge">SISTEMA CONTÁBIL</div>
+                </div>
+            </a>
+            <button class="sidebar-close-btn" id="sidebarCloseBtn"><i class="fa-solid fa-xmark"></i></button>
+        </div>
+
+        <nav class="sidebar-nav">
+            <div class="nav-category">Geral</div>
+            <a href="dashboard.html" class="sidebar-link">
+                <i class="fa-solid fa-chart-line"></i>
+                <span>Dashboard Principal</span>
+            </a>
+            <a href="empresas.html" class="sidebar-link">
+                <i class="fa-solid fa-building"></i>
+                <span>Empresas & Clientes</span>
+            </a>
+
+            <div class="nav-category">Operação & Conformidade</div>
+            <a href="impostos.html" class="sidebar-link">
+                <i class="fa-solid fa-receipt"></i>
+                <span>Impostos & Fiscal</span>
+                <span class="counter-badge" id="badge-sidebar-impostos">0</span>
+            </a>
+            <a href="folha.html" class="sidebar-link">
+                <i class="fa-solid fa-users"></i>
+                <span>Folha de Pagamento</span>
+                <span class="counter-badge" id="badge-sidebar-folha">0</span>
+            </a>
+            <a href="servicos.html" class="sidebar-link">
+                <i class="fa-solid fa-list-check"></i>
+                <span>Serviços & Tarefas</span>
+                <span class="counter-badge" id="badge-sidebar-servicos">0</span>
+            </a>
+            <a href="notas-fiscais.html" class="sidebar-link">
+                <i class="fa-solid fa-file-invoice"></i>
+                <span>Notas Fiscais</span>
+                <span class="counter-badge" id="badge-sidebar-notas">0</span>
+            </a>
+            <a href="parcelamentos.html" class="sidebar-link active">
+                <i class="fa-solid fa-hand-holding-dollar"></i>
+                <span>Parcelamentos</span>
+            </a>
+            <a href="documentos.html" class="sidebar-link">
+                <i class="fa-solid fa-folder-open"></i>
+                <span>Documentos & Anexos</span>
+                <span class="counter-badge" id="badge-sidebar-documentos">0</span>
+            </a>
+
+            <div class="nav-category">Gestão & Controle</div>
+            <a href="agenda.html" class="sidebar-link">
+                <i class="fa-solid fa-calendar-days"></i>
+                <span>Agenda & Prazos</span>
+            </a>
+            <a href="relatorios.html" class="sidebar-link">
+                <i class="fa-solid fa-file-excel"></i>
+                <span>Relatórios & Exportação</span>
+            </a>
+            <a href="usuarios.html" class="sidebar-link">
+                <i class="fa-solid fa-user-gear"></i>
+                <span>Usuários & Perfis</span>
+            </a>
+            <a href="notificacoes.html" class="sidebar-link">
+                <i class="fa-solid fa-bell"></i>
+                <span>Central de Alertas</span>
+            </a>
+        </nav>
+
+        <div class="sidebar-footer">
+            <div class="user-mini-card">
+                <div class="user-avatar-mini">WF</div>
+                <div class="user-info-text">
+                    <strong>Waldo Ferreira</strong>
+                    <span>Contador Responsável</span>
+                </div>
+            </div>
+            <a href="../login.html" class="btn-sidebar-exit">
+                <i class="fa-solid fa-arrow-right-from-bracket"></i>
+                <span>Encerrar Demonstração</span>
+            </a>
+        </div>
+    </aside>
+
+    <!-- Área Principal -->
+    <main class="admin-main">
+        <header class="admin-topbar">
+            <div class="topbar-left">
+                <button class="menu-toggle-btn" id="menuToggleBtn"><i class="fa-solid fa-bars"></i></button>
+                <div class="page-header-info">
+                    <div class="page-breadcrumb">
+                        <a href="dashboard.html">Dashboard</a>
+                        <i class="fa-solid fa-chevron-right" style="font-size: 0.65rem;"></i>
+                        <span>Regularização Tributária</span>
+                    </div>
+                    <h1>Controle de Parcelamentos & Acordos Fiscais</h1>
+                </div>
+            </div>
+
+            <div class="topbar-right">
+                <div class="demo-status-pill">
+                    <span class="pulse-dot"></span>
+                    <span>Modo Demo</span>
+                </div>
+                <a href="../index.html" class="btn-icon-action" title="Ir para o Site Público"><i class="fa-solid fa-globe"></i></a>
+            </div>
+        </header>
+
+        <div class="admin-content">
+            <!-- Barra de Ações & Filtros -->
+            <div class="action-toolbar">
+                <div class="filter-group">
+                    <select id="filtroEmpresa" class="filter-select">
+                        <option value="Todas">Empresa: Todas</option>
+                    </select>
+
+                    <select id="filtroSituacao" class="filter-select">
+                        <option value="Todas">Situação do Acordo: Todas</option>
+                        <option value="Ativo">Ativo / Em Dia</option>
+                        <option value="Com Atraso">Com Atraso</option>
+                        <option value="Quitado">Quitado</option>
+                    </select>
+                </div>
+
+                <div style="display: flex; gap: 10px;">
+                    <button type="button" class="btn btn-sm btn-contador" onclick="exportarParcelamentosCSV()">
+                        <i class="fa-solid fa-file-csv"></i> Exportar CSV
+                    </button>
+                </div>
+            </div>
+
+            <!-- Tabela de Parcelamentos -->
+            <div class="table-card">
+                <div class="table-responsive">
+                    <table class="admin-table">
+                        <thead>
+                            <tr>
+                                <th>Empresa</th>
+                                <th>Órgão / Modalidade</th>
+                                <th>Nº do Acordo</th>
+                                <th>Adesão</th>
+                                <th>Progresso das Parcelas</th>
+                                <th>Valor Mensal</th>
+                                <th>Dia Venc.</th>
+                                <th>Situação</th>
+                                <th style="text-align: right;">Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tabelaParcelamentosCorpo"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- MODAL: DETALHES DO PARCELAMENTO & PARCELAS INDIVIDUAIS -->
+    <div class="admin-modal-backdrop" id="modalDetalhesParcelamento">
+        <div class="admin-modal modal-lg">
+            <div class="modal-header">
+                <div>
+                    <h3 id="modalParcEmpresa">Empresa</h3>
+                    <span id="modalParcAcordo" style="font-size: 0.8rem; color: var(--text-muted);">Acordo / Órgão</span>
+                </div>
+                <button class="modal-close-btn"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <div class="modal-body">
+                <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 22px; background: #f8fafc; padding: 14px; border-radius: var(--radius-md); border: 1px solid var(--border-color);">
+                    <div>
+                        <span style="font-size: 0.74rem; color: var(--text-muted); display: block;">Data de Adesão</span>
+                        <strong id="modalParcAdesao" style="font-size: 0.9rem;">-</strong>
+                    </div>
+                    <div>
+                        <span style="font-size: 0.74rem; color: var(--text-muted); display: block;">Valor da Parcela</span>
+                        <strong id="modalParcValor" style="font-size: 0.9rem;">-</strong>
+                    </div>
+                    <div>
+                        <span style="font-size: 0.74rem; color: var(--text-muted); display: block;">Vencimento Todo Dia</span>
+                        <strong id="modalParcDia" style="font-size: 0.9rem;">-</strong>
+                    </div>
+                    <div>
+                        <span style="font-size: 0.74rem; color: var(--text-muted); display: block;">Situação Atual</span>
+                        <span id="modalParcStatus">-</span>
+                    </div>
+                </div>
+
+                <h4 style="font-size: 0.92rem; margin-bottom: 12px; color: var(--text-primary);"><i class="fa-solid fa-list-ol"></i> Extrato Demonstrativo das Parcelas</h4>
+                
+                <div class="table-responsive">
+                    <table class="admin-table">
+                        <thead>
+                            <tr>
+                                <th>Nº Parcela</th>
+                                <th>Competência</th>
+                                <th>Vencimento</th>
+                                <th>Valor</th>
+                                <th>Data Pagamento</th>
+                                <th>Situação</th>
+                                <th style="text-align: right;">Ação</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tabelaParcelasIndividuais"></tbody>
+                    </table>
+                </div>
+
+                <div style="margin-top: 18px; padding-top: 14px; border-top: 1px solid var(--border-color);">
+                    <strong style="font-size: 0.84rem; display: block; margin-bottom: 4px;">Observações da Regularização:</strong>
+                    <p id="modalParcObs" style="font-size: 0.82rem; color: var(--text-secondary);"></p>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-contador" onclick="window.AdminUI.closeModal('modalDetalhesParcelamento')">Fechar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="../js/data.js"></script>
+    <script src="../js/admin.js"></script>
+
+    <script>
+        let currentParcelamentoId = null;
+
+        document.addEventListener('DOMContentLoaded', () => {
+            carregarSelectEmpresas();
+            renderizarTabela();
+            initFiltros();
+        });
+
+        function carregarSelectEmpresas() {
+            const empresas = window.DataStore.getEmpresas();
+            const selectFiltro = document.getElementById('filtroEmpresa');
+
+            empresas.forEach(e => {
+                const opt = document.createElement('option');
+                opt.value = e.id;
+                opt.textContent = e.nomeFantasia;
+                selectFiltro.appendChild(opt);
+            });
+        }
+
+        function getFiltrosAtuais() {
+            return {
+                empresaId: document.getElementById('filtroEmpresa').value,
+                situacao: document.getElementById('filtroSituacao').value
+            };
+        }
+
+        function renderizarTabela() {
+            const tbody = document.getElementById('tabelaParcelamentosCorpo');
+            if (!tbody) return;
+
+            const parcelamentos = window.DataStore.getParcelamentos(getFiltrosAtuais());
+
+            if (!parcelamentos.length) {
+                tbody.innerHTML = `
+                    <tr>
+                        <td colspan="9" style="text-align: center; padding: 40px; color: var(--text-muted);">
+                            <i class="fa-solid fa-hand-holding-dollar" style="font-size: 2rem; margin-bottom: 8px; display: block;"></i>
+                            Nenhum parcelamento encontrado para os filtros selecionados.
+                        </td>
+                    </tr>
+                `;
+                return;
+            }
+
+            tbody.innerHTML = parcelamentos.map(p => {
+                const emp = window.DataStore.getEmpresaById(p.empresaId);
+                const pct = Math.round((p.parcelasPagas / p.totalParcelas) * 100);
+
+                return `
+                    <tr>
+                        <td>
+                            <strong>${window.AdminUI.escapeHtml(emp ? emp.nomeFantasia : 'Empresa')}</strong>
+                        </td>
+                        <td>
+                            <strong style="color: var(--navy-900); font-size: 0.88rem;">${p.orgao}</strong>
+                        </td>
+                        <td><code style="font-size: 0.8rem; background: #f1f5f9; padding: 2px 6px; border-radius: 4px;">${p.numeroAcordo}</code></td>
+                        <td>${window.AdminUI.formatDate(p.dataAdesao)}</td>
+                        <td>
+                            <div style="display: flex; align-items: center; gap: 8px;">
+                                <div style="flex-grow: 1; height: 6px; background: #e2e8f0; border-radius: 3px; overflow: hidden; max-width: 100px;">
+                                    <div style="width: ${pct}%; height: 100%; background: var(--primary);"></div>
+                                </div>
+                                <span style="font-size: 0.78rem; font-weight: 700;">${p.parcelasPagas}/${p.totalParcelas} (${pct}%)</span>
+                            </div>
+                        </td>
+                        <td><strong>${window.AdminUI.formatCurrency(p.valorParcela)}</strong></td>
+                        <td>Dia ${p.diaVencimento}</td>
+                        <td>
+                            <span class="status-badge ${p.situacao.toLowerCase().replace(/ /g, '-')}">
+                                ${p.situacao}
+                            </span>
+                        </td>
+                        <td style="text-align: right;">
+                            <div class="action-btn-group" style="justify-content: flex-end;">
+                                <button type="button" class="btn-icon-action" title="Visualizar Extrato de Parcelas" onclick="verParcelas(${p.id})">
+                                    <i class="fa-solid fa-list-ol"></i>
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                `;
+            }).join('');
+        }
+
+        function initFiltros() {
+            document.getElementById('filtroEmpresa').addEventListener('change', renderizarTabela);
+            document.getElementById('filtroSituacao').addEventListener('change', renderizarTabela);
+        }
+
+        function verParcelas(id) {
+            const p = window.DataStore.getParcelamentos().find(item => item.id === Number(id));
+            if (!p) return;
+            currentParcelamentoId = p.id;
+
+            const emp = window.DataStore.getEmpresaById(p.empresaId);
+
+            document.getElementById('modalParcEmpresa').textContent = emp ? emp.nomeFantasia : 'Empresa';
+            document.getElementById('modalParcAcordo').textContent = `${p.orgao} • Acordo nº ${p.numeroAcordo}`;
+            document.getElementById('modalParcAdesao').textContent = window.AdminUI.formatDate(p.dataAdesao);
+            document.getElementById('modalParcValor').textContent = window.AdminUI.formatCurrency(p.valorParcela);
+            document.getElementById('modalParcDia').textContent = `Dia ${p.diaVencimento}`;
+            document.getElementById('modalParcStatus').innerHTML = `<span class="status-badge ${p.situacao.toLowerCase().replace(/ /g, '-')}">${p.situacao}</span>`;
+            document.getElementById('modalParcObs').textContent = p.observacoes || 'Nenhuma ressalva.';
+
+            renderizarExtratoParcelas(p);
+            window.AdminUI.openModal('modalDetalhesParcelamento');
+        }
+
+        function renderizarExtratoParcelas(p) {
+            const tbody = document.getElementById('tabelaParcelasIndividuais');
+            if (!tbody) return;
+
+            tbody.innerHTML = p.parcelasRecentes.map(item => `
+                <tr>
+                    <td><strong>Parcela ${item.numero} / ${p.totalParcelas}</strong></td>
+                    <td>${item.competencia}</td>
+                    <td>${window.AdminUI.formatDate(item.vencimento)}</td>
+                    <td><strong>${window.AdminUI.formatCurrency(item.valor)}</strong></td>
+                    <td>${item.dataPagamento ? window.AdminUI.formatDate(item.dataPagamento) : '<span style="color: var(--text-muted);">-</span>'}</td>
+                    <td>
+                        <span class="status-badge ${item.situacao.toLowerCase().replace(/ /g, '-')}">
+                            ${item.situacao}
+                        </span>
+                    </td>
+                    <td style="text-align: right;">
+                        ${item.situacao !== 'Paga' ? `
+                            <button type="button" class="btn btn-sm btn-primary" onclick="pagarParcelaDemo(${p.id}, ${item.numero})">
+                                <i class="fa-solid fa-receipt"></i> Pagar Demo
+                            </button>
+                        ` : `
+                            <span style="font-size: 0.75rem; color: var(--success); font-weight: 700;">
+                                <i class="fa-solid fa-circle-check"></i> Comprovante
+                            </span>
+                        `}
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        function pagarParcelaDemo(parcId, numero) {
+            const p = window.DataStore.pagarParcela(parcId, numero);
+            if (p) {
+                window.AdminUI.showToast(`Parcela nº ${numero} registrada como paga na demonstração!`, 'success');
+                const parcelamento = window.DataStore.getParcelamentos().find(item => item.id === parcId);
+                renderizarExtratoParcelas(parcelamento);
+                renderizarTabela();
+                window.AdminUI.updateSidebarCounters();
+            }
+        }
+
+        function exportarParcelamentosCSV() {
+            const parcelamentos = window.DataStore.getParcelamentos(getFiltrosAtuais());
+            const rows = parcelamentos.map(p => {
+                const emp = window.DataStore.getEmpresaById(p.empresaId);
+                return {
+                    "ID": p.id,
+                    "Empresa": emp ? emp.nomeFantasia : '',
+                    "Órgão": p.orgao,
+                    "Número do Acordo": p.numeroAcordo,
+                    "Data de Adesão": p.dataAdesao,
+                    "Total de Parcelas": p.totalParcelas,
+                    "Parcelas Pagas": p.parcelasPagas,
+                    "Valor da Parcela": p.valorParcela,
+                    "Dia Vencimento": p.diaVencimento,
+                    "Situação": p.situacao
+                };
+            });
+            window.DataStore.exportToCSV("parcelamentos_tributarios_waldo", rows);
+        }
+    </script>
+</body>
+</html>
