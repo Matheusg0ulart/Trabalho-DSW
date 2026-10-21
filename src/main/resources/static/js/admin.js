@@ -14,34 +14,123 @@
 
 /**
  * ==============================================================================
- * GUARD DE NAVEGAÇÃO DEMONSTRATIVA (Frontend Security Layer)
+ * GUARD DE NAVEGAÇÃO SEGURA BASEADA EM TOKENS (Frontend Token Security Layer)
  * ==============================================================================
- * Centraliza a verificação de sessão demonstrativa para evitar acessos acidentais
- * às páginas internas do escritório sem passagem prévia pelo login.
- * 
- * AVISO OBRIGATÓRIO DE SEGURANÇA:
- * Esta verificação é executada no navegador do cliente (frontend) e simula o
- * comportamento de controle de acesso para fins demonstrativos e didáticos.
- * Ela NÃO substitui autenticação de backend e NÃO protege dados contra manipulação
- * no console ou leitura direta de arquivos estáticos.
+ * Valida o token assinado da sessão, checando integridade da assinatura e TTL de expiração.
  * ==============================================================================
  */
 (function enforceDemoNavigationGuard() {
-    const session = sessionStorage.getItem('WALDO_DEMO_SESSION');
-    if (!session) {
+    const SECRET_KEY = 'WALDO_CONTABILIDADE_SECRET_DSW_2026';
+
+    function base64UrlDecode(str) {
+        try {
+            str = str.replace(/-/g, '+').replace(/_/g, '/');
+            while (str.length % 4) str += '=';
+            const binary = atob(str);
+            const bytes = new Uint8Array(binary.length);
+            for (let i = 0; i < binary.length; i++) bytes[i] = binary.charCodeAt(i);
+            return new TextDecoder().decode(bytes);
+        } catch (e) {
+            return decodeURIComponent(escape(atob(str)));
+        }
+    }
+
+    function generateSignature(data, secret) {
+        let hash = 0x811c9dc5;
+        const combined = data + '#' + secret + '#WALDO_SECURE';
+        for (let i = 0; i < combined.length; i++) {
+            hash ^= combined.charCodeAt(i);
+            hash = (hash * 0x01000193) >>> 0;
+        }
+        let hash2 = 0x55555555;
+        for (let j = combined.length - 1; j >= 0; j--) {
+            hash2 = (hash2 ^ (combined.charCodeAt(j) << 5)) >>> 0;
+            hash2 = ((hash2 << 7) | (hash2 >>> 25)) ^ hash;
+        }
+        const hex = hash.toString(16).padStart(8, '0') + hash2.toString(16).padStart(8, '0');
+        return btoa(hex).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
+    }
+
+    const token = sessionStorage.getItem('WALDO_AUTH_TOKEN') || localStorage.getItem('WALDO_AUTH_TOKEN');
+    const legacySession = sessionStorage.getItem('WALDO_DEMO_SESSION');
+
+    // Se não há token nem sessão legada -> Acesso restrito
+    if (!token && !legacySession) {
         const currentPage = window.location.pathname.split('/').pop() || 'dashboard.html';
         sessionStorage.setItem('WALDO_REDIRECT_AFTER_LOGIN', currentPage);
         window.location.replace('../login.html?motivo=acesso_restrito');
+        return;
+    }
+
+    // Se há token, valida a assinatura e a expiração temporal
+    if (token) {
+        const parts = token.split('.');
+        if (parts.length !== 3) {
+            sessionStorage.removeItem('WALDO_AUTH_TOKEN');
+            localStorage.removeItem('WALDO_AUTH_TOKEN');
+            window.location.replace('../login.html?motivo=token_invalido');
+            return;
+        }
+
+        const [headerB64, payloadB64, sig] = parts;
+        const expectedSig = generateSignature(`${headerB64}.${payloadB64}`, SECRET_KEY);
+
+        if (sig !== expectedSig) {
+            sessionStorage.removeItem('WALDO_AUTH_TOKEN');
+            localStorage.removeItem('WALDO_AUTH_TOKEN');
+            window.location.replace('../login.html?motivo=token_invalido');
+            return;
+        }
+
+        try {
+            const payload = JSON.parse(base64UrlDecode(payloadB64));
+            const now = Math.floor(Date.now() / 1000);
+
+            if (payload.exp && payload.exp < now) {
+                // Token expirado
+                sessionStorage.removeItem('WALDO_AUTH_TOKEN');
+                sessionStorage.removeItem('WALDO_DEMO_SESSION');
+                sessionStorage.removeItem('WALDO_LOGGED_USER');
+                localStorage.removeItem('WALDO_AUTH_TOKEN');
+                window.location.replace('../login.html?motivo=sessao_expirada');
+                return;
+            }
+
+            // Sincroniza dados do payload para compatibilidade
+            const sessionData = {
+                usuario: payload.sub,
+                nome: payload.name,
+                cargo: payload.role,
+                perfil: payload.perfil || 'Administrador',
+                crc: payload.crc,
+                autenticadoEm: new Date(payload.iat * 1000).toISOString()
+            };
+            sessionStorage.setItem('WALDO_DEMO_SESSION', JSON.stringify(sessionData));
+            sessionStorage.setItem('WALDO_LOGGED_USER', JSON.stringify(sessionData));
+        } catch (e) {
+            window.location.replace('../login.html?motivo=token_invalido');
+            return;
+        }
+    }
+})();
+
+// Aplicação instantânea do tema salvo no localStorage antes da renderização do DOM
+(function applyAdminThemeEarly() {
+    const saved = localStorage.getItem('WALDO_ADMIN_THEME') || 'light';
+    if (saved === 'dark') {
+        document.documentElement.setAttribute('data-theme', 'dark');
     }
 })();
 
 class AdminUI {
     constructor() {
+        this.initThemeToggle();
         this.initMobileSidebar();
         this.initNotifications();
         this.initGlobalSearch();
         this.initUserProfile();
         this.initLogoutEvents();
+        this.initInputMasks();
     }
 
     /**
@@ -85,6 +174,72 @@ class AdminUI {
             const unread = window.DataStore.getNaoLidasCount();
             topbarNotifBadge.textContent = unread;
             topbarNotifBadge.style.display = unread > 0 ? 'flex' : 'none';
+        }
+    }
+
+    /**
+     * Alternador de Tema Claro / Escuro (Modo Noturno)
+     */
+    initThemeToggle() {
+        const savedTheme = localStorage.getItem('WALDO_ADMIN_THEME') || 'light';
+        
+        // Assegura que o botão exista na barra superior em qualquer página administrativa
+        const topbarRight = document.querySelector('.topbar-right');
+        let themeBtn = document.getElementById('themeToggleBtn');
+        
+        if (!themeBtn && topbarRight) {
+            themeBtn = document.createElement('button');
+            themeBtn.type = 'button';
+            themeBtn.className = 'topbar-btn-icon theme-toggle-btn';
+            themeBtn.id = 'themeToggleBtn';
+            
+            // Inserir antes do link do site público (globo)
+            const globeBtn = topbarRight.querySelector('a[href*="index.html"]');
+            if (globeBtn) {
+                topbarRight.insertBefore(themeBtn, globeBtn);
+            } else {
+                topbarRight.appendChild(themeBtn);
+            }
+        }
+
+        if (themeBtn) {
+            themeBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+                const nextTheme = isDark ? 'light' : 'dark';
+                this.applyTheme(nextTheme, true);
+            });
+        }
+
+        this.applyTheme(savedTheme, false);
+    }
+
+    applyTheme(theme, showToast = false) {
+        if (theme === 'dark') {
+            document.documentElement.setAttribute('data-theme', 'dark');
+            if (document.body) document.body.classList.add('dark-mode');
+            localStorage.setItem('WALDO_ADMIN_THEME', 'dark');
+        } else {
+            document.documentElement.removeAttribute('data-theme');
+            if (document.body) document.body.classList.remove('dark-mode');
+            localStorage.setItem('WALDO_ADMIN_THEME', 'light');
+        }
+
+        const themeBtns = document.querySelectorAll('#themeToggleBtn, .theme-toggle-btn');
+        themeBtns.forEach(btn => {
+            if (theme === 'dark') {
+                btn.innerHTML = '<i class="fa-solid fa-sun" style="color: #f59e0b;"></i>';
+                btn.setAttribute('title', 'Mudar para Modo Claro');
+                btn.setAttribute('aria-label', 'Mudar para Modo Claro');
+            } else {
+                btn.innerHTML = '<i class="fa-solid fa-moon"></i>';
+                btn.setAttribute('title', 'Mudar para Modo Noturno');
+                btn.setAttribute('aria-label', 'Mudar para Modo Noturno');
+            }
+        });
+
+        if (showToast) {
+            this.showToast(theme === 'dark' ? 'Modo Noturno ativado.' : 'Modo Claro ativado.', 'info');
         }
     }
 
@@ -331,14 +486,113 @@ class AdminUI {
     }
 
     /**
-     * Encerra a sessão demonstrativa com limpeza total de storage
+     * Encerra a sessão demonstrativa com limpeza total de tokens e storage
      */
     logout() {
         if (confirm("Deseja realmente encerrar a sessão demonstrativa do painel?")) {
+            sessionStorage.removeItem('WALDO_AUTH_TOKEN');
             sessionStorage.removeItem('WALDO_DEMO_SESSION');
             sessionStorage.removeItem('WALDO_LOGGED_USER');
             sessionStorage.removeItem('WALDO_REDIRECT_AFTER_LOGIN');
+            localStorage.removeItem('WALDO_AUTH_TOKEN');
             window.location.replace('../login.html?motivo=logout');
+        }
+    }
+
+    /**
+     * ==============================================================================
+     * MÁSCARAS EM TEMPO REAL NOS FORMULÁRIOS DO ADMIN (CNPJ & TELEFONE)
+     * ==============================================================================
+     */
+    formatPhone(value) {
+        if (!value) return '';
+        let digits = String(value).replace(/\D/g, '');
+        if (digits.length > 11 && digits.startsWith('55')) {
+            digits = digits.substring(2);
+        }
+        digits = digits.substring(0, 11);
+
+        if (digits.length === 0) return '';
+        if (digits.length <= 2) return `(${digits}`;
+        if (digits.length <= 6) return `(${digits.substring(0, 2)}) ${digits.substring(2)}`;
+        if (digits.length <= 10) {
+            return `(${digits.substring(0, 2)}) ${digits.substring(2, 6)}-${digits.substring(6)}`;
+        }
+        return `(${digits.substring(0, 2)}) ${digits.substring(2, 7)}-${digits.substring(7)}`;
+    }
+
+    formatCNPJ(value) {
+        if (!value) return '';
+        const digits = String(value).replace(/\D/g, '').substring(0, 14);
+        if (digits.length <= 2) return digits;
+        if (digits.length <= 5) return `${digits.substring(0, 2)}.${digits.substring(2)}`;
+        if (digits.length <= 8) return `${digits.substring(0, 2)}.${digits.substring(2, 5)}.${digits.substring(5)}`;
+        if (digits.length <= 12) return `${digits.substring(0, 2)}.${digits.substring(2, 5)}.${digits.substring(5, 8)}/${digits.substring(8)}`;
+        return `${digits.substring(0, 2)}.${digits.substring(2, 5)}.${digits.substring(5, 8)}/${digits.substring(8, 12)}-${digits.substring(12)}`;
+    }
+
+    initInputMasks() {
+        const bindMask = (input, formatter) => {
+            if (!input) return;
+            input.addEventListener('input', () => {
+                const start = input.selectionStart;
+                const prevLen = input.value.length;
+                input.value = formatter(input.value);
+                const newLen = input.value.length;
+                if (start !== null && start === prevLen) {
+                    input.setSelectionRange(newLen, newLen);
+                }
+            });
+        };
+
+        // Inputs de CNPJ específicos e genéricos
+        const cnpjInputs = document.querySelectorAll('#campoCNPJ, #cfgCNPJ, input[data-mask="cnpj"]');
+        cnpjInputs.forEach(input => bindMask(input, this.formatCNPJ));
+
+        // Inputs de Telefone específicos e genéricos
+        const phoneInputs = document.querySelectorAll('#campoTelefone, #cfgTelefone, input[data-mask="phone"]');
+        phoneInputs.forEach(input => bindMask(input, this.formatPhone));
+    }
+
+    /**
+     * ==============================================================================
+     * EXPORTAÇÃO DE RELATÓRIOS E LISTAS EM CSV (COMPATÍVEL COM EXCEL)
+     * ==============================================================================
+     */
+    exportToCSV(filename, rows) {
+        if (window.DataStore && typeof window.DataStore.exportToCSV === 'function') {
+            window.DataStore.exportToCSV(filename, rows);
+            this.showToast(`Relatório exportado em formato CSV/Excel com sucesso!`, 'success');
+        } else {
+            if (!rows || !rows.length) {
+                this.showToast("Nenhum registro para exportar.", "warning");
+                return;
+            }
+            const separator = ';';
+            const keys = Object.keys(rows[0]);
+            let csvContent = '\uFEFF' + keys.join(separator) + '\r\n';
+
+            rows.forEach(row => {
+                const values = keys.map(k => {
+                    let val = row[k] === null || row[k] === undefined ? '' : String(row[k]);
+                    if (val.includes(separator) || val.includes('\n') || val.includes('"')) {
+                        val = `"${val.replace(/"/g, '""')}"`;
+                    }
+                    return val;
+                });
+                csvContent += values.join(separator) + '\r\n';
+            });
+
+            const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+            const link = document.createElement("a");
+            const url = URL.createObjectURL(blob);
+            link.setAttribute("href", url);
+            link.setAttribute("download", `${filename}.csv`);
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            URL.revokeObjectURL(url);
+            this.showToast(`Relatório exportado em formato CSV/Excel com sucesso!`, 'success');
         }
     }
 

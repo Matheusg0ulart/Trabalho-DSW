@@ -94,8 +94,9 @@
         </div>
     </div>
 
+    <script src="js/auth-token.js"></script>
     <script>
-        // Lógica do Login Demonstrativo com Segurança no Frontend
+        // Lógica do Login Demonstrativo com Segurança no Frontend Baseada em Tokens
         document.addEventListener('DOMContentLoaded', () => {
             const form = document.getElementById('loginForm');
             const emailInput = document.getElementById('loginEmail');
@@ -108,6 +109,7 @@
             const feedback = document.getElementById('loginFeedback');
             const btnEsqueci = document.getElementById('btnEsqueciSenha');
             const statusNotice = document.getElementById('statusNotice');
+            const lembrarLogin = document.getElementById('lembrarLogin');
 
             // Verifica motivos de redirecionamento na URL
             const urlParams = new URLSearchParams(window.location.search);
@@ -118,13 +120,25 @@
                 statusNotice.style.backgroundColor = '#fffbeb';
                 statusNotice.style.border = '1px solid #fde68a';
                 statusNotice.style.color = '#92400e';
-                statusNotice.innerHTML = '<i class="fa-solid fa-lock" style="margin-right: 6px;"></i> <strong>Sessão Demonstrativa Necessária:</strong> O acesso direto às telas de gestão contábil requer uma sessão ativa. Utilize o botão de acesso rápido abaixo para testar a navegação.';
+                statusNotice.innerHTML = '<i class="fa-solid fa-lock" style="margin-right: 6px;"></i> <strong>Sessão Requerida:</strong> O acesso às telas de gestão contábil exige um token de autenticação válido. Faça login ou use o Acesso Rápido abaixo.';
+            } else if (motivo === 'sessao_expirada') {
+                statusNotice.style.display = 'block';
+                statusNotice.style.backgroundColor = '#fef3c7';
+                statusNotice.style.border = '1px solid #fcd34d';
+                statusNotice.style.color = '#92400e';
+                statusNotice.innerHTML = '<i class="fa-solid fa-clock-rotate-left" style="margin-right: 6px;"></i> <strong>Sessão Expirada por Segurança:</strong> O tempo limite do token de acesso expirou. Faça login novamente para renovar a sessão.';
+            } else if (motivo === 'token_invalido') {
+                statusNotice.style.display = 'block';
+                statusNotice.style.backgroundColor = '#fee2e2';
+                statusNotice.style.border = '1px solid #fca5a5';
+                statusNotice.style.color = '#991b1b';
+                statusNotice.innerHTML = '<i class="fa-solid fa-shield-virus" style="margin-right: 6px;"></i> <strong>Assinatura de Sessão Inválida:</strong> O token foi adulterado ou corrompido. Nova autenticação obrigatória.';
             } else if (motivo === 'logout') {
                 statusNotice.style.display = 'block';
                 statusNotice.style.backgroundColor = '#f0fdf4';
                 statusNotice.style.border = '1px solid #bbf7d0';
                 statusNotice.style.color = '#166534';
-                statusNotice.innerHTML = '<i class="fa-solid fa-circle-check" style="margin-right: 6px;"></i> <strong>Sessão Encerrada com Sucesso:</strong> Os dados de sessão temporária foram limpos do seu navegador com segurança.';
+                statusNotice.innerHTML = '<i class="fa-solid fa-circle-check" style="margin-right: 6px;"></i> <strong>Sessão Encerrada com Sucesso:</strong> O token criptográfico foi destruído e a sessão encerrada com segurança.';
             }
 
             // Mostrar/Ocultar Senha
@@ -187,25 +201,27 @@
                 }
 
                 btnEntrar.disabled = true;
-                btnEntrarTexto.textContent = 'Iniciando sessão demonstrativa...';
+                btnEntrarTexto.textContent = 'Gerando token de sessão seguro...';
                 feedback.style.display = 'none';
 
                 setTimeout(() => {
-                    // ATENÇÃO: NUNCA armazenar senhas em localStorage, sessionStorage ou cookies!
-                    // Armazena apenas o identificador da sessão demonstrativa temporária:
-                    const sessionData = {
+                    const manterSessao = lembrarLogin && lembrarLogin.checked;
+                    // Token expira em 2 horas (7200s) por padrão ou 7 dias se "Manter sessão"
+                    const ttl = manterSessao ? 86400 * 7 : 7200;
+
+                    const userData = {
                         usuario: email,
                         nome: "Waldo Ferreira",
                         cargo: "Contador Responsável / Sócio",
                         perfil: "Administrador",
-                        origem: "Sessão Demonstrativa Frontend",
-                        autenticadoEm: new Date().toISOString()
+                        crc: "CRC-SP 1SP234567/O-8"
                     };
 
-                    sessionStorage.setItem('WALDO_DEMO_SESSION', JSON.stringify(sessionData));
-                    sessionStorage.setItem('WALDO_LOGGED_USER', JSON.stringify(sessionData));
+                    // Gera e salva o token de sessão assinado
+                    const token = window.WaldoAuth.createToken(userData, ttl);
+                    window.WaldoAuth.saveSession(token, manterSessao);
 
-                    // Redireciona para a página que o usuário tentou acessar ou para o dashboard
+                    // Redireciona para a página pendente ou dashboard
                     const destinoPendente = sessionStorage.getItem('WALDO_REDIRECT_AFTER_LOGIN');
                     sessionStorage.removeItem('WALDO_REDIRECT_AFTER_LOGIN');
 
@@ -215,7 +231,7 @@
                     } else {
                         window.location.href = 'admin/dashboard.html';
                     }
-                }, 500);
+                }, 400);
             }
 
             form.addEventListener('submit', (e) => {

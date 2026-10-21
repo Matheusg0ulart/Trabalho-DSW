@@ -314,7 +314,7 @@ body.admin-body {
 
 .admin-topbar {
     height: var(--topbar-height);
-    background-color: #ffffff;
+    background-color: var(--bg-card);
     border-bottom: 1px solid var(--border-color);
     padding: 0 32px;
     display: flex;
@@ -415,7 +415,7 @@ body.admin-body {
 }
 
 .topbar-search input:focus {
-    background-color: #ffffff;
+    background-color: var(--bg-card);
     border-color: var(--primary);
     box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
 }
@@ -650,7 +650,7 @@ body.admin-body {
     padding: 8px 12px;
     border: 1px solid var(--border-color);
     border-radius: var(--radius-md);
-    background-color: #ffffff;
+    background-color: var(--bg-card);
     font-size: 0.85rem;
     color: var(--text-primary);
     outline: none;
@@ -757,7 +757,7 @@ body.admin-body {
     height: 32px;
     border-radius: var(--radius-sm);
     border: 1px solid var(--border-color);
-    background-color: #ffffff;
+    background-color: var(--bg-card);
     color: var(--text-secondary);
     display: inline-flex;
     align-items: center;
@@ -806,7 +806,7 @@ body.admin-body {
 }
 
 .admin-modal {
-    background-color: #ffffff;
+    background-color: var(--bg-card);
     border-radius: var(--radius-xl);
     width: 100%;
     max-width: 760px;
@@ -1082,3 +1082,201 @@ body.admin-body {
         margin: 12px;
     }
 }
+
+/* ==============================================================================
+   MODO ESCURO / NOTURNO (DARK THEME) - ÁREA ADMINISTRATIVA
+   ============================================================================== */
+:root {
+    --theme-transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+}
+
+body.admin-body,
+.admin-topbar,
+.kpi-card,
+.chart-card,
+.table-card,
+.action-toolbar,
+.admin-modal,
+.topbar-btn-icon,
+.btn-icon-action,
+.topbar-search input {
+    transition: var(--theme-transition);
+}
+
+[data-theme="dark"], body.dark-mode {
+    --bg-main: #0a0f1d;
+    --bg-card: #111827;
+    --border-color: #1f293d;
+    --border-subtle: #162035;
+
+    --text-primary: #f8fafc;
+    --text-secondary: #94a3b8;
+    --text-muted: #64748b;
+
+    --admin-sidebar-bg: #060a15;
+
+    --primary-light: rgba(37, 99, 235, 0.16);
+    --gold-light: rgba(217, 119, 6, 0.16);
+    --success-light: rgba(16, 185, 129, 0.16);
+    --warning-light: rgba(245, 158, 11, 0.16);
+    --danger-light: rgba(239, 68, 68, 0.16);
+    --info-light: rgba(2, 132, 199, 0.16);
+    --purple-light: rgba(139, 92, 246, 0.16);
+
+    --shadow-subtle: 0 1px 3px 0 rgba(0, 0, 0, 0.4);
+    --shadow-card: 0 4px 6px -1px rgba(0, 0, 0, 0.45);
+    --shadow-dropdown: 0 10px 25px -5px rgba(0, 0, 0, 0.6);
+    --shadow-modal: 0 25px 50px -12px rgba(0, 0, 0, 0.7);
+}
+
+[data-theme="dark"] .admin-topbar,
+body.dark-mode .admin-topbar {
+    background-color: var(--bg-card);
+    border-bottom-color: var(--border-color);
+}
+
+[data-theme="dark"] .topbar-search input,
+body.dark-mode .topbar-search input {
+    background-color: var(--border-subtle);
+    border-color: var(--border-color);
+    color: var(--text-primary);
+}
+
+[data-theme="dark"] .topbar-search input:focus,
+body.dark-mode .topbar-search input:focus {
+    background-color: var(--bg-card);
+}
+
+[data-theme="dark"] .admin-table th,
+body.dark-mode .admin-table th {
+    background-color: #0d1527;
+    color: var(--text-secondary);
+    border-bottom-color: var(--border-color);
+}
+
+[data-theme="dark"] .admin-table td,
+body.dark-mode .admin-table td {
+    border-bottom-color: var(--border-color);
+    color: var(--text-secondary);
+}
+
+[data-theme="dark"] .admin-table tbody tr:hover,
+body.dark-mode .admin-table tbody tr:hover {
+    background-color: rgba(255, 255, 255, 0.03);
+}
+
+[data-theme="dark"] .notif-dropdown,
+body.dark-mode .notif-dropdown {
+    background-color: var(--bg-card);
+    border-color: var(--border-color);
+}
+
+[data-theme="dark"] .notif-item,
+body.dark-mode .notif-item {
+    border-bottom-color: var(--border-color);
+}
+
+[data-theme="dark"] .notif-item:hover,
+body.dark-mode .notif-item:hover {
+    background-color: var(--border-subtle);
+}
+
+[data-theme="dark"] .notif-item strong,
+body.dark-mode .notif-item strong {
+    color: var(--text-primary);
+}
+
+[data-theme="dark"] .admin-modal,
+body.dark-mode .admin-modal {
+    background-color: var(--bg-card);
+    border: 1px solid var(--border-color);
+}
+
+[data-theme="dark"] .modal-header,
+[data-theme="dark"] .modal-footer,
+body.dark-mode .modal-header,
+body.dark-mode .modal-footer {
+    border-color: var(--border-color);
+}
+
+[data-theme="dark"] .filter-input,
+[data-theme="dark"] .filter-select,
+body.dark-mode .filter-input,
+body.dark-mode .filter-select {
+    background-color: var(--border-subtle);
+    color: var(--text-primary);
+    border-color: var(--border-color);
+}
+
+[data-theme="dark"] .btn-icon-action,
+body.dark-mode .btn-icon-action {
+    background-color: var(--bg-card);
+    border-color: var(--border-color);
+    color: var(--text-secondary);
+}
+
+[data-theme="dark"] .btn-icon-action:hover,
+body.dark-mode .btn-icon-action:hover {
+    background-color: var(--border-subtle);
+    color: var(--text-primary);
+    border-color: var(--primary);
+}
+
+[data-theme="dark"] .form-group input,
+[data-theme="dark"] .form-group select,
+[data-theme="dark"] .form-group textarea,
+body.dark-mode .form-group input,
+body.dark-mode .form-group select,
+body.dark-mode .form-group textarea {
+    background-color: var(--border-subtle);
+    color: var(--text-primary);
+    border-color: var(--border-color);
+}
+
+[data-theme="dark"] .demo-status-pill,
+body.dark-mode .demo-status-pill {
+    background-color: rgba(245, 158, 11, 0.12);
+    border-color: rgba(245, 158, 11, 0.25);
+    color: #fbbf24;
+}
+
+[data-theme="dark"] .topbar-btn-icon,
+body.dark-mode .topbar-btn-icon {
+    border-color: var(--border-color);
+    color: var(--text-secondary);
+}
+
+[data-theme="dark"] .topbar-btn-icon:hover,
+body.dark-mode .topbar-btn-icon:hover {
+    background-color: var(--border-subtle);
+    color: var(--text-primary);
+}
+
+[data-theme="dark"] .topbar-btn-icon .notif-badge,
+body.dark-mode .topbar-btn-icon .notif-badge {
+    border-color: var(--bg-card);
+}
+
+/* Botão Alternador de Tema */
+.theme-toggle-btn {
+    position: relative;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.theme-toggle-btn i {
+    font-size: 1rem;
+    transition: transform 0.25s ease, color 0.25s ease;
+}
+
+.theme-toggle-btn:hover i {
+    transform: rotate(15deg);
+}
+
+[data-theme="dark"] .theme-toggle-btn i,
+body.dark-mode .theme-toggle-btn i {
+    color: #f59e0b;
+}
+
