@@ -191,57 +191,57 @@
                         <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 18px;">
                             <div class="form-field">
                                 <label>Nome Fantasia</label>
-                                <input type="text" id="cfgNomeFantasia" value="Waldo Ferreira Assessoria Contábil" required>
+                                <input type="text" id="cfgNomeFantasia" required>
                             </div>
                             <div class="form-field">
                                 <label>Razão Social</label>
-                                <input type="text" id="cfgRazaoSocial" value="Waldo Ferreira Assessoria & Consultoria Contábil Ltda" required>
+                                <input type="text" id="cfgRazaoSocial" required>
                             </div>
                         </div>
 
                         <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; margin-top: 14px;">
                             <div class="form-field">
-                                <label>CNPJ Demonstrativo</label>
-                                <input type="text" id="cfgCNPJ" value="11.222.333/0001-44 [Demonstrativo]" required data-mask="cnpj">
+                                <label>CNPJ do escritório</label>
+                                <input type="text" id="cfgCNPJ" required data-mask="cnpj">
                             </div>
                             <div class="form-field">
                                 <label>Registro CRC</label>
-                                <input type="text" id="cfgCRC" value="CRC-SP 1SP234567/O-8" required>
+                                <input type="text" id="cfgCRC" required>
                             </div>
                             <div class="form-field">
                                 <label>Contador Responsável</label>
-                                <input type="text" id="cfgResponsavel" value="Waldo Ferreira" required>
+                                <input type="text" id="cfgResponsavel" required>
                             </div>
                         </div>
 
                         <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; margin-top: 14px;">
                             <div class="form-field">
                                 <label>Telefone Fixo</label>
-                                <input type="text" id="cfgTelefone" value="(11) 3999-8888" required data-mask="phone">
+                                <input type="text" id="cfgTelefone" required data-mask="phone">
                             </div>
                             <div class="form-field">
                                 <label>WhatsApp Direto</label>
-                                <input type="text" id="cfgWhatsApp" value="(11) 99999-9999" required data-mask="phone">
+                                <input type="text" id="cfgWhatsApp" required data-mask="phone">
                             </div>
                             <div class="form-field">
                                 <label>E-mail Geral</label>
-                                <input type="email" id="cfgEmail" value="waldoferreira@gmail.com" required>
+                                <input type="email" id="cfgEmail" required>
                             </div>
                         </div>
 
                         <div class="form-field" style="margin-top: 14px;">
                             <label>Endereço Presencial</label>
-                            <input type="text" id="cfgEndereco" value="Av. Paulista, 1000 - Sala 501 - Bela Vista, São Paulo/SP - CEP 01310-100" required>
+                            <input type="text" id="cfgEndereco" required>
                         </div>
 
                         <div class="form-field" style="margin-top: 14px;">
                             <label>Horário de Atendimento</label>
-                            <input type="text" id="cfgHorario" value="Segunda a Sexta, das 08h00 às 18h00" required>
+                            <input type="text" id="cfgHorario" required>
                         </div>
 
                         <div style="margin-top: 24px;">
                             <button type="submit" class="btn btn-primary">
-                                <i class="fa-solid fa-floppy-disk"></i> Salvar Configurações Demonstrativas
+                                <i class="fa-solid fa-floppy-disk"></i> Salvar Dados do Escritório
                             </button>
                         </div>
                     </form>
@@ -277,9 +277,15 @@
                         </div>
                     </div>
 
+                    <div class="form-field" style="margin-top: 14px;">
+                        <label for="campoSenhaUsuario">Senha inicial (mínimo de 12 caracteres) *</label>
+                        <input type="password" id="campoSenhaUsuario" minlength="12" autocomplete="new-password" placeholder="Defina uma senha para o colaborador">
+                        <small id="ajudaSenhaUsuario" style="color: var(--text-muted);">Obrigatória ao criar; deixe vazia para manter a senha atual ao editar.</small>
+                    </div>
+
                     <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 14px;">
                         <div class="form-field">
-                            <label for="campoPerfilUsuario">Perfil de Acesso Demonstrativo *</label>
+                            <label for="campoPerfilUsuario">Perfil de Acesso *</label>
                             <select id="campoPerfilUsuario" class="filter-select" style="width: 100%;">
                                 <option value="Colaborador">Colaborador (Módulos Operacionais)</option>
                                 <option value="Administrador">Administrador (Acesso Total)</option>
@@ -305,7 +311,6 @@
 
     <!-- Scripts -->
     <script src="../js/data.js"></script>
-    <script src="../js/auth-token.js"></script>
     <script src="../js/admin.js"></script>
 
     <script>
@@ -313,6 +318,15 @@
             renderizarUsuarios();
             initTabs();
             initForms();
+            const office = window.DataStore.data.escritorio || {};
+            const officeFields = {
+                cfgNomeFantasia: 'nomeFantasia', cfgRazaoSocial: 'razaoSocial', cfgCNPJ: 'cnpj',
+                cfgCRC: 'crc', cfgResponsavel: 'responsavel', cfgTelefone: 'telefone',
+                cfgWhatsApp: 'whatsapp', cfgEmail: 'email', cfgEndereco: 'endereco', cfgHorario: 'horario'
+            };
+            Object.entries(officeFields).forEach(([inputId, field]) => {
+                if (office[field]) document.getElementById(inputId).value = office[field];
+            });
         });
 
         function initTabs() {
@@ -381,6 +395,8 @@
             document.getElementById('formUsuarioTitulo').textContent = 'Cadastrar Novo Colaborador';
             document.getElementById('formCadastroUsuario').reset();
             document.getElementById('usuarioId').value = '';
+            document.getElementById('campoSenhaUsuario').required = true;
+            document.getElementById('campoSenhaUsuario').value = '';
             window.AdminUI.openModal('modalFormUsuario');
         }
 
@@ -395,6 +411,8 @@
             document.getElementById('campoCargoUsuario').value = u.cargo;
             document.getElementById('campoPerfilUsuario').value = u.perfil;
             document.getElementById('campoSituacaoUsuario').value = u.situacao;
+            document.getElementById('campoSenhaUsuario').required = false;
+            document.getElementById('campoSenhaUsuario').value = '';
 
             window.AdminUI.openModal('modalFormUsuario');
         }
@@ -412,8 +430,14 @@
                     email: document.getElementById('campoEmailUsuario').value.trim(),
                     cargo: document.getElementById('campoCargoUsuario').value.trim(),
                     perfil: document.getElementById('campoPerfilUsuario').value,
-                    situacao: document.getElementById('campoSituacaoUsuario').value
+                    situacao: document.getElementById('campoSituacaoUsuario').value,
+                    senha: document.getElementById('campoSenhaUsuario').value
                 };
+
+                if (!id && userData.senha.length < 12) {
+                    window.AdminUI.showToast('A senha inicial deve ter pelo menos 12 caracteres.', 'warning');
+                    return;
+                }
 
                 window.DataStore.saveUsuario(userData);
                 window.AdminUI.closeModal('modalFormUsuario');
@@ -425,7 +449,22 @@
             const formEscritorio = document.getElementById('formDadosEscritorio');
             formEscritorio.addEventListener('submit', (e) => {
                 e.preventDefault();
-                window.AdminUI.showToast('Configurações do escritório atualizadas na demonstração!', 'success');
+                const atual = window.DataStore.data.escritorio || {};
+                window.DataStore.data.escritorio = {
+                    ...atual,
+                    nomeFantasia: document.getElementById('cfgNomeFantasia').value.trim(),
+                    razaoSocial: document.getElementById('cfgRazaoSocial').value.trim(),
+                    cnpj: document.getElementById('cfgCNPJ').value.trim(),
+                    crc: document.getElementById('cfgCRC').value.trim(),
+                    responsavel: document.getElementById('cfgResponsavel').value.trim(),
+                    telefone: document.getElementById('cfgTelefone').value.trim(),
+                    whatsapp: document.getElementById('cfgWhatsApp').value.trim(),
+                    email: document.getElementById('cfgEmail').value.trim(),
+                    endereco: document.getElementById('cfgEndereco').value.trim(),
+                    horario: document.getElementById('cfgHorario').value.trim()
+                };
+                window.DataStore.save();
+                window.AdminUI.showToast('Dados do escritório enviados ao servidor.', 'success');
             });
         }
     </script>

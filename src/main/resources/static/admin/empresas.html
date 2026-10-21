@@ -457,7 +457,6 @@
 
     <!-- Scripts -->
     <script src="../js/data.js"></script>
-    <script src="../js/auth-token.js"></script>
     <script src="../js/admin.js"></script>
 
     <script>
@@ -722,7 +721,7 @@
             const emp = window.DataStore.getEmpresaById(id);
             if (!emp) return;
             const novaSit = emp.situacao === 'Inativa' ? 'Ativa' : 'Inativa';
-            if (confirm(`Deseja alterar a situação da empresa "${emp.nomeFantasia}" para "${novaSit}" na demonstração?`)) {
+            if (confirm(`Deseja alterar a situação da empresa "${emp.nomeFantasia}" para "${novaSit}"?`)) {
                 window.DataStore.desativarEmpresa(id);
                 window.AdminUI.showToast(`Situação da empresa alterada para "${novaSit}" com sucesso!`, "info");
                 renderizarTabela();

@@ -547,8 +547,8 @@ function initContactForm() {
                     <div style="display: flex; gap: 12px; align-items: flex-start;">
                         <i class="fa-solid fa-circle-check" aria-hidden="true" style="font-size: 1.4rem; color: var(--green-600); margin-top: 2px;"></i>
                         <div>
-                            <strong>Solicitação Registrada no Modo Demonstrativo!</strong><br>
-                            Obrigado, <strong>${nome}</strong>. Seus dados foram salvos no ambiente demonstrativo do frontend. Como este site opera sem backend ou banco de dados ativo, clique abaixo para falar diretamente com o contador e receber seu orçamento imediato:<br><br>
+                            <strong>Continue pelo WhatsApp para enviar sua solicitação</strong><br>
+                            Obrigado, <strong>${nome}</strong>. O formulário ainda não envia os dados para o painel automaticamente. Use o botão abaixo para encaminhar sua mensagem ao contador:<br><br>
                             <a href="https://wa.me/5511999999999?text=${encodeURIComponent(whatsappMsg)}" target="_blank" rel="noopener noreferrer" class="btn btn-whatsapp btn-sm" style="display: inline-flex; margin-top: 4px;">
                                 <i class="fa-brands fa-whatsapp" aria-hidden="true"></i> Continuar Conversa no WhatsApp
                             </a>

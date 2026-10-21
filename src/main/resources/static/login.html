@@ -35,31 +35,31 @@
         <!-- Banner de Status de Navegação (Acesso Restrito ou Logout) -->
         <div id="statusNotice" style="display: none; margin-bottom: 16px; padding: 12px 14px; border-radius: var(--radius-md); font-size: 0.85rem; line-height: 1.4;"></div>
 
-        <!-- Banner Explicativo do Modo Demonstrativo -->
+        <!-- A autenticação é validada pelo backend e pelo usuário cadastrado no banco. -->
         <div class="demo-mode-alert" style="margin-bottom: 16px;">
             <i class="fa-solid fa-shield-halved" style="font-size: 1.25rem; color: var(--gold-500); margin-top: 2px;"></i>
             <div>
-                <strong>Navegação Demonstrativa do Frontend</strong><br>
-                Nesta etapa o frontend simula a proteção da área administrativa no navegador. Nenhuma senha real deve ser utilizada. Clique em <u>Acesso Rápido Demonstrativo</u> para iniciar.
+                <strong>Acesso seguro ao sistema</strong><br>
+                Entre com o e-mail e a senha cadastrados no banco de dados do escritório.
             </div>
         </div>
 
         <form id="loginForm" class="contact-form" novalidate>
             <div class="form-field">
-                <label for="loginEmail">E-mail Corporativo Demonstrativo</label>
+                    <label for="loginEmail">E-mail corporativo</label>
                 <div style="position: relative;">
-                    <input type="email" id="loginEmail" required maxlength="100" value="waldo@waldocontabilidade.com.br" placeholder="seu.nome@waldocontabilidade.com.br" style="padding-left: 38px;">
+                    <input type="email" id="loginEmail" required maxlength="180" placeholder="seu.nome@waldocontabilidade.com.br" style="padding-left: 38px;">
                     <i class="fa-solid fa-envelope" style="position: absolute; left: 14px; top: 50%; transform: translateY(-50%); color: var(--slate-400);"></i>
                 </div>
             </div>
 
             <div class="form-field">
                 <div style="display: flex; justify-content: space-between; align-items: center;">
-                    <label for="loginPassword">Senha Demonstrativa</label>
+                    <label for="loginPassword">Senha</label>
                     <a href="#" id="btnEsqueciSenha" style="font-size: 0.78rem; color: var(--navy-800); font-weight: 600;">Esqueceu a senha?</a>
                 </div>
                 <div class="input-password-wrap">
-                    <input type="password" id="loginPassword" required maxlength="100" value="demo2026" placeholder="••••••••" style="padding-left: 38px; width: 100%;">
+                    <input type="password" id="loginPassword" required maxlength="100" placeholder="Sua senha" style="padding-left: 38px; width: 100%;">
                     <i class="fa-solid fa-lock" style="position: absolute; left: 14px; top: 50%; transform: translateY(-50%); color: var(--slate-400);"></i>
                     <button type="button" class="toggle-password-btn" id="togglePasswordBtn" aria-label="Mostrar ou ocultar senha">
                         <i class="fa-solid fa-eye" id="togglePasswordIcon"></i>
@@ -67,22 +67,17 @@
                 </div>
             </div>
 
-            <div style="display: flex; align-items: center; justify-content: space-between; font-size: 0.84rem; color: var(--slate-600); margin-top: -6px;">
-                <label style="display: flex; align-items: center; gap: 8px; cursor: pointer;">
-                    <input type="checkbox" id="lembrarLogin" checked style="accent-color: var(--navy-900);">
-                    Manter sessão demonstrativa ativa
-                </label>
-            </div>
-
             <button type="submit" id="btnEntrar" class="btn btn-primary btn-full btn-lg" style="margin-top: 8px;">
                 <i class="fa-solid fa-right-to-bracket"></i>
                 <span id="btnEntrarTexto">Acessar Área do Contador</span>
             </button>
 
-            <!-- Botão de Acesso Rápido Demonstrativo -->
-            <button type="button" id="btnAcessoRapido" class="btn btn-gold btn-full" style="margin-top: 4px;">
-                <i class="fa-solid fa-bolt"></i> Acesso Rápido Demonstrativo (1-Clique)
+            <button type="button" id="btnAcessoDemo" class="btn btn-gold btn-full btn-lg" style="margin-top: 10px;">
+                <i class="fa-solid fa-eye"></i> Acessar Demonstração para Apresentação
             </button>
+            <p style="font-size: 0.78rem; color: var(--slate-500); margin: 8px 0 0; text-align: center;">
+                Usa dados fictícios neste navegador e não acessa o banco de dados.
+            </p>
 
             <div id="loginFeedback" class="form-feedback-alert" style="display: none; margin-top: 10px;"></div>
         </form>
@@ -94,9 +89,9 @@
         </div>
     </div>
 
-    <script src="js/auth-token.js"></script>
+    <script src="js/data.js"></script>
     <script>
-        // Lógica do Login Demonstrativo com Segurança no Frontend Baseada em Tokens
+        // Login real pela API Spring Security.
         document.addEventListener('DOMContentLoaded', () => {
             const form = document.getElementById('loginForm');
             const emailInput = document.getElementById('loginEmail');
@@ -105,11 +100,10 @@
             const togglePassIcon = document.getElementById('togglePasswordIcon');
             const btnEntrar = document.getElementById('btnEntrar');
             const btnEntrarTexto = document.getElementById('btnEntrarTexto');
-            const btnAcessoRapido = document.getElementById('btnAcessoRapido');
+            const btnAcessoDemo = document.getElementById('btnAcessoDemo');
             const feedback = document.getElementById('loginFeedback');
             const btnEsqueci = document.getElementById('btnEsqueciSenha');
             const statusNotice = document.getElementById('statusNotice');
-            const lembrarLogin = document.getElementById('lembrarLogin');
 
             // Verifica motivos de redirecionamento na URL
             const urlParams = new URLSearchParams(window.location.search);
@@ -120,25 +114,25 @@
                 statusNotice.style.backgroundColor = '#fffbeb';
                 statusNotice.style.border = '1px solid #fde68a';
                 statusNotice.style.color = '#92400e';
-                statusNotice.innerHTML = '<i class="fa-solid fa-lock" style="margin-right: 6px;"></i> <strong>Sessão Requerida:</strong> O acesso às telas de gestão contábil exige um token de autenticação válido. Faça login ou use o Acesso Rápido abaixo.';
+                statusNotice.innerHTML = '<i class="fa-solid fa-lock" style="margin-right: 6px;"></i> <strong>Sessão requerida:</strong> entre com sua conta cadastrada para acessar o sistema.';
             } else if (motivo === 'sessao_expirada') {
                 statusNotice.style.display = 'block';
                 statusNotice.style.backgroundColor = '#fef3c7';
                 statusNotice.style.border = '1px solid #fcd34d';
                 statusNotice.style.color = '#92400e';
-                statusNotice.innerHTML = '<i class="fa-solid fa-clock-rotate-left" style="margin-right: 6px;"></i> <strong>Sessão Expirada por Segurança:</strong> O tempo limite do token de acesso expirou. Faça login novamente para renovar a sessão.';
+                statusNotice.innerHTML = '<i class="fa-solid fa-clock-rotate-left" style="margin-right: 6px;"></i> <strong>Sessão encerrada:</strong> entre novamente para continuar.';
             } else if (motivo === 'token_invalido') {
                 statusNotice.style.display = 'block';
                 statusNotice.style.backgroundColor = '#fee2e2';
                 statusNotice.style.border = '1px solid #fca5a5';
                 statusNotice.style.color = '#991b1b';
-                statusNotice.innerHTML = '<i class="fa-solid fa-shield-virus" style="margin-right: 6px;"></i> <strong>Assinatura de Sessão Inválida:</strong> O token foi adulterado ou corrompido. Nova autenticação obrigatória.';
+                statusNotice.innerHTML = '<i class="fa-solid fa-shield-virus" style="margin-right: 6px;"></i> <strong>Credenciais inválidas:</strong> entre novamente com sua conta.';
             } else if (motivo === 'logout') {
                 statusNotice.style.display = 'block';
                 statusNotice.style.backgroundColor = '#f0fdf4';
                 statusNotice.style.border = '1px solid #bbf7d0';
                 statusNotice.style.color = '#166534';
-                statusNotice.innerHTML = '<i class="fa-solid fa-circle-check" style="margin-right: 6px;"></i> <strong>Sessão Encerrada com Sucesso:</strong> O token criptográfico foi destruído e a sessão encerrada com segurança.';
+                statusNotice.innerHTML = '<i class="fa-solid fa-circle-check" style="margin-right: 6px;"></i> <strong>Sessão encerrada com sucesso.</strong>';
             }
 
             // Mostrar/Ocultar Senha
@@ -154,10 +148,9 @@
                 }
             });
 
-            // "Esqueci a senha" demonstrativo
             btnEsqueci.addEventListener('click', (e) => {
                 e.preventDefault();
-                alert("Aviso de Segurança: Este ambiente é exclusivamente demonstrativo. Em produção, um link de recuperação com token temporário e expirável será enviado ao e-mail cadastrado.");
+                alert("Para redefinir sua senha, solicite ajuda ao administrador do escritório.");
             });
 
             function exibirErro(msg) {
@@ -171,13 +164,13 @@
                 feedback.innerHTML = `<i class="fa-solid fa-circle-exclamation"></i> ${msg}`;
             }
 
-            function autenticarDemonstracao() {
+            async function autenticar() {
                 const email = emailInput.value.trim();
-                const senha = passInput.value.trim();
+                const senha = passInput.value;
 
                 // 1. Validação de preenchimento
                 if (!email || !senha) {
-                    exibirErro('Por favor, informe o e-mail corporativo e a senha demonstrativos.');
+                    exibirErro('Informe seu e-mail e sua senha.');
                     return;
                 }
 
@@ -189,60 +182,43 @@
                 }
 
                 // 3. Validação de tamanho mínimo
-                if (senha.length < 4) {
-                    exibirErro('A senha demonstrativa deve possuir no mínimo 4 caracteres.');
-                    return;
-                }
-
-                // 4. Bloqueio preventivo contra caracteres de injeção de script
-                if (/[<>]/.test(email) || /[<>]/.test(senha)) {
-                    exibirErro('Caracteres inválidos detectados. Não utilize caracteres como < ou > nos campos.');
+                if (senha.length < 1) {
+                    exibirErro('Informe sua senha.');
                     return;
                 }
 
                 btnEntrar.disabled = true;
-                btnEntrarTexto.textContent = 'Gerando token de sessão seguro...';
+                btnEntrarTexto.textContent = 'Validando acesso...';
                 feedback.style.display = 'none';
-
-                setTimeout(() => {
-                    const manterSessao = lembrarLogin && lembrarLogin.checked;
-                    // Token expira em 2 horas (7200s) por padrão ou 7 dias se "Manter sessão"
-                    const ttl = manterSessao ? 86400 * 7 : 7200;
-
-                    const userData = {
-                        usuario: email,
-                        nome: "Waldo Ferreira",
-                        cargo: "Contador Responsável / Sócio",
-                        perfil: "Administrador",
-                        crc: "CRC-SP 1SP234567/O-8"
-                    };
-
-                    // Gera e salva o token de sessão assinado
-                    const token = window.WaldoAuth.createToken(userData, ttl);
-                    window.WaldoAuth.saveSession(token, manterSessao);
-
-                    // Redireciona para a página pendente ou dashboard
-                    const destinoPendente = sessionStorage.getItem('WALDO_REDIRECT_AFTER_LOGIN');
+                try {
+                    const credentials = btoa(unescape(encodeURIComponent(`${email}:${senha}`)));
+                    const response = await fetch('/api/auth/me', { headers: { Authorization: `Basic ${credentials}` } });
+                    if (!response.ok) throw new Error(response.status === 401 ? 'E-mail ou senha incorretos.' : 'Não foi possível conectar ao servidor.');
+                    const user = await response.json();
+                    sessionStorage.setItem('WALDO_API_AUTH', credentials);
+                    sessionStorage.setItem('WALDO_USER_SESSION', JSON.stringify({ nome: user.nome, cargo: user.cargo, perfil: user.perfil, usuario: user.email }));
+                    localStorage.removeItem('WALDO_API_AUTH');
+                    const destino = sessionStorage.getItem('WALDO_REDIRECT_AFTER_LOGIN');
                     sessionStorage.removeItem('WALDO_REDIRECT_AFTER_LOGIN');
-
-                    if (destinoPendente && !destinoPendente.includes('login.html')) {
-                        const target = destinoPendente.startsWith('admin/') ? destinoPendente : 'admin/' + destinoPendente;
-                        window.location.href = target;
-                    } else {
-                        window.location.href = 'admin/dashboard.html';
-                    }
-                }, 400);
+                    window.location.href = destino && !destino.includes('login.html') ? `admin/${destino.replace(/^admin\//, '')}` : 'admin/dashboard.html';
+                } catch (error) {
+                    exibirErro(error.message || 'Falha ao autenticar. Confira sua conexão e tente novamente.');
+                    btnEntrar.disabled = false;
+                    btnEntrarTexto.textContent = 'Acessar Área do Contador';
+                }
             }
 
             form.addEventListener('submit', (e) => {
                 e.preventDefault();
-                autenticarDemonstracao();
+                autenticar();
             });
 
-            btnAcessoRapido.addEventListener('click', () => {
-                emailInput.value = 'waldo@waldocontabilidade.com.br';
-                passInput.value = 'demo2026';
-                autenticarDemonstracao();
+            btnAcessoDemo.addEventListener('click', () => {
+                sessionStorage.removeItem('WALDO_API_AUTH');
+                sessionStorage.removeItem('WALDO_USER_SESSION');
+                sessionStorage.setItem('WALDO_PRESENTATION_DEMO', '1');
+                window.DataStore.resetToDefault();
+                window.location.href = 'admin/dashboard.html';
             });
         });
     </script>

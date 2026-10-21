@@ -6,7 +6,7 @@
  * - Sidebar com marcação do módulo ativo e contadores dinâmicos
  * - Topbar com notificações, busca e perfil
  * - Sistema de Modais reutilizáveis
- * - Toast alerts para feedback visual de ações demonstrativas
+ * - Toast alerts para feedback de operações
  * - Formatadores de moeda (BRL), CNPJ e datas (pt-BR)
  * - Exportação de relatórios
  * ==============================================================================
@@ -16,101 +16,36 @@
  * ==============================================================================
  * GUARD DE NAVEGAÇÃO SEGURA BASEADA EM TOKENS (Frontend Token Security Layer)
  * ==============================================================================
- * Valida o token assinado da sessão, checando integridade da assinatura e TTL de expiração.
+ * Valida a sessão com o backend antes de exibir os módulos privados.
  * ==============================================================================
  */
-(function enforceDemoNavigationGuard() {
-    const SECRET_KEY = 'WALDO_CONTABILIDADE_SECRET_DSW_2026';
-
-    function base64UrlDecode(str) {
-        try {
-            str = str.replace(/-/g, '+').replace(/_/g, '/');
-            while (str.length % 4) str += '=';
-            const binary = atob(str);
-            const bytes = new Uint8Array(binary.length);
-            for (let i = 0; i < binary.length; i++) bytes[i] = binary.charCodeAt(i);
-            return new TextDecoder().decode(bytes);
-        } catch (e) {
-            return decodeURIComponent(escape(atob(str)));
-        }
+(async function enforceBackendSession() {
+    if (sessionStorage.getItem('WALDO_PRESENTATION_DEMO') === '1') {
+        sessionStorage.setItem('WALDO_USER_SESSION', JSON.stringify({
+            nome: 'Waldo Ferreira', cargo: 'Modo de apresentação', perfil: 'DEMONSTRAÇÃO'
+        }));
+        return;
     }
-
-    function generateSignature(data, secret) {
-        let hash = 0x811c9dc5;
-        const combined = data + '#' + secret + '#WALDO_SECURE';
-        for (let i = 0; i < combined.length; i++) {
-            hash ^= combined.charCodeAt(i);
-            hash = (hash * 0x01000193) >>> 0;
-        }
-        let hash2 = 0x55555555;
-        for (let j = combined.length - 1; j >= 0; j--) {
-            hash2 = (hash2 ^ (combined.charCodeAt(j) << 5)) >>> 0;
-            hash2 = ((hash2 << 7) | (hash2 >>> 25)) ^ hash;
-        }
-        const hex = hash.toString(16).padStart(8, '0') + hash2.toString(16).padStart(8, '0');
-        return btoa(hex).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
-    }
-
-    const token = sessionStorage.getItem('WALDO_AUTH_TOKEN') || localStorage.getItem('WALDO_AUTH_TOKEN');
-    const legacySession = sessionStorage.getItem('WALDO_DEMO_SESSION');
-
-    // Se não há token nem sessão legada -> Acesso restrito
-    if (!token && !legacySession) {
+    const authorization = sessionStorage.getItem('WALDO_API_AUTH');
+    if (!authorization) {
         const currentPage = window.location.pathname.split('/').pop() || 'dashboard.html';
         sessionStorage.setItem('WALDO_REDIRECT_AFTER_LOGIN', currentPage);
         window.location.replace('../login.html?motivo=acesso_restrito');
         return;
     }
-
-    // Se há token, valida a assinatura e a expiração temporal
-    if (token) {
-        const parts = token.split('.');
-        if (parts.length !== 3) {
-            sessionStorage.removeItem('WALDO_AUTH_TOKEN');
-            localStorage.removeItem('WALDO_AUTH_TOKEN');
-            window.location.replace('../login.html?motivo=token_invalido');
-            return;
-        }
-
-        const [headerB64, payloadB64, sig] = parts;
-        const expectedSig = generateSignature(`${headerB64}.${payloadB64}`, SECRET_KEY);
-
-        if (sig !== expectedSig) {
-            sessionStorage.removeItem('WALDO_AUTH_TOKEN');
-            localStorage.removeItem('WALDO_AUTH_TOKEN');
-            window.location.replace('../login.html?motivo=token_invalido');
-            return;
-        }
-
-        try {
-            const payload = JSON.parse(base64UrlDecode(payloadB64));
-            const now = Math.floor(Date.now() / 1000);
-
-            if (payload.exp && payload.exp < now) {
-                // Token expirado
-                sessionStorage.removeItem('WALDO_AUTH_TOKEN');
-                sessionStorage.removeItem('WALDO_DEMO_SESSION');
-                sessionStorage.removeItem('WALDO_LOGGED_USER');
-                localStorage.removeItem('WALDO_AUTH_TOKEN');
-                window.location.replace('../login.html?motivo=sessao_expirada');
-                return;
-            }
-
-            // Sincroniza dados do payload para compatibilidade
-            const sessionData = {
-                usuario: payload.sub,
-                nome: payload.name,
-                cargo: payload.role,
-                perfil: payload.perfil || 'Administrador',
-                crc: payload.crc,
-                autenticadoEm: new Date(payload.iat * 1000).toISOString()
-            };
-            sessionStorage.setItem('WALDO_DEMO_SESSION', JSON.stringify(sessionData));
-            sessionStorage.setItem('WALDO_LOGGED_USER', JSON.stringify(sessionData));
-        } catch (e) {
-            window.location.replace('../login.html?motivo=token_invalido');
-            return;
-        }
+    try {
+        const response = await fetch('/api/auth/me', { headers: { Authorization: `Basic ${authorization}` } });
+        if (!response.ok) throw new Error('Sessão inválida');
+        const user = await response.json();
+        sessionStorage.setItem('WALDO_USER_SESSION', JSON.stringify({ usuario: user.email, nome: user.nome, cargo: user.cargo, perfil: user.perfil }));
+    } catch (error) {
+        sessionStorage.removeItem('WALDO_API_AUTH');
+        sessionStorage.removeItem('WALDO_USER_SESSION');
+        sessionStorage.removeItem('WALDO_DEMO_SESSION');
+        sessionStorage.removeItem('WALDO_PRESENTATION_DEMO');
+        const currentPage = window.location.pathname.split('/').pop() || 'dashboard.html';
+        sessionStorage.setItem('WALDO_REDIRECT_AFTER_LOGIN', currentPage);
+        window.location.replace('../login.html?motivo=sessao_expirada');
     }
 })();
 
@@ -426,16 +361,6 @@ class AdminUI {
     /**
      * Restaura os dados padrão para demonstração
      */
-    resetDemoData() {
-        if (confirm("Deseja restaurar todos os dados demonstrativos para os valores originais do escritório?")) {
-            if (window.DataStore) {
-                window.DataStore.resetToDefault();
-                this.showToast("Dados demonstrativos restaurados com sucesso!", "info");
-                setTimeout(() => window.location.reload(), 600);
-            }
-        }
-    }
-
     // ==========================================
     // UTILITÁRIOS DE FORMATAÇÃO (PT-BR)
     // ==========================================
@@ -459,7 +384,7 @@ class AdminUI {
      */
     initUserProfile() {
         try {
-            const sessionStr = sessionStorage.getItem('WALDO_DEMO_SESSION');
+            const sessionStr = sessionStorage.getItem('WALDO_USER_SESSION');
             if (!sessionStr) return;
             const user = JSON.parse(sessionStr);
             document.querySelectorAll('.user-info-text strong').forEach(el => {
@@ -474,7 +399,7 @@ class AdminUI {
     }
 
     /**
-     * Vincula todos os gatilhos de encerramento de sessão demonstrativa
+     * Vincula os gatilhos de encerramento da sessão
      */
     initLogoutEvents() {
         document.querySelectorAll('.btn-sidebar-exit, .btn-logout').forEach(btn => {
@@ -486,15 +411,17 @@ class AdminUI {
     }
 
     /**
-     * Encerra a sessão demonstrativa com limpeza total de tokens e storage
+     * Encerra a sessão removendo a credencial mantida nesta aba
      */
     logout() {
-        if (confirm("Deseja realmente encerrar a sessão demonstrativa do painel?")) {
-            sessionStorage.removeItem('WALDO_AUTH_TOKEN');
+        if (confirm("Deseja realmente encerrar sua sessão?")) {
+            sessionStorage.removeItem('WALDO_USER_SESSION');
             sessionStorage.removeItem('WALDO_DEMO_SESSION');
             sessionStorage.removeItem('WALDO_LOGGED_USER');
             sessionStorage.removeItem('WALDO_REDIRECT_AFTER_LOGIN');
-            localStorage.removeItem('WALDO_AUTH_TOKEN');
+            sessionStorage.removeItem('WALDO_API_AUTH');
+            sessionStorage.removeItem('WALDO_PRESENTATION_DEMO');
+            localStorage.removeItem('WALDO_API_AUTH');
             window.location.replace('../login.html?motivo=logout');
         }
     }
@@ -627,4 +554,8 @@ document.addEventListener('DOMContentLoaded', () => {
     window.AdminUI = new AdminUI();
     window.AdminUI.updateSidebarCounters();
     window.AdminUI.bindModalEvents();
+    if (sessionStorage.getItem('WALDO_PRESENTATION_DEMO') === '1') {
+        const notice = document.querySelector('.admin-banner-notice .notice-text > div');
+        if (notice) notice.innerHTML = '<strong>Modo de demonstração para apresentação</strong> — Estes registros são fictícios e ficam salvos apenas neste navegador.';
+    }
 });

@@ -246,7 +246,6 @@
 
     <!-- Scripts -->
     <script src="../js/data.js"></script>
-    <script src="../js/auth-token.js"></script>
     <script src="../js/admin.js"></script>
 
     <script>
@@ -394,7 +393,7 @@
         function pagarParcelaDemo(parcId, numero) {
             const p = window.DataStore.pagarParcela(parcId, numero);
             if (p) {
-                window.AdminUI.showToast(`Parcela nº ${numero} registrada como paga na demonstração!`, 'success');
+                window.AdminUI.showToast(`Parcela nº ${numero} registrada como paga.`, 'success');
                 const parcelamento = window.DataStore.getParcelamentos().find(item => item.id === parcId);
                 renderizarExtratoParcelas(parcelamento);
                 renderizarTabela();

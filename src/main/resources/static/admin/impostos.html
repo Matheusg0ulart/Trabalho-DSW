@@ -286,7 +286,6 @@
 
     <!-- Scripts -->
     <script src="../js/data.js"></script>
-    <script src="../js/auth-token.js"></script>
     <script src="../js/admin.js"></script>
 
     <script>
@@ -385,7 +384,7 @@
                         <td style="text-align: right;">
                             <div class="action-btn-group" style="justify-content: flex-end;">
                                 ${i.situacao !== 'Concluída' ? `
-                                    <button type="button" class="btn-icon-action success" title="Concluir / Gerar Recibo Demonstrativo" onclick="concluirObrigacao(${i.id})">
+                                    <button type="button" class="btn-icon-action success" title="Marcar obrigação como concluída" onclick="concluirObrigacao(${i.id})">
                                         <i class="fa-solid fa-check"></i>
                                     </button>
                                 ` : ''}
@@ -409,7 +408,7 @@
         function concluirObrigacao(id) {
             const imp = window.DataStore.concluirImposto(id);
             if (imp) {
-                window.AdminUI.showToast(`Obrigação "${imp.tipo}" concluída com sucesso! Recibo gerado: ${imp.protocolo}`, 'success');
+                window.AdminUI.showToast(`Obrigação "${imp.tipo}" marcada como concluída.`, 'success');
                 renderizarTabela();
                 window.AdminUI.updateSidebarCounters();
             }

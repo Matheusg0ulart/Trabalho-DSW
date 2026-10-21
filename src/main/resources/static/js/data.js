@@ -1,10 +1,8 @@
 /**
  * ==============================================================================
- * WALDO FERREIRA ASSESSORIA CONTÁBIL - DATA STORE CENTRALIZADO (DEMO)
+ * WALDO FERREIRA ASSESSORIA CONTÁBIL - CAMADA DE DADOS DA API
  * ==============================================================================
- * Este arquivo centraliza todas as estruturas de dados demonstrativas do sistema.
- * Não utiliza banco de dados real (MySQL/PostgreSQL), servindo como camada desacoplada
- * que simula uma API para o frontend, facilitando uma futura integração com backend.
+ * Mantém a interface síncrona existente e sincroniza os cadastros com a API Spring.
  * 
  * Permite persistência temporária no LocalStorage para que alterações feitas na UI
  * (como cadastrar empresa, concluir obrigação, atualizar folha) reflitam em tempo real
@@ -13,6 +11,13 @@
  */
 
 const STORAGE_KEY = 'WALDO_CONTABILIDADE_DEMO_DATA_V1';
+const API_AUTH_KEY = 'WALDO_API_AUTH';
+const API_COLLECTIONS = {
+    empresas: '/api/empresas', impostos: '/api/impostos', folha: '/api/folhas',
+    servicos: '/api/servicos', notasFiscais: '/api/notas-fiscais',
+    parcelamentos: '/api/parcelamentos', documentos: '/api/documentos',
+    notificacoes: '/api/notificacoes'
+};
 
 const DEFAULT_DATA = {
     escritorio: {
@@ -832,6 +837,10 @@ const DEFAULT_DATA = {
 class WaldoDataStore {
     constructor() {
         this.data = this.load();
+        this.saveLocalCache();
+        this.apiSnapshot = null;
+        this.persistQueue = Promise.resolve();
+        this.ready = this.hydrateFromApi();
     }
 
     load() {
@@ -848,9 +857,173 @@ class WaldoDataStore {
 
     save() {
         try {
-            localStorage.setItem(STORAGE_KEY, JSON.stringify(this.data));
+            this.saveLocalCache();
         } catch (e) {
             console.error("Erro ao salvar dados no localStorage", e);
+        }
+        if (this.apiSnapshot) {
+            this.persistQueue = this.persistQueue.then(() => this.persistChanges()).catch(error => {
+                console.error('Falha na fila de sincronização da API:', error);
+            });
+        }
+    }
+
+    saveLocalCache() {
+        const safeCopy = JSON.parse(JSON.stringify(this.data));
+        (safeCopy.usuarios || []).forEach(user => delete user.senha);
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(safeCopy));
+    }
+
+    async apiRequest(url, options = {}) {
+        const auth = sessionStorage.getItem(API_AUTH_KEY);
+        const headers = new Headers(options.headers || {});
+        if (auth) headers.set('Authorization', `Basic ${auth}`);
+        if (options.body) headers.set('Content-Type', 'application/json');
+        if (options.method && !['GET', 'HEAD'].includes(options.method.toUpperCase())) {
+            const csrfResponse = await fetch('/api/auth/csrf', { headers: auth ? { Authorization: `Basic ${auth}` } : {} });
+            if (!csrfResponse.ok) throw new Error('Não foi possível validar a sessão para salvar os dados.');
+            const csrf = await csrfResponse.json();
+            headers.set(csrf.headerName, csrf.token);
+        }
+        const response = await fetch(url, { ...options, headers, credentials: 'same-origin' });
+        if (!response.ok) {
+            const body = await response.json().catch(() => ({}));
+            throw new Error(body.message || `Falha ao acessar a API (${response.status}).`);
+        }
+        if (response.status === 204) return null;
+        return response.json();
+    }
+
+    async loadCollection(path) {
+        const page = await this.apiRequest(`${path}?size=100&sort=id,asc`);
+        return Array.isArray(page) ? page : (page.content || []);
+    }
+
+    async hydrateFromApi() {
+        if (!sessionStorage.getItem(API_AUTH_KEY)) return;
+        const cachedBeforeRequest = localStorage.getItem(STORAGE_KEY);
+        try {
+            const entries = await Promise.all(Object.entries(API_COLLECTIONS).map(async ([key, path]) => [key, await this.loadCollection(path)]));
+            for (const [key, rows] of entries) this.data[key] = rows;
+            try {
+                const users = await this.loadCollection('/api/usuarios');
+                this.data.usuarios = users.map(user => ({ ...user, perfil: /ADMIN/i.test(user.perfil) ? 'Administrador' : 'Colaborador', dataCadastro: user.criadoEm ? user.criadoEm.split('T')[0] : '' }));
+            } catch (error) {
+                // Colaboradores não têm acesso ao cadastro de usuários.
+                this.data.usuarios = [];
+            }
+            try {
+                const offices = await this.loadCollection('/api/escritorio');
+                this.data.escritorio = offices[0] || {};
+            } catch (error) {
+                // A configuração do escritório é restrita a administradores.
+                this.data.escritorio = {};
+            }
+            const before = localStorage.getItem(STORAGE_KEY);
+            const next = JSON.stringify(this.data);
+            this.apiSnapshot = JSON.parse(next);
+            this.saveLocalCache();
+            if (before !== next) {
+                const pageKey = `WALDO_API_REFRESHED:${location.pathname}`;
+                if (!sessionStorage.getItem(pageKey)) {
+                    sessionStorage.setItem(pageKey, '1');
+                    location.reload();
+                }
+            }
+        } catch (error) {
+            console.error('Falha ao carregar os dados do backend:', error);
+            for (const key of Object.keys(API_COLLECTIONS)) this.data[key] = [];
+            this.data.usuarios = [];
+            this.data.escritorio = {};
+            this.apiSnapshot = null;
+            this.saveLocalCache();
+            if (cachedBeforeRequest !== localStorage.getItem(STORAGE_KEY)) {
+                const pageKey = `WALDO_API_REFRESHED:${location.pathname}`;
+                if (!sessionStorage.getItem(pageKey)) {
+                    sessionStorage.setItem(pageKey, '1');
+                    location.reload();
+                }
+            }
+            if (window.AdminUI) window.AdminUI.showToast(error.message || 'Não foi possível carregar os dados do servidor.', 'danger');
+        }
+    }
+
+    async persistChanges() {
+        const previous = this.apiSnapshot;
+        const current = JSON.parse(JSON.stringify(this.data));
+        for (const [key, path] of Object.entries(API_COLLECTIONS)) {
+            const oldRows = previous[key] || [];
+            const newRows = current[key] || [];
+            for (const row of newRows) {
+                const old = oldRows.find(item => Number(item.id) === Number(row.id));
+                if (old && JSON.stringify(old) === JSON.stringify(row)) continue;
+                const payload = { ...row };
+                delete payload.criadoEm;
+                delete payload.atualizadoEm;
+                delete payload.versao;
+                try {
+                    const saved = await this.apiRequest(old ? `${path}/${row.id}` : path, {
+                        method: old ? 'PUT' : 'POST', body: JSON.stringify(payload)
+                    });
+                    if (!old && saved && saved.id) {
+                        const localRow = (this.data[key] || []).find(item => Number(item.id) === Number(row.id));
+                        if (localRow) localRow.id = saved.id;
+                        row.id = saved.id;
+                        this.saveLocalCache();
+                    }
+                    this.apiSnapshot[key] = this.apiSnapshot[key] || [];
+                    const index = this.apiSnapshot[key].findIndex(item => Number(item.id) === Number(row.id));
+                    if (index >= 0) this.apiSnapshot[key][index] = JSON.parse(JSON.stringify(row));
+                    else this.apiSnapshot[key].push(JSON.parse(JSON.stringify(row)));
+                } catch (error) {
+                    console.error(`Falha ao salvar ${key} na API:`, error);
+                    if (window.AdminUI) window.AdminUI.showToast(error.message || 'Erro ao salvar no servidor.', 'danger');
+                }
+            }
+        }
+        this.apiSnapshot.usuarios = this.apiSnapshot.usuarios || [];
+        for (const row of current.usuarios || []) {
+            const old = this.apiSnapshot.usuarios.find(item => Number(item.id) === Number(row.id));
+            if (old && JSON.stringify(old) === JSON.stringify(row)) continue;
+            try {
+                let saved;
+                if (old) {
+                    if (old.situacao !== row.situacao) {
+                        saved = await this.apiRequest(`/api/usuarios/${row.id}/status`, { method: 'PATCH', body: JSON.stringify({ ativo: row.situacao === 'Ativo' }) });
+                    } else {
+                        saved = await this.apiRequest(`/api/usuarios/${row.id}`, { method: 'PUT', body: JSON.stringify({ nome: row.nome, email: row.email, cargo: row.cargo, perfil: row.perfil, senha: row.senha || null }) });
+                    }
+                } else if (row.senha) {
+                    saved = await this.apiRequest('/api/usuarios', { method: 'POST', body: JSON.stringify({ nome: row.nome, email: row.email, cargo: row.cargo, perfil: row.perfil, senha: row.senha }) });
+                } else continue;
+                if (saved) {
+                    const user = { ...saved, perfil: /ADMIN/i.test(saved.perfil) ? 'Administrador' : 'Colaborador', dataCadastro: saved.criadoEm ? saved.criadoEm.split('T')[0] : '', situacao: saved.situacao };
+                    delete user.senha;
+                    const localUser = this.data.usuarios.find(item => Number(item.id) === Number(row.id));
+                    if (localUser) delete localUser.senha;
+                    if (!old && localUser && saved.id) localUser.id = saved.id;
+                    const index = this.apiSnapshot.usuarios.findIndex(item => Number(item.id) === Number(user.id));
+                    if (index >= 0) this.apiSnapshot.usuarios[index] = user; else this.apiSnapshot.usuarios.push(user);
+                    this.saveLocalCache();
+                }
+            } catch (error) {
+                if (window.AdminUI) window.AdminUI.showToast(error.message || 'Erro ao salvar usuário.', 'danger');
+            }
+        }
+        const oldOffice = previous.escritorio || {};
+        const office = current.escritorio || {};
+        if (JSON.stringify(oldOffice) !== JSON.stringify(office)) {
+            try {
+                const officePath = '/api/escritorio';
+                const saved = office.id
+                    ? await this.apiRequest(`${officePath}/${office.id}`, { method: 'PUT', body: JSON.stringify(office) })
+                    : await this.apiRequest(officePath, { method: 'POST', body: JSON.stringify(office) });
+                this.data.escritorio = saved;
+                this.apiSnapshot.escritorio = JSON.parse(JSON.stringify(saved));
+                this.saveLocalCache();
+            } catch (error) {
+                if (window.AdminUI) window.AdminUI.showToast(error.message || 'Erro ao salvar os dados do escritório.', 'danger');
+            }
         }
     }
 
@@ -1143,8 +1316,6 @@ class WaldoDataStore {
         const nota = this.data.notasFiscais.find(n => n.id === Number(id));
         if (nota) {
             nota.situacao = 'Emitida';
-            nota.numeroNota = `2026/${Math.floor(1000 + Math.random() * 9000)}`;
-            nota.chaveAcesso = `352610${Date.now()}550010000000001`;
             this.save();
             return nota;
         }

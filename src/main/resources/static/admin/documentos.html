@@ -260,7 +260,6 @@
 
     <!-- Scripts -->
     <script src="../js/data.js"></script>
-    <script src="../js/auth-token.js"></script>
     <script src="../js/admin.js"></script>
 
     <script>
@@ -374,7 +373,7 @@
         function aprovarDocDemo(id) {
             const doc = window.DataStore.aprovarDocumento(id);
             if (doc) {
-                window.AdminUI.showToast(`Documento "${doc.nome}" aprovado na demonstração!`, 'success');
+                window.AdminUI.showToast(`Documento "${doc.nome}" aprovado.`, 'success');
                 renderizarTabela();
                 window.AdminUI.updateSidebarCounters();
             }

@@ -2773,6 +2773,8 @@ textarea:focus-visible {
 
 [data-theme="dark"] .range-display {
     color: var(--gold-400) !important;
+    background-color: #0b1427 !important;
+    border-color: #263653 !important;
 }
 
 [data-theme="dark"] .range-ticks span {
@@ -2781,7 +2783,9 @@ textarea:focus-visible {
 
 [data-theme="dark"] .result-highlight-box {
     background-color: #070d1e !important;
-    border-color: #1a2744 !important;
+    border: 1px solid #1a2744 !important;
+    border-radius: var(--radius-md);
+    padding: 16px !important;
 }
 
 [data-theme="dark"] .result-highlight-box h3 {
@@ -2932,6 +2936,122 @@ textarea:focus-visible {
     border-top: 1px solid #1a2744 !important;
 }
 
+/* Footer — fundo sempre escuro */
+[data-theme="dark"] .footer {
+    background-color: #070d1e !important;
+    color: var(--slate-300) !important;
+}
 
+[data-theme="dark"] .footer-desc,
+[data-theme="dark"] .footer-col ul li a,
+[data-theme="dark"] .footer-contact p,
+[data-theme="dark"] .footer-bottom {
+    color: #94a3b8 !important;
+}
 
+[data-theme="dark"] .footer-col h4,
+[data-theme="dark"] .footer-brand .brand-name {
+    color: #ffffff !important;
+}
 
+/* Textos que usam --navy-* como cor de texto (sem tocar nos fundos) */
+[data-theme="dark"] .brand-name,
+[data-theme="dark"] .nav-link:hover,
+[data-theme="dark"] .nav-link.active {
+    color: #ffffff !important;
+}
+
+[data-theme="dark"] .section-title {
+    color: #ffffff !important;
+}
+
+[data-theme="dark"] .sobre-lead {
+    color: #cbd5e1 !important;
+}
+
+[data-theme="dark"] .form-group-block label,
+[data-theme="dark"] .range-display,
+[data-theme="dark"] .label-row {
+    color: #e2e8f0 !important;
+}
+
+/* Simulador — fundo escuro no card wrapper e seção */
+[data-theme="dark"] .simulador-section {
+    background-color: #070d1e !important;
+}
+
+[data-theme="dark"] .simulador-card-wrapper {
+    background-color: #0f182e !important;
+    border-color: #1a2744 !important;
+}
+
+[data-theme="dark"] .sim-header .section-title,
+[data-theme="dark"] .sim-header p {
+    color: #ffffff !important;
+}
+
+[data-theme="dark"] .custom-range {
+    background: #1a2744 !important;
+}
+
+/* Service detail boxes e meta items */
+[data-theme="dark"] .service-meta-item,
+[data-theme="dark"] .service-details li,
+[data-theme="dark"] .service-details ul li {
+    color: #cbd5e1 !important;
+}
+
+/* Superfícies com cores fixas no tema claro precisam de pares escuros próprios. */
+[data-theme="dark"] .service-meta-item {
+    background: #0b1427 !important;
+    border-color: #263653 !important;
+    color: #dbe5f2 !important;
+}
+
+[data-theme="dark"] .service-meta-item strong {
+    color: #f8fafc !important;
+}
+
+[data-theme="dark"] .service-meta-item.benefit {
+    background: rgba(5, 150, 105, 0.16) !important;
+    border-color: rgba(16, 185, 129, 0.35) !important;
+    color: #d1fae5 !important;
+}
+
+[data-theme="dark"] .service-meta-item.benefit strong {
+    color: #ecfdf5 !important;
+}
+
+/* Seções que recebem fundo claro por estilo inline no HTML. */
+html[data-theme="dark"] #depoimentos,
+html[data-theme="dark"] #depoimentos.section {
+    background-color: #070d1e !important;
+    border-top-color: #1a2744 !important;
+}
+
+html[data-theme="dark"] .simulador-section,
+html[data-theme="dark"] .simulador-section.section {
+    background-color: #070d1e !important;
+}
+
+html[data-theme="dark"] .simulador-card-wrapper {
+    background: #0f182e !important;
+    border-color: #1a2744 !important;
+}
+
+html[data-theme="dark"] .footer {
+    background: #070d1e !important;
+    color: #cbd5e1 !important;
+}
+
+html[data-theme="dark"] .footer-desc,
+html[data-theme="dark"] .footer-col ul li a,
+html[data-theme="dark"] .footer-contact p,
+html[data-theme="dark"] .footer-bottom {
+    color: #b6c4d8 !important;
+}
+
+html[data-theme="dark"] .footer-col h4,
+html[data-theme="dark"] .footer-brand .brand-name {
+    color: #ffffff !important;
+}

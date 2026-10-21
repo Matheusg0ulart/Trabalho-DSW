@@ -296,7 +296,6 @@
 
     <!-- Scripts -->
     <script src="../js/data.js"></script>
-    <script src="../js/auth-token.js"></script>
     <script src="../js/admin.js"></script>
 
     <script>
@@ -417,7 +416,7 @@
         function emitirNotaDemo(id) {
             const nota = window.DataStore.emitirNota(id);
             if (nota) {
-                window.AdminUI.showToast(`Nota Fiscal emitida na demonstração! Número gerado: ${nota.numeroNota}`, 'success');
+                window.AdminUI.showToast('Solicitação marcada como emitida no painel. A emissão fiscal externa não está integrada.', 'info');
                 renderizarTabela();
                 atualizarKPIsNotas();
                 window.AdminUI.updateSidebarCounters();
