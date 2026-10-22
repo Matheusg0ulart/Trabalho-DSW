@@ -38,6 +38,7 @@ public final class DomainModels {
         @Column(length = 40) public String inscricaoEstadual;
         @Column(length = 40) public String inscricaoMunicipal;
         @Column(length = 50) public String regimeTributario;
+        @Column(name = "fator_r")
         public Boolean fatorR;
         public LocalDate dataAbertura;
         @Column(length = 180) public String cnae;
