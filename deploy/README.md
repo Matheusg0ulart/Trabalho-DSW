@@ -18,3 +18,4 @@ Este diretório contém os arquivos necessários para rodar a aplicação comple
 3. Acesse:
    - Frontend: `http://localhost`
    - Backend API: `http://localhost:8080/api/health`
+
